@@ -56,3 +56,44 @@ Frees up model and clears any cache if needed.
 
 ------------------------------------------------------------------------------------------------------------
 """
+import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
+model_id = "sshleifer/tiny-gpt2" # Only for testing, we should change the model
+
+def get_device():
+    if torch.cuda.is_available():
+        return "cuda"
+    elif torch.backends.mps.is_available():
+        return "mps"
+    else:
+        return "cpu"
+
+def load_model(model_name=model_id, device=None):
+    if device is None:
+        device = get_device()
+    
+    model = AutoModelForCausalLM.from_pretrained(model_name)
+    model.to(device)
+    return model
+
+def load_tokenizer(model_name=model_id):
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    return tokenizer
+
+def generate_response(model, tokenizer, prompt, max_length=50, sampling=True, temperature=0.7, device=None):
+    if device is None:
+        device = get_device()
+    
+    inputs = tokenizer(prompt, return_tensors="pt").to(device)
+    if sampling:
+        outputs = model.generate(**inputs, max_length=max_length, temperature=temperature)
+    else:
+        outputs = model.generate(**inputs, max_length=max_length, top_p=0.95, top_k=40)
+    
+    response = tokenizer.decode(outputs[0], skip_special_tokens=True)
+    return response
+
+def free_model(model):
+    del model
+    torch.cuda.empty_cache()
