@@ -1,7 +1,4 @@
-from flask import Flask, app
-app = Flask(__name__)
-@app.route('/')
-def home():
-    return "Candace is Running"
+import routes
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    routes.RunApp()
