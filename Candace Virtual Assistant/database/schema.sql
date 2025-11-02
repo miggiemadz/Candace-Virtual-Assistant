@@ -79,3 +79,10 @@ CREATE TABLE AI_CHAT_LOG (
     ai_response TEXT NOT NULL,
     FOREIGN KEY (student_id) REFERENCES STUDENT(student_id)
 );
+DROP TABLE IF EXISTS LOGIN_INFO;
+CREATE TABLE LOGIN_INFO (
+    login_id INT PRIMARY KEY,
+    student_id INT NOT NULL,
+    login_password TEXT NOT NULL,
+    FOREIGN KEY (student_id) REFERENCES STUDENT(student_id)
+);
