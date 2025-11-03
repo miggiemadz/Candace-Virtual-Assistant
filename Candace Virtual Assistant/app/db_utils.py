@@ -4,7 +4,7 @@ from flask import current_app, g
 def get_db():
     db = g.get("db")
     if db is None:
-        path = current_app.config.get("DATABASE", "candace.db")
+        path = current_app.config.get("DATABASE", "database/candace.db")
         db = g.db = sqlite3.connect(path)
         db.execute("PRAGMA foreign_keys = ON")
         db.row_factory = sqlite3.Row

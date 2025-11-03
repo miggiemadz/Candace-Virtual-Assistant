@@ -16,7 +16,7 @@ def UserLoginPage():
     else:
         return render_template('login-page.html')
 
-@app.route('/dashboard/<student-id>')
+@app.route('/dashboard')
 def DashboardPage():
     return "This is the student dashboard page."
 
