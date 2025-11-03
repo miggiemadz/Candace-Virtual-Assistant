@@ -1,7 +1,10 @@
-from flask import Flask, app
-app = Flask(__name__)
-@app.route('/')
-def home():
-    return "Candace is Running"
+import routes
+
+userNameInput = ""
+passwordInput = ""
+
+def VerifyLoginCredentials(username: str, password: str, db) -> bool: 
+    return username == "0679866" and password == "Miggie(2004)"
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    routes.RunApp()
