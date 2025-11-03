@@ -24,8 +24,13 @@ def DashboardPage():
 def StudentSignUpPage():
     if request.method == 'POST':
         db = db_utils.get_db()
-        
-    return "This is the student sign up page."
+        student_id = request.form["studentid"]
+        username = request.form["schoolemail"]
+        password = request.form["password"]
+        if (main.VerifySignUpCredentials(student_id, username, password, db)):
+            return redirect(url_for("UserLoginPage"))
+    else:
+        return render_template('sign-up-page.html')
 
 def RunApp():
     return app.run(debug=True)
