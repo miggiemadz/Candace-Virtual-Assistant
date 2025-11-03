@@ -24,7 +24,7 @@ def insert_chat_logs(student_id, ai_response):
         print(f"Error inserting chat log for student ID {student_id}: {e}")
         return False
 
-def insert_login_get_login_info_by_id(login_id, login_password):
+def insert_login_info(login_id, login_password):
     db = get_db()
     try:
         with db:
