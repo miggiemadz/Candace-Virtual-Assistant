@@ -55,11 +55,17 @@ Model Teardown or Memory Management
 Frees up model and clears any cache if needed.
 
 ------------------------------------------------------------------------------------------------------------
+
+IMPORTS
+from transformers import AutoModelForCausalLM, AutoTokenizer
 """
 import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 
 model_id = "sshleifer/tiny-gpt2" # Only for testing, we should change the model
+model_instance = None
+pipeline_instance = None
+
 
 def get_device():
     if torch.cuda.is_available():
@@ -73,27 +79,62 @@ def load_model(model_name=model_id, device=None):
     if device is None:
         device = get_device()
     
-    model = AutoModelForCausalLM.from_pretrained(model_name)
-    model.to(device)
-    return model
+    global model_instance
+    model_instance = AutoModelForCausalLM.from_pretrained(model_name)
+    model_instance.to(device)
+    return model_instance
 
 def load_tokenizer(model_name=model_id):
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     return tokenizer
 
-def generate_response(model, tokenizer, prompt, max_length=50, sampling=True, temperature=0.7, device=None):
+def generate_response(tokenizer, prompt, max_length=50, sampling=True, temperature=0.7, device=None):
     if device is None:
         device = get_device()
     
+    global model_instance
     inputs = tokenizer(prompt, return_tensors="pt").to(device)
     if sampling:
-        outputs = model.generate(**inputs, max_length=max_length, temperature=temperature)
+        outputs = model_instance.generate(**inputs, max_length=max_length, temperature=temperature)
     else:
-        outputs = model.generate(**inputs, max_length=max_length, top_p=0.95, top_k=40)
+        outputs = model_instance.generate(**inputs, max_length=max_length, top_p=0.95, top_k=40)
     
     response = tokenizer.decode(outputs[0], skip_special_tokens=True)
     return response
 
-def free_model(model):
-    del model
+def free_model():
+    global model_instance
+    del model_instance
+    torch.cuda.empty_cache()
+
+# Pipeline 
+
+def load_pipeline(model_name=model_id, device=None):
+    if device is None:
+        device = get_device()
+    
+    global pipeline_instance
+    pipeline_instance = pipeline("text-generation", model=model_name, device=device)
+    return pipeline_instance
+
+def generate_response_pipeline(prompt, max_length=50, sampling=True, temperature=0.7):
+    global pipeline_instance
+    if pipeline_instance is None:
+        load_pipeline()
+
+    kwargs = {"max_length": max_length}
+    if sampling:
+        kwargs['temperature'] = temperature
+        kwargs['do_sample'] = True
+    else:
+        kwargs['top_p'] = 0.95
+        kwargs['top_k'] = 40
+        kwargs['do_sample'] = False
+
+    result = pipeline_instance(prompt, **kwargs)
+    return result[0]['generated_text']
+
+def free_pipeline():
+    global pipeline_instance
+    del pipeline_instance
     torch.cuda.empty_cache()
