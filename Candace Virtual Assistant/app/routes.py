@@ -16,11 +16,11 @@ def UserLoginPage():
     else:
         return render_template('login-page.html')
 
-@app.route('/dashboard')
+@app.route('/dashboard/<student-id>')
 def DashboardPage():
     return "This is the student dashboard page."
 
-@app.route('/student-login/sign-up')
+@app.route('/sign-up', methods=['GET', 'POST'])
 def StudentSignUpPage():
     return "This is the student sign up page."
 
