@@ -1,11 +1,13 @@
+import os
 import sqlite3
 from flask import current_app, g
 
 def get_db():
     db = g.get("db")
     if db is None:
-        path = current_app.config.get("DATABASE", "database/candace.db")
-        db = g.db = sqlite3.connect(path)
+        base_dir = os.path.abspath(os.path.dirname(__file__))
+        db_path = os.path.join(base_dir, "..", "database", "candace.db")
+        db = g.db = sqlite3.connect(db_path)
         db.execute("PRAGMA foreign_keys = ON")
         db.row_factory = sqlite3.Row
     return db
