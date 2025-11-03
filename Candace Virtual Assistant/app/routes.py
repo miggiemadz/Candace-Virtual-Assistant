@@ -22,6 +22,9 @@ def DashboardPage():
 
 @app.route('/sign-up', methods=['GET', 'POST'])
 def StudentSignUpPage():
+    if request.method == 'POST':
+        db = db_utils.get_db()
+        
     return "This is the student sign up page."
 
 def RunApp():
