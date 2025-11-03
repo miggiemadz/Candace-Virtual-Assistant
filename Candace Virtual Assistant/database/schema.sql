@@ -13,6 +13,7 @@ CREATE TABLE STUDENT (
     student_gpa REAL check (student_gpa BETWEEN 0.0 AND 4.0),
     student_total_credits INT check (student_total_credits >= 0),
     major_id INT,
+    has_account BOOLEAN NOT NULL,
     FOREIGN KEY (major_id) REFERENCES MAJOR(major_id)
 );
 DROP TABLE IF EXISTS PROFESSOR;
