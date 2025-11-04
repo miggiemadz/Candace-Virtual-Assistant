@@ -1,0 +1,636 @@
+{
+    "STUDENT": [
+        {
+            "student_id": 2971596,
+            "student_first_name": "Charlie",
+            "student_last_name": "Brown",
+            "student_gpa": 2.64,
+            "student_total_credits": 30,
+            "major_id": 19,
+            "has_account": true
+        },
+        {
+            "student_id": 6612894,
+            "student_first_name": "Zion",
+            "student_last_name": "Thomas",
+            "student_gpa": 3.05,
+            "student_total_credits": 14,
+            "major_id": 19,
+            "has_account": false
+        },
+        {
+            "student_id": 2241047,
+            "student_first_name": "Finley",
+            "student_last_name": "Lee",
+            "student_gpa": 2.13,
+            "student_total_credits": 45,
+            "major_id": 2,
+            "has_account": true
+        },
+        {
+            "student_id": 6593998,
+            "student_first_name": "Avery",
+            "student_last_name": "Garcia",
+            "student_gpa": 3.23,
+            "student_total_credits": 78,
+            "major_id": 10,
+            "has_account": true
+        },
+        {
+            "student_id": 2555670,
+            "student_first_name": "Cameron",
+            "student_last_name": "Rodriguez",
+            "student_gpa": 3.69,
+            "student_total_credits": 47,
+            "major_id": 13,
+            "has_account": false
+        },
+        {
+            "student_id": 3343064,
+            "student_first_name": "Jamie",
+            "student_last_name": "Adams",
+            "student_gpa": 3.67,
+            "student_total_credits": 71,
+            "major_id": 14,
+            "has_account": true
+        },
+        {
+            "student_id": 8068694,
+            "student_first_name": "Jules",
+            "student_last_name": "Hall",
+            "student_gpa": 3.26,
+            "student_total_credits": 68,
+            "major_id": 17,
+            "has_account": false
+        },
+        {
+            "student_id": 7812141,
+            "student_first_name": "Charlie",
+            "student_last_name": "Nelson",
+            "student_gpa": 3.03,
+            "student_total_credits": 14,
+            "major_id": 14,
+            "has_account": true
+        },
+        {
+            "student_id": 1142011,
+            "student_first_name": "Quinn",
+            "student_last_name": "Lewis",
+            "student_gpa": 3.3,
+            "student_total_credits": 76,
+            "major_id": 12,
+            "has_account": true
+        },
+        {
+            "student_id": 9487555,
+            "student_first_name": "Alex",
+            "student_last_name": "Hall",
+            "student_gpa": 2.23,
+            "student_total_credits": 79,
+            "major_id": 10,
+            "has_account": true
+        },
+        {
+            "student_id": 4885344,
+            "student_first_name": "Rory",
+            "student_last_name": "Taylor",
+            "student_gpa": 3.04,
+            "student_total_credits": 93,
+            "major_id": 15,
+            "has_account": true
+        },
+        {
+            "student_id": 1064636,
+            "student_first_name": "Dakota",
+            "student_last_name": "Brown",
+            "student_gpa": 3.7,
+            "student_total_credits": 81,
+            "major_id": 5,
+            "has_account": true
+        },
+        {
+            "student_id": 1983264,
+            "student_first_name": "Tatum",
+            "student_last_name": "Hill",
+            "student_gpa": 3.73,
+            "student_total_credits": 95,
+            "major_id": 20,
+            "has_account": false
+        },
+        {
+            "student_id": 9124297,
+            "student_first_name": "Harper",
+            "student_last_name": "Rodriguez",
+            "student_gpa": 3.99,
+            "student_total_credits": 38,
+            "major_id": 20,
+            "has_account": false
+        },
+        {
+            "student_id": 3461297,
+            "student_first_name": "Noel",
+            "student_last_name": "Garcia",
+            "student_gpa": 2.7,
+            "student_total_credits": 84,
+            "major_id": 2,
+            "has_account": true
+        },
+        {
+            "student_id": 7656317,
+            "student_first_name": "Sawyer",
+            "student_last_name": "Green",
+            "student_gpa": 3.47,
+            "student_total_credits": 27,
+            "major_id": 17,
+            "has_account": true
+        },
+        {
+            "student_id": 2039937,
+            "student_first_name": "Dakota",
+            "student_last_name": "Jackson",
+            "student_gpa": 3.14,
+            "student_total_credits": 49,
+            "major_id": 14,
+            "has_account": true
+        },
+        {
+            "student_id": 2926625,
+            "student_first_name": "Tatum",
+            "student_last_name": "Harris",
+            "student_gpa": 3.9,
+            "student_total_credits": 80,
+            "major_id": 7,
+            "has_account": true
+        },
+        {
+            "student_id": 2822819,
+            "student_first_name": "Finley",
+            "student_last_name": "Jackson",
+            "student_gpa": 3.22,
+            "student_total_credits": 102,
+            "major_id": 6,
+            "has_account": true
+        },
+        {
+            "student_id": 4169966,
+            "student_first_name": "Finley",
+            "student_last_name": "Smith",
+            "student_gpa": 2.63,
+            "student_total_credits": 72,
+            "major_id": 19,
+            "has_account": true
+        },
+        {
+            "student_id": 3708453,
+            "student_first_name": "Tatum",
+            "student_last_name": "Martin",
+            "student_gpa": 3.72,
+            "student_total_credits": 31,
+            "major_id": 19,
+            "has_account": false
+        },
+        {
+            "student_id": 7525652,
+            "student_first_name": "Reese",
+            "student_last_name": "Anderson",
+            "student_gpa": 2.54,
+            "student_total_credits": 49,
+            "major_id": 6,
+            "has_account": true
+        },
+        {
+            "student_id": 5795424,
+            "student_first_name": "Jordan",
+            "student_last_name": "Smith",
+            "student_gpa": 3.68,
+            "student_total_credits": 16,
+            "major_id": 20,
+            "has_account": true
+        },
+        {
+            "student_id": 2384720,
+            "student_first_name": "Emerson",
+            "student_last_name": "Brown",
+            "student_gpa": 3.15,
+            "student_total_credits": 69,
+            "major_id": 2,
+            "has_account": true
+        },
+        {
+            "student_id": 6531445,
+            "student_first_name": "Jules",
+            "student_last_name": "Clark",
+            "student_gpa": 2.45,
+            "student_total_credits": 103,
+            "major_id": 4,
+            "has_account": false
+        },
+        {
+            "student_id": 9675384,
+            "student_first_name": "Emerson",
+            "student_last_name": "White",
+            "student_gpa": 2.75,
+            "student_total_credits": 116,
+            "major_id": 16,
+            "has_account": true
+        },
+        {
+            "student_id": 2629537,
+            "student_first_name": "Jamie",
+            "student_last_name": "Robinson",
+            "student_gpa": 3.74,
+            "student_total_credits": 76,
+            "major_id": 10,
+            "has_account": true
+        },
+        {
+            "student_id": 6018431,
+            "student_first_name": "Jamie",
+            "student_last_name": "Martinez",
+            "student_gpa": 2.02,
+            "student_total_credits": 22,
+            "major_id": 20,
+            "has_account": false
+        },
+        {
+            "student_id": 6942827,
+            "student_first_name": "Avery",
+            "student_last_name": "Young",
+            "student_gpa": 3.87,
+            "student_total_credits": 15,
+            "major_id": 2,
+            "has_account": false
+        },
+        {
+            "student_id": 5836630,
+            "student_first_name": "Emerson",
+            "student_last_name": "Wright",
+            "student_gpa": 3.84,
+            "student_total_credits": 40,
+            "major_id": 5,
+            "has_account": false
+        },
+        {
+            "student_id": 9674455,
+            "student_first_name": "Alex",
+            "student_last_name": "Martinez",
+            "student_gpa": 3.52,
+            "student_total_credits": 118,
+            "major_id": 11,
+            "has_account": true
+        },
+        {
+            "student_id": 5182295,
+            "student_first_name": "Blake",
+            "student_last_name": "White",
+            "student_gpa": 2.84,
+            "student_total_credits": 90,
+            "major_id": 7,
+            "has_account": true
+        },
+        {
+            "student_id": 6498660,
+            "student_first_name": "Jordan",
+            "student_last_name": "Lewis",
+            "student_gpa": 3.84,
+            "student_total_credits": 15,
+            "major_id": 14,
+            "has_account": true
+        },
+        {
+            "student_id": 1089907,
+            "student_first_name": "Dakota",
+            "student_last_name": "Adams",
+            "student_gpa": 3.8,
+            "student_total_credits": 79,
+            "major_id": 20,
+            "has_account": false
+        },
+        {
+            "student_id": 4879948,
+            "student_first_name": "Payton",
+            "student_last_name": "Allen",
+            "student_gpa": 2.61,
+            "student_total_credits": 20,
+            "major_id": 3,
+            "has_account": false
+        },
+        {
+            "student_id": 4227518,
+            "student_first_name": "Parker",
+            "student_last_name": "Scott",
+            "student_gpa": 3.91,
+            "student_total_credits": 79,
+            "major_id": 4,
+            "has_account": true
+        },
+        {
+            "student_id": 8491069,
+            "student_first_name": "Sydney",
+            "student_last_name": "Martinez",
+            "student_gpa": 2.76,
+            "student_total_credits": 96,
+            "major_id": 7,
+            "has_account": false
+        },
+        {
+            "student_id": 8322998,
+            "student_first_name": "Elliot",
+            "student_last_name": "Taylor",
+            "student_gpa": 2.73,
+            "student_total_credits": 16,
+            "major_id": 3,
+            "has_account": true
+        },
+        {
+            "student_id": 8214325,
+            "student_first_name": "Sawyer",
+            "student_last_name": "Lee",
+            "student_gpa": 2.33,
+            "student_total_credits": 118,
+            "major_id": 14,
+            "has_account": true
+        },
+        {
+            "student_id": 9498025,
+            "student_first_name": "Quinn",
+            "student_last_name": "Johnson",
+            "student_gpa": 3.13,
+            "student_total_credits": 57,
+            "major_id": 5,
+            "has_account": true
+        },
+        {
+            "student_id": 4035793,
+            "student_first_name": "Owen",
+            "student_last_name": "Lewis",
+            "student_gpa": 2.53,
+            "student_total_credits": 107,
+            "major_id": 11,
+            "has_account": true
+        },
+        {
+            "student_id": 9797037,
+            "student_first_name": "Charlie",
+            "student_last_name": "Thomas",
+            "student_gpa": 3.56,
+            "student_total_credits": 93,
+            "major_id": 5,
+            "has_account": true
+        },
+        {
+            "student_id": 5655025,
+            "student_first_name": "Avery",
+            "student_last_name": "Johnson",
+            "student_gpa": 2.83,
+            "student_total_credits": 104,
+            "major_id": 13,
+            "has_account": false
+        },
+        {
+            "student_id": 3309691,
+            "student_first_name": "Parker",
+            "student_last_name": "Lee",
+            "student_gpa": 3.82,
+            "student_total_credits": 53,
+            "major_id": 14,
+            "has_account": true
+        },
+        {
+            "student_id": 2285163,
+            "student_first_name": "Blake",
+            "student_last_name": "Scott",
+            "student_gpa": 2.7,
+            "student_total_credits": 58,
+            "major_id": 11,
+            "has_account": true
+        },
+        {
+            "student_id": 4665704,
+            "student_first_name": "Parker",
+            "student_last_name": "Garcia",
+            "student_gpa": 3.47,
+            "student_total_credits": 23,
+            "major_id": 6,
+            "has_account": true
+        },
+        {
+            "student_id": 2006502,
+            "student_first_name": "Alex",
+            "student_last_name": "Garcia",
+            "student_gpa": 2.61,
+            "student_total_credits": 88,
+            "major_id": 12,
+            "has_account": true
+        },
+        {
+            "student_id": 5319351,
+            "student_first_name": "Emerson",
+            "student_last_name": "King",
+            "student_gpa": 2.87,
+            "student_total_credits": 65,
+            "major_id": 15,
+            "has_account": true
+        },
+        {
+            "student_id": 4265834,
+            "student_first_name": "Reese",
+            "student_last_name": "Lewis",
+            "student_gpa": 2.15,
+            "student_total_credits": 47,
+            "major_id": 1,
+            "has_account": true
+        },
+        {
+            "student_id": 7713742,
+            "student_first_name": "Rory",
+            "student_last_name": "White",
+            "student_gpa": 3.56,
+            "student_total_credits": 40,
+            "major_id": 13,
+            "has_account": true
+        }
+    ],
+    "LOGIN_INFORMATION": [
+        {
+            "login_id": "charlie.brown@owl.ucc.edu",
+            "student_id": 2971596,
+            "login_password": "jpvTM0^Sh"
+        },
+        {
+            "login_id": "finley.lee@owl.ucc.edu",
+            "student_id": 2241047,
+            "login_password": "rmkbs2%K9"
+        },
+        {
+            "login_id": "avery.garcia@owl.ucc.edu",
+            "student_id": 6593998,
+            "login_password": "oKvKj3$t7"
+        },
+        {
+            "login_id": "jamie.adams@owl.ucc.edu",
+            "student_id": 3343064,
+            "login_password": "bIkIr5^W0"
+        },
+        {
+            "login_id": "charlie.nelson@owl.ucc.edu",
+            "student_id": 7812141,
+            "login_password": "sRSCd2$Rk"
+        },
+        {
+            "login_id": "quinn.lewis@owl.ucc.edu",
+            "student_id": 1142011,
+            "login_password": "KfOQR6@9H"
+        },
+        {
+            "login_id": "alex.hall@owl.ucc.edu",
+            "student_id": 9487555,
+            "login_password": "ggKZG2@Qf"
+        },
+        {
+            "login_id": "rory.taylor@owl.ucc.edu",
+            "student_id": 4885344,
+            "login_password": "Tahzc0%aL"
+        },
+        {
+            "login_id": "dakota.brown@owl.ucc.edu",
+            "student_id": 1064636,
+            "login_password": "mEcyx5!CN"
+        },
+        {
+            "login_id": "noel.garcia@owl.ucc.edu",
+            "student_id": 3461297,
+            "login_password": "eSmfj7%P0"
+        },
+        {
+            "login_id": "sawyer.green@owl.ucc.edu",
+            "student_id": 7656317,
+            "login_password": "ckJJP2*fe"
+        },
+        {
+            "login_id": "dakota.jackson@owl.ucc.edu",
+            "student_id": 2039937,
+            "login_password": "YYocY9$Lj"
+        },
+        {
+            "login_id": "tatum.harris@owl.ucc.edu",
+            "student_id": 2926625,
+            "login_password": "AFaZu1^Di"
+        },
+        {
+            "login_id": "finley.jackson@owl.ucc.edu",
+            "student_id": 2822819,
+            "login_password": "wzIyX3#xr"
+        },
+        {
+            "login_id": "finley.smith@owl.ucc.edu",
+            "student_id": 4169966,
+            "login_password": "hQHso6#7E"
+        },
+        {
+            "login_id": "reese.anderson@owl.ucc.edu",
+            "student_id": 7525652,
+            "login_password": "MHWPU6#mP"
+        },
+        {
+            "login_id": "jordan.smith@owl.ucc.edu",
+            "student_id": 5795424,
+            "login_password": "hmgzv2#ef"
+        },
+        {
+            "login_id": "emerson.brown@owl.ucc.edu",
+            "student_id": 2384720,
+            "login_password": "rpbwb2$s3"
+        },
+        {
+            "login_id": "emerson.white@owl.ucc.edu",
+            "student_id": 9675384,
+            "login_password": "BGVgz0*AE"
+        },
+        {
+            "login_id": "jamie.robinson@owl.ucc.edu",
+            "student_id": 2629537,
+            "login_password": "lppAW3!D4"
+        },
+        {
+            "login_id": "alex.martinez@owl.ucc.edu",
+            "student_id": 9674455,
+            "login_password": "xEmFG2$WH"
+        },
+        {
+            "login_id": "blake.white@owl.ucc.edu",
+            "student_id": 5182295,
+            "login_password": "BsCql9&Ne"
+        },
+        {
+            "login_id": "jordan.lewis@owl.ucc.edu",
+            "student_id": 6498660,
+            "login_password": "sLhqS9@eV"
+        },
+        {
+            "login_id": "parker.scott@owl.ucc.edu",
+            "student_id": 4227518,
+            "login_password": "xKtvB4*JN"
+        },
+        {
+            "login_id": "elliot.taylor@owl.ucc.edu",
+            "student_id": 8322998,
+            "login_password": "NdAMo5&gQ"
+        },
+        {
+            "login_id": "sawyer.lee@owl.ucc.edu",
+            "student_id": 8214325,
+            "login_password": "szpJo9^an"
+        },
+        {
+            "login_id": "quinn.johnson@owl.ucc.edu",
+            "student_id": 9498025,
+            "login_password": "KXTfl5%fP"
+        },
+        {
+            "login_id": "owen.lewis@owl.ucc.edu",
+            "student_id": 4035793,
+            "login_password": "OhwwJ2@Sg"
+        },
+        {
+            "login_id": "charlie.thomas@owl.ucc.edu",
+            "student_id": 9797037,
+            "login_password": "iPwYW3*5M"
+        },
+        {
+            "login_id": "parker.lee@owl.ucc.edu",
+            "student_id": 3309691,
+            "login_password": "EHDxt2@Wk"
+        },
+        {
+            "login_id": "blake.scott@owl.ucc.edu",
+            "student_id": 2285163,
+            "login_password": "NUkgB5!8c"
+        },
+        {
+            "login_id": "parker.garcia@owl.ucc.edu",
+            "student_id": 4665704,
+            "login_password": "Yncgq9#67"
+        },
+        {
+            "login_id": "alex.garcia@owl.ucc.edu",
+            "student_id": 2006502,
+            "login_password": "kJRFv0!Dl"
+        },
+        {
+            "login_id": "emerson.king@owl.ucc.edu",
+            "student_id": 5319351,
+            "login_password": "ZzMjf2#Op"
+        },
+        {
+            "login_id": "reese.lewis@owl.ucc.edu",
+            "student_id": 4265834,
+            "login_password": "puQlE1$Wr"
+        },
+        {
+            "login_id": "rory.white@owl.ucc.edu",
+            "student_id": 7713742,
+            "login_password": "NZXma7#ZV"
+        }
+    ]
+}
