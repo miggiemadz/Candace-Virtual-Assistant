@@ -57,45 +57,61 @@ def load(model_name: str = DEFAULT_MODEL_ID, device: str | None = None):
     return _model, _tokenizer, _device
 
 
+# models/llama_utils.py (replace generate_response with this version)
 def generate_response(
     prompt: str,
     model_name: str = DEFAULT_MODEL_ID,
     max_new_tokens: int = 80,
-    temperature: float = 0.7,
-    do_sample: bool = True,
-    top_p: float = 0.95,
+    temperature: float = 0.0,      # deterministic by default
+    do_sample: bool = False,       # deterministic by default
+    top_p: float = 0.9,
     top_k: int = 40,
     device: str | None = None,
+    stop_strings: list[str] | None = None,
 ):
     """
-    Core inference method (no pipeline). Uses lazy-loaded model/tokenizer.
-    Uses max_new_tokens so prompt length won't choke outputs.
+    Generates ONLY the new tokens (no prompt echo).
+    Adds repetition constraints; supports simple stop strings.
     """
     _ensure_loaded(model_name, device)
 
-    # Encode on same device as model
-    inputs = _tokenizer(prompt, return_tensors="pt", truncation=True).to(_device)
+    stop_strings = stop_strings or ["\nUser:", "User:", "Assistant:", "\nAssistant:"]
+    inputs = _tokenizer(prompt, return_tensors="pt", truncation=True)
+    input_ids = inputs["input_ids"].to(_device)
+    attention_mask = inputs.get("attention_mask")
+    if attention_mask is not None:
+        attention_mask = attention_mask.to(_device)
 
     gen_kwargs = dict(
         max_new_tokens=max_new_tokens,
         pad_token_id=_tokenizer.pad_token_id,
         eos_token_id=_tokenizer.eos_token_id,
+        repetition_penalty=1.1,
+        no_repeat_ngram_size=3,
+        do_sample=do_sample,
     )
     if do_sample:
-        gen_kwargs.update(dict(do_sample=True, temperature=temperature, top_p=top_p, top_k=top_k))
-    else:
-        gen_kwargs.update(dict(do_sample=False))
+        gen_kwargs.update(dict(temperature=temperature, top_p=top_p, top_k=top_k))
 
     with torch.no_grad():
-        outputs = _model.generate(**inputs, **gen_kwargs)
+        outputs = _model.generate(
+            input_ids=input_ids,
+            attention_mask=attention_mask,
+            **gen_kwargs
+        )
 
-    text = _tokenizer.decode(outputs[0], skip_special_tokens=True)
-    # Many decoder-only models echo the prompt; strip it if present
-    if text.startswith(prompt):
-        text = text[len(prompt):].lstrip()
+    # Slice out only the newly generated token ids
+    gen_ids = outputs[0][input_ids.shape[1]:]
+    text = _tokenizer.decode(gen_ids, skip_special_tokens=True).strip()
 
-    return text.strip()
+    # Simple stop-string truncation
+    for s in stop_strings:
+        idx = text.find(s)
+        if idx != -1:
+            text = text[:idx].strip()
+            break
 
+    return text
 
 def free():
     """

@@ -81,26 +81,25 @@ function setPending(p) {
 async function generateResponse(incomingLi, userText) {
   const p = incomingLi.querySelector("p");
   try {
-    // include short history (last 10 messages) for context
     const shortHistory = history.slice(-10);
-
     const res = await fetch("/chatbot", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      credentials: "same-origin", // include cookies/session if needed
-      body: JSON.stringify({
-        user_message: userText,
-        history: shortHistory // server can use this to build context
-      })
+      credentials: "same-origin",
+      body: JSON.stringify({ user_message: userText, history: shortHistory })
     });
 
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     const botReply = (data.chatbot_response || "").toString().trim() || "(no response)";
+
+    // 1) Replace the placeholder text only:
     p.textContent = botReply;
 
-    // Save assistant message to history
-    pushMessage("assistant", botReply);
+    // 2) Update history WITHOUT appending another li
+    history.push({ role: "assistant", content: botReply });
+    saveHistory(history);
+
   } catch (err) {
     p.classList.add("error");
     p.textContent = "Oops! Something went wrong. Please try again.";

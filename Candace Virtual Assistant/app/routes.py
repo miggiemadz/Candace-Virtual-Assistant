@@ -63,9 +63,9 @@ def ChatbotEndpoint():
         reply = llm_generate(
             prompt=prompt,
             # You can tune these:
-            max_new_tokens=120,
-            temperature=0.7,
-            do_sample=True,
+            max_new_tokens=64,
+            temperature=0.0,
+            do_sample=False,
             top_p=0.9,
             top_k=40,
         )
