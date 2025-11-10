@@ -9,7 +9,7 @@
     <div class="login-box">
         <h1>Student Login</h1>
 
-        <form method="POST" action="{{ url_for('UserLoginPage') }}">
+        <form method="POST" action="{{ url_for('main.UserLoginPage') }}">
             <label>Email:</label>
             <input type="text" name="username" placeholder="Enter your college email" required>
 
@@ -24,7 +24,7 @@
 
             <div class="signup-link">
                 <p>Don't have an account?
-                    <a href="{{ url_for('StudentSignUpPage') }}">Create one here</a>
+                    <a href="{{ url_for('main.StudentSignUpPage') }}">Create one here</a>
                 </p>
             </div>
         </form>

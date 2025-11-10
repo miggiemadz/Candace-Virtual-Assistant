@@ -1,5 +1,5 @@
-from flask import Blueprint, redirect, url_for, request, app, render_template, jsonify, session
-import main, db_utils
+from flask import Blueprint, redirect, url_for, request, render_template, jsonify, session
+from . import db_utils
 from . import auth_utils as auth
 from .services.assistant.llama_utils import generate_response as llm_generate
 from .services.assistant.prompt_utils import build_prompt
@@ -12,7 +12,7 @@ def UserLoginPage():
         db = db_utils.get_db()
         username_input = request.form['username']
         password_input = request.form['password']
-        if (main.VerifyLoginCredentials(username_input, password_input, db)):
+        if (auth.VerifyLoginCredentials(username_input, password_input, db)):
             return redirect(url_for('DashboardPage'))
         else:
             return render_template('login-page.html', error="Invalid credentials")
@@ -30,7 +30,7 @@ def StudentSignUpPage():
         student_id = request.form["studentid"]
         username = request.form["schoolemail"]
         password = request.form["password"]
-        if (main.VerifySignUpCredentials(student_id, username, password, db)):
+        if (auth.VerifySignUpCredentials(student_id, username, password, db)):
             return redirect(url_for("UserLoginPage"))
     else:
         return render_template('sign-up-page.html')
