@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="sentry-trace" content="candace-base-template"/>
+    <title>Candace: The Canvas AI Assistant</title>
+
+    <!-- Core styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chatbot.css') }}">
+
+    <!-- App icons (we will need to find some app icons for dashboards and nav bar) -->
+
+    <!-- Meta -->
+    <meta name="msapplication-TileColor" content="#E02B20">
+    <meta name="theme-color" content="#FFFFFF">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex,nofollow" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&family=Material+Symbols+Rounded" />
+
+    {% block head_extra %}{% endblock %}
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="header-top">
+                <!-- Replace with UCNJ or project logo -->
+                <img src="{{ url_for('static', filename='images/ucnj-logo.png') }}" alt="UCNJ Logo" id="ucnj-logo">
+                <span class="app-title">Candace: Canvas AI Assistant</span>
+                <!-- Hamburger toggles the nav on mobile; optional -->
+                <button class="hamburger-menu" aria-label="Open menu">&#9776;</button>
+            </div>
+
+            <div class="header-bottom">
+                <!-- Primary Navigation (adjust endpoints to your routes) -->
+                <nav class="main-nav" aria-label="Primary">
+                    <a href="/">Home</a>
+                    <a href="/dashboard">Dashboard</a>
+                    <a href="/courses">Courses</a>
+                    <a href="/assistant">Assistant</a>
+                    <a href="/logs">Logs</a>
+                    <a href="/docs">Docs</a>
+                    {% block nav_extra %}{% endblock %}
+                </nav>
+
+                <!-- Auth / Session -->
+                <div class="user-auth-links">
+                    {% if 'username' in session %}
+                        <div class="user-dropdown">
+                            <button class="dropbtn" aria-haspopup="true" aria-expanded="false">{{ session['username'] }}</button>
+                            <div class="dropdown-content" role="menu">
+                                <a href="/profile">Profile</a>
+                                <a href="{{ url_for('logout') }}">Logout</a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <a href="{{ url_for('UserLoginPage') }}">Login</a>
+                        <a href="{{ url_for('StudentSignUpPage') }}">Register</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Flash messages (optional) -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-container">
+          {% for category, message in messages %}
+            <div class="flash flash-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <main class="main-content" role="main">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Chatbot (Candace) -->
+    <button class="chatbot-toggler" aria-controls="candace-chatbot" aria-expanded="false" aria-label="Open chat">
+        <span class="material-symbols-rounded">chat</span>
+        <span class="material-symbols-outlined">close</span>
+    </button>
+
+    <section id="candace-chatbot"
+                class="chatbot"
+                role="dialog"
+                aria-modal="true"
+                aria-live="polite"
+                aria-label="Candace Assistant"
+                data-version="1.0">
+        <header class="chatbot-header">
+            <h2>Candace Assistant</h2>
+            <span class="close-btn material-symbols-outlined" role="button" aria-label="Close chat">close</span>
+        </header>
+
+        <ul class="chatbox" id="chatbox"></ul>
+
+        <div class="chat-input">
+            <textarea id="chat-input"
+                    placeholder="Ask about assignments, grades, due dates..."
+                    spellcheck="false"
+                    required></textarea>
+            <span id="send-btn" class="material-symbols-rounded" role="button" aria-label="Send message">send</span>
+        </div>
+    </section>
+    <!-- End Chatbot -->
+
+    <footer>
+        <div class="footer-inner">
+            <span>© {{ 2025 }} Candace: UCNJ Undergraduate Research</span>
+            <span>Mentor: Emilio Vasquez</span>
+            <span>Students: Miguel Torres, Angello Bravo, Julio Padilla</span>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <!-- Chatbot logic -> expects DOM ids/classes above -->
+    <script type="module" src="{{ url_for('static', filename='js/chatbot.js') }}"></script>
+    {% block scripts_extra %}{% endblock %}
+</body>
+</html>
