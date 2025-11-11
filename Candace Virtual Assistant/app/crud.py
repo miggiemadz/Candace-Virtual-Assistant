@@ -1,3 +1,56 @@
+"""
+Purpose
+-------
+Provide CRUD helper functions for interacting with the Candace SQLite database. 
+Each function opens a connection through get_db(), executes parameterized SQL 
+statements, handles foreign key constraints automatically, and returns rows when 
+required. Errors are caught and reported so the application does not crash.
+
+General Behavior
+----------------
+- All reads use SELECT with parameter binding and return fetched records.
+- All inserts use parameterized INSERT statements inside a `with db:` block so 
+  commits occur automatically.
+- get_db() ensures PRAGMA foreign_keys=ON is enabled for the connection.
+- Every function uses the same database connection provided by Flask’s g object.
+
+Execution Pattern
+-----------------
+1) Read functions:
+   - Open cursor
+   - Execute SELECT with placeholders
+   - Fetch all rows
+   - Return results or False on error
+
+2) Insert functions:
+   - Open cursor inside `with db:`
+   - Execute INSERT with placeholders
+   - Commit automatically
+   - Return nothing on success, False on failure
+
+Scope of Functions
+------------------
+This module includes CRUD operations for:
+- STUDENT
+- CHAT_LOGS
+- LOGIN_INFO
+- MAJOR
+- PROFESSOR
+- COURSE
+- CLASS
+- ASSIGNMENT
+- WORK_LOAD (junction table)
+- SCHEDULE (junction table)
+- STUDY_GUIDE
+
+Maintenance Notes
+-----------------
+- If you add a new table, follow the same pattern: parameterized queries, `with db:`, 
+  and error handling with sqlite3.Error.
+- Always rely on get_db() so foreign key enforcement stays active.
+- Junction tables (WORK_LOAD, SCHEDULE) require composite keys; ensure inserts match 
+  existing FK rows to avoid integrity errors.
+"""
 import sqlite3
 from db_utils import get_db
 
