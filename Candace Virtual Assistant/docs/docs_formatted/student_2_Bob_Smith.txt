@@ -1,0 +1,5 @@
+[Student] Bob Smith
+Major: Mathematics
+Courses Enrolled: Calculus I
+GPA: 3.2
+Credits: 75

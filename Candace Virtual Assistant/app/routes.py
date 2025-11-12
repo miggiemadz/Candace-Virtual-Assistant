@@ -3,6 +3,7 @@ from . import db_utils
 from . import auth_utils as auth
 from .services.assistant.llama_utils import generate_response as llm_generate
 from .services.assistant.prompt_utils import build_prompt
+from .services import rag_utils
 
 bp = Blueprint("main", __name__)
 
@@ -37,40 +38,37 @@ def StudentSignUpPage():
     
 @bp.post("/chatbot")
 def ChatbotEndpoint():
-    """
-    Expects JSON:
-      {
-        "user_message": "string",
-        "history": [{"role":"user|assistant","content":"..."}]
-      }
-    Returns:
-      { "chatbot_response": "string" }
-    """
-    try:
-        data = request.get_json(force=True) or {}
-        user_message = (data.get("user_message") or "").strip()
-        history = data.get("history") or []
+    data = request.get_json(force=True) or {}
+    user_message = (data.get("user_message") or "").strip()
+    history = data.get("history") or []
 
-        if not user_message:
-            return jsonify({"chatbot_response": "Please type a message."}), 200
+    if not user_message:
+        return jsonify({"chatbot_response": "Please type a message."}), 200
 
-        # If you want to add DB-derived context, fetch here (e.g., from session['username'])
-        # context_text = main.fetch_student_context(session.get('username'))
-        # Then add to system prompt or preface the prompt string.
+    # 1) Retrieve top-k context chunks
+    hits = rag_utils.retrieve(user_message, k=4)
+    context = rag_utils.format_context(hits)
 
-        prompt = build_prompt(user_message=user_message, history=history, max_turns=5)
+    # 2) Build prompt with context + short history
+    prompt = build_prompt(user_message=user_message, history=history, context=context, max_turns=4)
 
-        reply = llm_generate(
-            prompt=prompt,
-            # You can tune these:
-            max_new_tokens=64,
-            temperature=0.0,
-            do_sample=False,
-            top_p=0.9,
-            top_k=40,
-        )
+    # 3) Generate with deterministic settings (stable on CPU)
+    reply = llm_generate(
+        prompt=prompt,
+        max_new_tokens=96,
+        temperature=0.0,
+        do_sample=False
+    )
 
-        return jsonify({"chatbot_response": reply}), 200
-    except Exception as e:
-        # Optionally log e
-        return jsonify({"chatbot_response": "Sorry, something went wrong."}), 500
+    return jsonify({"chatbot_response": reply}), 200
+
+# Optional: simple ingestion endpoint (POST form-data: folder=path)
+@bp.post("/rag/ingest")
+def rag_ingest():
+    if "username" not in session:
+        return jsonify({"ok": False, "error": "Auth required"}), 401
+    folder = request.form.get("folder") or request.json.get("folder")
+    if not folder or not os.path.isdir(folder):
+        return jsonify({"ok": False, "error": "Valid folder path required"}), 400
+    docs, chunks = rag_utils.ingest_folder(folder)
+    return jsonify({"ok": True, "docs": docs, "chunks": chunks})

@@ -1,124 +1,95 @@
-# models/llama_utils.py
 import os
 import threading
-import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from llama_cpp import Llama
 
-# You can override via env var LLAMA_MODEL_ID
-DEFAULT_MODEL_ID = os.getenv("LLAMA_MODEL_ID", "sshleifer/tiny-gpt2")
+# Default path to your quantized model
+DEFAULT_GGUF_PATH = os.getenv(
+    "LLAMA_GGUF_PATH",
+    r".\models\Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf"
+)
 
 _model = None
-_tokenizer = None
-_device = None
 _lock = threading.Lock()
 
+def _resolve_path(p: str) -> str:
+    # If relative, resolve from repo root (this file’s parent’s parent)
+    if not os.path.isabs(p):
+        base = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+        p = os.path.abspath(os.path.join(base, p))
+    return p
 
-def get_device():
-    """
-    Returns a torch device string: 'cuda', 'mps', or 'cpu'.
-    """
-    if torch.cuda.is_available():
-        return "cuda"
-    if getattr(torch.backends, "mps", None) and torch.backends.mps.is_available():
-        return "mps"
-    return "cpu"
-
-
-def _ensure_loaded(model_name: str = DEFAULT_MODEL_ID, device: str | None = None):
-    """
-    Lazy-loads model/tokenizer once, thread-safe.
-    Also sets a pad_token for GPT-2 style tokenizers.
-    """
-    global _model, _tokenizer, _device
-    if _model is not None and _tokenizer is not None:
+def _ensure_loaded(gguf_path: str = DEFAULT_GGUF_PATH):
+    global _model
+    if _model is not None:
         return
-
     with _lock:
-        if _model is not None and _tokenizer is not None:
+        if _model is not None:
             return
-
-        _device = device or get_device()
-        _tokenizer = AutoTokenizer.from_pretrained(model_name)
-
-        # Many decoder-only models (e.g., GPT-2) lack a pad token.
-        if _tokenizer.pad_token is None:
-            _tokenizer.pad_token = _tokenizer.eos_token
-
-        _model = AutoModelForCausalLM.from_pretrained(model_name)
-        _model.to(_device)
-        _model.eval()
-
-
-def load(model_name: str = DEFAULT_MODEL_ID, device: str | None = None):
-    """
-    Explicit loader if you want to preload at app start.
-    """
-    _ensure_loaded(model_name, device)
-    return _model, _tokenizer, _device
-
-
-# models/llama_utils.py (replace generate_response with this version)
-def generate_response(
-    prompt: str,
-    model_name: str = DEFAULT_MODEL_ID,
-    max_new_tokens: int = 80,
-    temperature: float = 0.0,      # deterministic by default
-    do_sample: bool = False,       # deterministic by default
-    top_p: float = 0.9,
-    top_k: int = 40,
-    device: str | None = None,
-    stop_strings: list[str] | None = None,
-):
-    """
-    Generates ONLY the new tokens (no prompt echo).
-    Adds repetition constraints; supports simple stop strings.
-    """
-    _ensure_loaded(model_name, device)
-
-    stop_strings = stop_strings or ["\nUser:", "User:", "Assistant:", "\nAssistant:"]
-    inputs = _tokenizer(prompt, return_tensors="pt", truncation=True)
-    input_ids = inputs["input_ids"].to(_device)
-    attention_mask = inputs.get("attention_mask")
-    if attention_mask is not None:
-        attention_mask = attention_mask.to(_device)
-
-    gen_kwargs = dict(
-        max_new_tokens=max_new_tokens,
-        pad_token_id=_tokenizer.pad_token_id,
-        eos_token_id=_tokenizer.eos_token_id,
-        repetition_penalty=1.1,
-        no_repeat_ngram_size=3,
-        do_sample=do_sample,
-    )
-    if do_sample:
-        gen_kwargs.update(dict(temperature=temperature, top_p=top_p, top_k=top_k))
-
-    with torch.no_grad():
-        outputs = _model.generate(
-            input_ids=input_ids,
-            attention_mask=attention_mask,
-            **gen_kwargs
+        gguf_path = _resolve_path(gguf_path)
+        if not os.path.exists(gguf_path):
+            raise ValueError(f"[Candace] GGUF not found at: {gguf_path}")
+        _model = Llama(
+            model_path=gguf_path,
+            n_ctx=int(os.getenv("LLAMA_N_CTX", "8192")),
+            n_threads=os.cpu_count(),
+            verbose=False
         )
 
-    # Slice out only the newly generated token ids
-    gen_ids = outputs[0][input_ids.shape[1]:]
-    text = _tokenizer.decode(gen_ids, skip_special_tokens=True).strip()
 
-    # Simple stop-string truncation
-    for s in stop_strings:
-        idx = text.find(s)
-        if idx != -1:
-            text = text[:idx].strip()
-            break
+def load(gguf_path: str = DEFAULT_GGUF_PATH):
+    """
+    Explicit loader if you want to preload the model at app startup.
+    """
+    _ensure_loaded(gguf_path)
+    return _model, None, "cpu"
+
+
+def generate_response(
+    prompt: str,
+    gguf_path: str = DEFAULT_GGUF_PATH,
+    max_new_tokens: int = 160,
+    temperature: float = 0.2,
+    top_p: float = 0.9,
+    top_k: int = 40,
+    stop_strings: list[str] | None = None,
+    **_
+) -> str:
+    """
+    Generates text using Meta-Llama-3.1-8B-Instruct GGUF via llama.cpp.
+
+    Args:
+        prompt (str): The formatted system+user prompt.
+        max_new_tokens (int): Max new tokens to generate.
+        temperature (float): Creativity level (0.0–1.0 typical).
+        top_p (float): Nucleus sampling cutoff.
+        top_k (int): Top-k sampling cutoff.
+        stop_strings (list): Strings that signal stop (e.g. "User:", "Assistant:").
+
+    Returns:
+        str: The model's generated text.
+    """
+    _ensure_loaded(gguf_path)
+
+    stop = stop_strings or ["\nUser:", "User:", "\nAssistant:", "Assistant:"]
+    result = _model(
+        prompt,
+        max_tokens=max_new_tokens,
+        temperature=temperature,
+        top_p=top_p,
+        top_k=top_k,
+        stop=stop,
+    )
+
+    text = result["choices"][0]["text"]
+    if text:
+        text = text.strip()
 
     return text
 
+
 def free():
     """
-    Frees VRAM/Metal memory. Call on shutdown if needed.
+    Releases model memory manually if needed.
     """
-    global _model, _tokenizer
+    global _model
     _model = None
-    _tokenizer = None
-    if torch.cuda.is_available():
-        torch.cuda.empty_cache()
