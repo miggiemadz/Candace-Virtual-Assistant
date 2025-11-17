@@ -61,9 +61,13 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 """
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
+from app import crud
+import sqlite3
 
 model_id = "sshleifer/tiny-gpt2" # Only for testing, we should change the model
 model_instance = None
+tokenizer_instance = None
+
 pipeline_instance = None
 
 
@@ -85,8 +89,10 @@ def load_model(model_name=model_id, device=None):
     return model_instance
 
 def load_tokenizer(model_name=model_id):
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
-    return tokenizer
+    global tokenizer_instance
+    tokenizer_instance = AutoTokenizer.from_pretrained(model_name)
+    return tokenizer_instance
+
 
 def generate_response(tokenizer, prompt, max_length=50, sampling=True, temperature=0.7, device=None):
     if device is None:
@@ -106,6 +112,29 @@ def free_model():
     global model_instance
     del model_instance
     torch.cuda.empty_cache()
+
+# RAG?
+
+def _get_student_info_context(user_id: str):
+    try:
+        student = crud.get_student_by_id(user_id)
+        if not student:
+            return "It seems the student ID you provided does not exist. Please try again."
+        student_data = {
+            'student_id': student[0][0],
+            'student_first_name': student[0][1],
+            'student_last_name': student[0][2],
+            'student_gpa': student[0][3],
+            'student_total_credits': student[0][4],
+            'major_id': student[0][5]
+        }
+        return student_data
+    except sqlite3.Error as e:
+        print(f"Error retrieving student by ID {user_id}: {e}")
+        return "It seems the student ID you provided does not exist. Please try again."
+    except Exception as e:
+        print(f"Error retrieving student by ID {user_id}: {e}")
+        return "It seems the student ID you provided does not exist. Please try again."
 
 # Pipeline 
 

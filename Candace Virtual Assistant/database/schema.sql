@@ -13,6 +13,7 @@ CREATE TABLE STUDENT (
     student_gpa REAL check (student_gpa BETWEEN 0.0 AND 4.0),
     student_total_credits INT check (student_total_credits >= 0),
     major_id INT,
+    has_account BOOLEAN NOT NULL,
     FOREIGN KEY (major_id) REFERENCES MAJOR(major_id)
 );
 DROP TABLE IF EXISTS PROFESSOR;
@@ -77,5 +78,12 @@ CREATE TABLE AI_CHAT_LOG (
     chat_timestamp TEXT NOT NULL,
     user_message TEXT NOT NULL,
     ai_response TEXT NOT NULL,
+    FOREIGN KEY (student_id) REFERENCES STUDENT(student_id)
+);
+DROP TABLE IF EXISTS LOGIN_INFO;
+CREATE TABLE LOGIN_INFO (
+    login_id TEXT PRIMARY KEY,
+    student_id INT NOT NULL,
+    login_password TEXT NOT NULL,
     FOREIGN KEY (student_id) REFERENCES STUDENT(student_id)
 );

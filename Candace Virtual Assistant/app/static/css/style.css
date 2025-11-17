@@ -1,0 +1,278 @@
+/* ================================
+   Global Styles for Candace Assistant
+   Author: Emilio Vasquez
+   ================================ */
+
+/* ---------- Color Variables ---------- */
+:root {
+  /* Swap accent for Canvas red (#E02B20) or UCNJ blue (#00205B) */
+  --accent: #E02B20;
+  --accent-hover: #c5271c;
+  --text: #1a1a1a;
+  --bg: #ffffff;
+  --light-gray: #f7f7f7;
+  --border-gray: #dddddd;
+  --shadow: rgba(0, 0, 0, 0.08);
+  --header-bg: #ffffff;
+}
+
+/* ---------- Reset & Base ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Poppins', sans-serif;
+  color: var(--text);
+  background-color: var(--bg);
+}
+
+/* ---------- Header ---------- */
+header {
+  background: var(--header-bg);
+  box-shadow: 0 2px 6px var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-content {
+  display: flex;
+  flex-direction: column;
+  padding: 0.75rem 1rem;
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-top img {
+  height: 40px;
+  width: auto;
+}
+
+.app-title {
+  font-weight: 600;
+  color: var(--accent);
+  font-size: 1.25rem;
+  letter-spacing: 0.3px;
+}
+
+/* ---------- Navigation ---------- */
+.main-nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 0.75rem 0;
+}
+
+.main-nav a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.main-nav a:hover {
+  color: var(--accent);
+}
+
+/* ---------- Auth Dropdown ---------- */
+.user-auth-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-dropdown {
+  position: relative;
+}
+
+.user-dropdown .dropbtn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.user-dropdown .dropbtn:hover {
+  background: var(--accent-hover);
+}
+
+.user-dropdown .dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #fff;
+  box-shadow: 0 4px 8px var(--shadow);
+  border-radius: 6px;
+  z-index: 10;
+}
+
+.user-dropdown .dropdown-content a {
+  display: block;
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.user-dropdown .dropdown-content a:hover {
+  background-color: var(--light-gray);
+  color: var(--accent);
+}
+
+.user-dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* ---------- Flash messages ---------- */
+.flash-container {
+  padding: 1rem;
+  text-align: center;
+}
+
+.flash {
+  margin: 0.5rem auto;
+  padding: 0.75rem 1rem;
+  border-radius: 5px;
+  width: 90%;
+  max-width: 700px;
+  color: #fff;
+}
+
+.flash-success { background: #4CAF50; }
+.flash-error { background: #E02B20; }
+.flash-warning { background: #FFC107; color: #000; }
+
+/* ---------- Main Layout ---------- */
+.main-content {
+  padding: 2rem;
+  min-height: calc(100vh - 150px);
+}
+
+/* ---------- Auth Forms (Login & Signup) ---------- */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  text-align: center;
+}
+
+.auth-box {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 2rem 3rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.auth-box h1 {
+  color: var(--accent);
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.auth-box label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+.auth-box input[type="text"],
+.auth-box input[type="password"],
+.auth-box input[type="number"] {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.auth-box button {
+  width: 100%;
+  background-color: var(--accent);
+  color: white;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.auth-box button:hover {
+  background-color: var(--accent-hover);
+}
+
+.error-message {
+  color: red;
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.auth-link {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+}
+
+.auth-link a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.auth-link a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Footer ---------- */
+footer {
+  background-color: var(--light-gray);
+  color: var(--text);
+  padding: 1rem 0;
+  text-align: center;
+  font-size: 0.9rem;
+  box-shadow: 0 -1px 4px var(--shadow);
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.footer-inner span {
+  display: block;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .main-nav {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .auth-box {
+    margin: 1rem;
+    padding: 2rem;
+  }
+
+  .app-title {
+    font-size: 1rem;
+  }
+}

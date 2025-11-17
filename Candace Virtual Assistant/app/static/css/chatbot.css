@@ -1,0 +1,309 @@
+/* Keep Google Font in base.html; avoid re-import here */
+
+/* ========================
+   THEME VARIABLES
+   Swap --accent to Canvas red (#E02B20) or UCNJ blue (#00205B)
+======================== */
+:root {
+  --bg: #ffffff;
+  --text: #111827;
+  --muted: #f2f2f2;
+  --muted-2: #dddddd;
+  --shadow-1: rgba(0,0,0,0.1);
+  --shadow-2: rgba(0,0,0,0.5);
+
+  /* Accent currently set to your navy (#15293F) */
+  --accent: #15293F;        /* Canvas red: #E02B20, UCNJ blue: #00205B */
+  --accent-600: #0f2134;    /* Darker shade for hover */
+  --link: #4a8eda;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Inherit Poppins from base.html */
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* ========================
+   TOGGLER
+======================== */
+.chatbot-toggler {
+  position: fixed;
+  bottom: 50px;
+  right: 35px;
+  outline: none;
+  border: none;
+  height: 50px;
+  width: 50px;
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  transition: transform 0.2s ease, background 0.2s ease;
+  z-index: 9999; /* make sure toggler stays above */
+}
+
+.chatbot-toggler:focus-visible {
+  outline: 2px solid #000;
+  outline-offset: 3px;
+}
+
+body.show-chatbot .chatbot-toggler {
+  transform: rotate(90deg);
+}
+
+.chatbot-toggler span {
+  color: #fff;
+  position: absolute;
+}
+
+.chatbot-toggler span:last-child,
+body.show-chatbot .chatbot-toggler span:first-child  {
+  opacity: 0;
+}
+
+body.show-chatbot .chatbot-toggler span:last-child {
+  opacity: 1;
+}
+
+/* ========================
+   CHATBOT PANEL
+======================== */
+.chatbot {
+  position: fixed;
+  right: 35px;
+  bottom: 110px;
+  width: 420px;
+  background: #fff;
+  border-radius: 15px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.5);
+  transform-origin: bottom right;
+  box-shadow: 0 0 128px 0 var(--shadow-1),
+              0 32px 64px -48px var(--shadow-2);
+  transition: transform 0.15s ease, opacity 0.15s ease;
+  z-index: 9998; /* on top of app UI, below toggler */
+}
+
+body.show-chatbot .chatbot {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+/* Header */
+.chatbot header {
+  position: relative;
+  padding: 16px 48px 16px 16px; /* room for close icon */
+  text-align: left;
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 2px 10px var(--shadow-1);
+}
+
+.chatbot header h2 {
+  font-size: 1.15rem;
+  line-height: 1.2;
+}
+
+/* Close button in header */
+.chatbot header .close-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: none; /* shown on mobile in media query */
+  cursor: pointer;
+}
+
+.chatbot header .close-btn:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* ========================
+   CHAT CONTENT
+======================== */
+.chatbot .chatbox {
+  overflow-y: auto;
+  /* Adaptive height: viewport height minus header + input area */
+  max-height: calc(80vh - 140px);
+  min-height: 240px;
+  padding: 30px 20px 100px;
+}
+
+.chatbot :where(.chatbox, textarea)::-webkit-scrollbar {
+  width: 6px;
+}
+.chatbot :where(.chatbox, textarea)::-webkit-scrollbar-track {
+  background: #fff;
+  border-radius: 25px;
+}
+.chatbot :where(.chatbox, textarea)::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 25px;
+}
+
+.chatbox .chat {
+  display: flex;
+  list-style: none;
+}
+
+.chatbox .outgoing {
+  margin: 16px 0;
+  justify-content: flex-end;
+}
+
+.chatbox .incoming {
+  margin: 16px 0;
+  justify-content: flex-start;
+}
+
+.chatbox .incoming span {
+  width: 32px;
+  height: 32px;
+  color: #fff;
+  cursor: default;
+  text-align: center;
+  line-height: 32px;
+  align-self: flex-end;
+  background: var(--accent);
+  border-radius: 4px;
+  margin: 0 10px 7px 0;
+}
+
+.chatbox .chat p {
+  white-space: pre-wrap;
+  padding: 12px 16px;
+  border-radius: 10px 10px 0 10px;
+  max-width: 75%;
+  color: #fff;
+  font-size: 0.95rem;
+  background: var(--accent);
+}
+
+.chatbox .incoming p {
+  border-radius: 10px 10px 10px 0;
+  color: #000;
+  background: var(--muted);
+}
+
+.chatbox .chat p.error {
+  color: #721c24;
+  background: #f8d7da;
+}
+
+/* First message spacing (optional) */
+.chatbox .chat:first-child {
+  margin-top: 12px;
+}
+
+/* ========================
+   INPUT BAR
+======================== */
+.chatbot .chat-input {
+  display: flex;
+  gap: 8px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: #fff;
+  padding: 8px 16px;
+  border-top: 1px solid #ddd;
+}
+
+.chat-input textarea {
+  height: 55px;
+  width: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+  max-height: 180px;
+  padding: 15px 0 15px 0;
+  font-size: 0.95rem;
+}
+
+.chat-input textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.chat-input span {
+  align-self: flex-end;
+  color: var(--link);
+  cursor: pointer;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  visibility: hidden; /* shown when textarea has content */
+  font-size: 1.35rem;
+}
+
+.chat-input textarea:valid ~ span {
+  visibility: visible;
+}
+
+/* ========================
+   MOBILE
+======================== */
+@media (max-width: 490px) {
+  .chatbot-toggler {
+    right: 20px;
+    bottom: 20px;
+  }
+
+  .chatbot {
+    right: 0;
+    bottom: 0;
+    height: auto;
+    max-height: 92vh;
+    border-radius: 0;
+    width: 100%;
+    box-shadow: 0 -2px 24px var(--shadow-1);
+  }
+
+  .chatbot .chatbox {
+    height: auto;
+    max-height: calc(100vh - 160px); /* header + input area */
+    padding: 25px 15px 75px;
+  }
+
+  .chatbot .chat-input {
+    padding: 8px 15px;
+    position: fixed;
+    bottom: 60px; /* FIXED: added px */
+    left: 0;
+    width: 100%;
+    box-shadow: 0 -2px 5px var(--shadow-1);
+  }
+
+  .chat-input textarea {
+    height: 60px;
+    max-height: 180px;
+  }
+
+  .chatbot header .close-btn {
+    display: block; /* show close button on mobile */
+  }
+}
+
+/* ========================
+   REDUCED MOTION
+======================== */
+@media (prefers-reduced-motion: reduce) {
+  .chatbot,
+  .chatbot-toggler {
+    transition: none !important;
+  }
+}

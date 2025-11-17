@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block head_extra %}
+<title>Login: Candace Assistant</title>
+{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-box">
+        <h1>Student Login</h1>
+
+        <form method="POST" action="{{ url_for('main.UserLoginPage') }}">
+            <label>Email:</label>
+            <input type="text" name="username" placeholder="Enter your college email" required>
+
+            <label>Password:</label>
+            <input type="password" name="password" placeholder="Enter your password" required>
+
+            <button type="submit">Sign In</button>
+
+            {% if error %}
+            <p class="error-message">{{ error }}</p>
+            {% endif %}
+
+            <div class="signup-link">
+                <p>Don't have an account?
+                    <a href="{{ url_for('main.StudentSignUpPage') }}">Create one here</a>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
