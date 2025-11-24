@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% set active_page = 'courses' %}
+{% set active_course_page = 'files' %}
+
+{% block title %}{{ course.course_name }} – Files{% endblock %}
+{% block header_title %}{{ course.course_name }}{% endblock %}
+{% block header_subtitle %}Files{% endblock %}
+
+{% block content %}
+<div class="section-header">
+    <div>
+        <div class="section-title">Files</div>
+        <div class="section-subtitle">
+            Documents and resources uploaded for this course.
+        </div>
+    </div>
+</div>
+
+<div class="course-layout">
+    {% include "_course_nav.html" %}
+    <div class="course-main">
+        {% if files %}
+        <table class="table files-table">
+            <thead>
+                <tr>
+                    <th>File Name</th>
+                    <th>Folder</th>
+                    <th>Size</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for f in files %}
+                <tr>
+                    <td>{{ f.name }}</td>
+                    <td>{{ f.folder }}</td>
+                    <td>{{ f.size }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <p>No files have been uploaded yet.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

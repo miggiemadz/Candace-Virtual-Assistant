@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% set active_page = 'courses' %}
+{% set active_course_page = 'grades' %}
+
+{% block title %}{{ course.course_name }} – Grades{% endblock %}
+{% block header_title %}{{ course.course_name }}{% endblock %}
+{% block header_subtitle %}Grades{% endblock %}
+
+{% block content %}
+<div class="section-header">
+    <div>
+        <div class="section-title">Grades</div>
+        <div class="section-subtitle">
+            View your performance in this course.
+        </div>
+    </div>
+</div>
+
+<div class="course-layout">
+    {% include "_course_nav.html" %}
+    <div class="course-main">
+        <div class="grade-summary">
+            <div><strong>Current Grade:</strong> {{ current_grade }}</div>
+            <div><strong>Total Points:</strong> {{ total_points }}</div>
+        </div>
+
+        {% if grade_items %}
+        <table class="table grades-table">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Category</th>
+                    <th>Score</th>
+                    <th>Points</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for g in grade_items %}
+                <tr>
+                    <td>{{ g.name }}</td>
+                    <td>{{ g.type }}</td>
+                    <td>
+                        {% if g.score is not none %}
+                            {{ g.score }}
+                        {% else %}
+                            —
+                        {% endif %}
+                    </td>
+                    <td>{{ g.points }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <p>No grade data is available yet.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

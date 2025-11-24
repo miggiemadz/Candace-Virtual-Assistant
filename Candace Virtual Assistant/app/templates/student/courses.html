@@ -6,23 +6,60 @@
 {% block header_subtitle %}Current and previously completed courses{% endblock %}
 
 {% block content %}
-<h2>Current Courses</h2>
-<ul>
-    {% for c in current %}
-        <li>{{ c.course_name }} ({{ c.course_credits }} credits, {{ c.class_type }})</li>
-    {% else %}
-        <li>No current courses.</li>
-    {% endfor %}
-</ul>
 
-<hr style="margin:20px 0;">
+<div class="section-header">
+    <div>
+        <div class="section-title">Current Courses</div>
+        <div class="section-subtitle">
+            These are the courses you’re enrolled in right now.
+        </div>
+    </div>
+</div>
 
-<h2>Completed Courses</h2>
-<ul>
-    {% for c in completed %}
-        <li>{{ c.course_name }} ({{ c.course_credits }} credits)</li>
+<div class="card-grid">
+    {% if current %}
+        {% for c in current %}
+        <a class="course-card"
+           href="{{ url_for('main.course_shell', class_id=c.class_id) }}">
+            <div class="course-card-banner"></div>
+            <div class="course-card-body">
+                <div class="course-card-title">{{ c.course_name }}</div>
+                <div class="course-card-subtitle">{{ c.class_type }}</div>
+                <div class="course-card-term">{{ c.course_credits }} credits</div>
+            </div>
+        </a>
+        {% endfor %}
     {% else %}
-        <li>No completed courses recorded.</li>
-    {% endfor %}
-</ul>
+        <p>No current courses.</p>
+    {% endif %}
+</div>
+
+<hr style="margin: 24px 0;">
+
+<div class="section-header">
+    <div>
+        <div class="section-title">Completed Courses</div>
+        <div class="section-subtitle">
+            Courses you’ve already finished.
+        </div>
+    </div>
+</div>
+
+<div class="card-grid">
+    {% if completed %}
+        {% for c in completed %}
+        <a class="course-card"
+           href="{{ url_for('main.course_shell', class_id=c.class_id) }}">
+            <div class="course-card-banner"></div>
+            <div class="course-card-body">
+                <div class="course-card-title">{{ c.course_name }}</div>
+                <div class="course-card-term">{{ c.course_credits }} credits</div>
+            </div>
+        </a>
+        {% endfor %}
+    {% else %}
+        <p>No completed courses recorded.</p>
+    {% endif %}
+</div>
+
 {% endblock %}

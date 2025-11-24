@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% set active_page = 'courses' %}
+
+{% block title %}{{ course.course_name }} – Modules{% endblock %}
+{% block header_title %}{{ course.course_name }}{% endblock %}
+{% block header_subtitle %}
+    {{ course.class_type }} · {{ course.course_credits }} credits
+{% endblock %}
+
+{% block content %}
+
+<!-- PAGE HEADER -->
+<div class="section-header">
+    <div>
+        <div class="section-title">Modules</div>
+        <div class="section-subtitle">
+            Course content, weekly lessons, assignments, and materials.
+        </div>
+    </div>
+</div>
+
+<!-- MAIN MODULES CONTAINER -->
+<div class="modules-container">
+
+    <!-- MODULE BLOCK (EMPTY SHELL) -->
+    <div class="module-block">
+        <div class="module-header">
+            <span class="module-chevron">▸</span>
+            <span class="module-header-title">Instructors Start Here (Hidden)</span>
+            <span class="module-header-icons">🙈</span>
+        </div>
+
+        <div class="module-items">
+            <div class="module-item locked">
+                <span class="module-item-icon">📌</span>
+                Watch This Video: Linking Cengage and Canvas
+            </div>
+
+            <div class="module-item locked">
+                <span class="module-item-icon">📌</span>
+                REQUIRED: Set Up / Access Course Materials
+            </div>
+
+            <div class="module-item locked">
+                <span class="module-item-icon">📌</span>
+                Deep Link Activities & Connect the Gradebook
+            </div>
+        </div>
+    </div>
+
+    <!-- STUDENTS START HERE -->
+    <div class="module-block">
+        <div class="module-header">
+            <span class="module-chevron">▸</span>
+            <span class="module-header-title">Students Start Here!!</span>
+        </div>
+
+        <div class="module-items">
+
+            <div class="module-item">
+                <span class="module-item-icon">▶</span>
+                First Day of Class – Getting Started Video
+            </div>
+
+            <div class="module-item">
+                <span class="module-item-icon">💻</span>
+                System Requirements Check
+            </div>
+
+            <div class="module-item">
+                <span class="module-item-icon">📞</span>
+                VIP Tech Support Contact Information
+            </div>
+
+        </div>
+    </div>
+
+    <!-- WEEK 1 (EMPTY SHELL) -->
+    <div class="module-block">
+        <div class="module-header">
+            <span class="module-chevron">▸</span>
+            <span class="module-header-title">Week 1: Getting Started</span>
+        </div>
+
+        <div class="module-items">
+
+            <div class="module-item">
+                <span class="module-item-icon">📘</span>
+                Read: Chapter 1 Overview
+            </div>
+
+            <div class="module-item">
+                <span class="module-item-icon">🎥</span>
+                Watch: Intro to Course Tools
+            </div>
+
+            <div class="module-item assignment">
+                <span class="module-item-icon">📝</span>
+                Assignment: Chapter 1 Homework
+            </div>
+
+        </div>
+    </div>
+
+    <!-- === FUTURE WEEKS EMPTY SHELL === -->
+    <div class="module-block empty-block">
+        <div class="module-header">
+            <span class="module-chevron">▸</span>
+            <span class="module-header-title">Week 2</span>
+        </div>
+        <div class="module-items">
+            <div class="module-item empty">No items added yet.</div>
+        </div>
+    </div>
+
+    <div class="module-block empty-block">
+        <div class="module-header">
+            <span class="module-chevron">▸</span>
+            <span class="module-header-title">Week 3</span>
+        </div>
+        <div class="module-items">
+            <div class="module-item empty">No items added yet.</div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block right_sidebar %}
+
+<section>
+    <h3>Course Status</h3>
+    <div class="todo-item">
+        <div class="todo-title">Active</div>
+        <div class="todo-meta">
+            You're enrolled in this course for {{ course.course_credits }} credits.
+        </div>
+    </div>
+</section>
+
+<section>
+    <h3>Upcoming</h3>
+    <div class="upcoming-item">
+        <div class="todo-meta">No upcoming assignments yet.</div>
+    </div>
+</section>
+
+{% endblock %}

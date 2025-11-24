@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% set active_page = 'courses' %}
+{% set active_course_page = 'modules' %}
+
+{% block title %}{{ course.course_name }} – Modules{% endblock %}
+{% block header_title %}{{ course.course_name }}{% endblock %}
+{% block header_subtitle %}
+    {{ course.class_type }} · {{ course.course_credits }} credits
+{% endblock %}
+
+{% block content %}
+<div class="section-header">
+    <div>
+        <div class="section-title">Modules</div>
+        <div class="section-subtitle">
+            Course content, weekly lessons, assignments, and materials.
+        </div>
+    </div>
+</div>
+
+<div class="course-layout">
+    {# _course_nav.html should be at templates/_course_nav.html #}
+    {% include "_course_nav.html" %}
+
+    <div class="course-main">
+        <div class="modules-container">
+            {% for module in modules %}
+            <div class="module-block{% if not module['items'] %} empty-block{% endif %}">
+                <div class="module-header">
+                    <span class="module-chevron">▸</span>
+                    <span class="module-header-title">
+                        {{ module.title }}
+                        {% if module.hidden %}
+                            <span class="module-hidden-label">(Hidden)</span>
+                        {% endif %}
+                    </span>
+                </div>
+                <div class="module-items">
+                    {% if module['items'] %}
+                        {% for item in module['items'] %}
+                        <div class="module-item">
+                            <span class="module-item-icon">•</span>
+                            {{ item }}
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="module-item empty">No items added yet.</div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block right_sidebar %}
+<section>
+    <h3>Course Status</h3>
+    <div class="todo-item">
+        <div class="todo-title">Active</div>
+        <div class="todo-meta">
+            You're enrolled in this course for {{ course.course_credits }} credits.
+        </div>
+    </div>
+</section>
+
+<section>
+    <h3>Upcoming</h3>
+    <div class="upcoming-item">
+        <div class="todo-meta">No upcoming assignments yet.</div>
+    </div>
+</section>
+{% endblock %}

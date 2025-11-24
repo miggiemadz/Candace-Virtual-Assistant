@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% set active_page = 'courses' %}
+{% set active_course_page = 'syllabus' %}
+
+{% block title %}{{ course.course_name }} – Syllabus{% endblock %}
+{% block header_title %}{{ course.course_name }}{% endblock %}
+{% block header_subtitle %}Syllabus{% endblock %}
+
+{% block content %}
+<div class="section-header">
+    <div>
+        <div class="section-title">Syllabus</div>
+        <div class="section-subtitle">
+            Course description, policies, and grading.
+        </div>
+    </div>
+</div>
+
+<div class="course-layout">
+    {% include "_course_nav.html" %}
+    <div class="course-main syllabus-content">
+
+        <h3>Course Description</h3>
+        <p>{{ course_description }}</p>
+
+        <h3>Learning Outcomes</h3>
+        <ul>
+            {% for lo in learning_outcomes %}
+            <li>{{ lo }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Grading Policy</h3>
+        <ul>
+            {% for g in grading_policy %}
+            <li>{{ g }}</li>
+            {% endfor %}
+        </ul>
+
+    </div>
+</div>
+{% endblock %}

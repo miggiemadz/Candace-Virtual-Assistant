@@ -139,29 +139,26 @@ def logout():
 @bp.route("/dashboard")
 @login_required
 def dashboard():
-    """
-    Simple starter dashboard.
-    You can customize this later: show schedule, courses, etc.
-    """
     user = get_current_user()
-    # Example: fetch student's schedule if they have a student_id
-    schedule_rows = []
-    if user and user.get("student_id"):
-        schedule_rows = query_db(
-            """
-            SELECT c.course_name, c.course_credits, cl.class_type
+    schedule = []
+
+    if user.get("student_id"):
+        schedule = query_db("""
+            SELECT
+                cl.class_id AS class_id,
+                c.course_name,
+                c.course_credits,
+                cl.class_type
             FROM schedule s
             JOIN classes cl ON s.class_id = cl.class_id
             JOIN courses c ON cl.course_id = c.course_id
             WHERE s.student_id = %s
-            """,
-            (user["student_id"],),
-        )
+        """, (user["student_id"],))
 
     return render_template(
         "dashboard.html",
         user=user,
-        schedule=schedule_rows,
+        schedule=schedule,
     )
 
 @bp.post("/chatbot")
@@ -661,33 +658,499 @@ def account():
 def courses():
     user = get_current_user()
 
-    # Enrolled *now*
     current_courses = []
     if user.get("student_id"):
         current_courses = query_db("""
-            SELECT c.course_name, c.course_credits, cl.class_type
+            SELECT
+                cl.class_id AS class_id,
+                c.course_name,
+                c.course_credits,
+                cl.class_type
             FROM schedule s
             JOIN classes cl ON s.class_id = cl.class_id
             JOIN courses c ON cl.course_id = c.course_id
             WHERE s.student_id = %s
         """, (user["student_id"],))
 
-    # Completed courses (if any)
-    completed_courses = query_db("""
-        SELECT DISTINCT
-            c.course_name, c.course_credits
-        FROM work_load w
-        JOIN assignments a ON w.assignment_id = a.assignment_id
-        JOIN classes cl ON a.class_id = cl.class_id
-        JOIN courses c ON cl.course_id = c.course_id
-        WHERE w.student_id = %s
-    """, (user["student_id"],))
+    completed_courses = []
+    if user.get("student_id"):
+        completed_courses = query_db("""
+            SELECT DISTINCT
+                cl.class_id AS class_id,
+                c.course_name,
+                c.course_credits
+            FROM work_load w
+            JOIN assignments a ON w.assignment_id = a.assignment_id
+            JOIN classes cl ON a.class_id = cl.class_id
+            JOIN courses c ON cl.course_id = c.course_id
+            WHERE w.student_id = %s
+        """, (user["student_id"],))
 
     return render_template(
         "student/courses.html",
         user=user,
         current=current_courses,
-        completed=completed_courses
+        completed=completed_courses,
+    )
+
+@bp.route("/course/<int:class_id>")
+@login_required
+def course_shell(class_id):
+    # Home / Modules tab
+    user, course = _get_course_context_or_redirect(class_id)
+    if not course:
+        return redirect(url_for("main.courses"))
+
+    # 1) Fetch modules for this class
+    module_rows = query_db("""
+        SELECT id, title, is_hidden
+        FROM course_modules
+        WHERE class_id = %s
+        ORDER BY position
+    """, (class_id,))
+
+    # 2) Fetch items for those modules
+    module_ids = [m["id"] for m in module_rows]
+    items_by_module = {mid: [] for mid in module_ids}
+
+    if module_ids:
+        placeholders = ",".join(["%s"] * len(module_ids))
+        item_rows = query_db(f"""
+            SELECT module_id, title
+            FROM course_module_items
+            WHERE module_id IN ({placeholders})
+            ORDER BY position
+        """, module_ids)
+
+        for row in item_rows:
+            items_by_module[row["module_id"]].append(row["title"])
+
+    # 3) Transform into structure expected by template
+    modules = [
+        {
+            "title": m["title"],
+            "hidden": bool(m["is_hidden"]),
+            "items": items_by_module.get(m["id"], []),
+        }
+        for m in module_rows
+    ]
+
+    return render_template(
+        "student/course_modules.html",
+        user=user,
+        course=course,
+        modules=modules,
+    )
+
+@bp.route("/course/<int:class_id>/announcements")
+@login_required
+def course_announcements(class_id):
+    user, course = _get_course_context_or_redirect(class_id)
+    if not course:
+        return redirect(url_for("main.courses"))
+
+    announcements = query_db("""
+        SELECT
+            ca.title,
+            ca.body,
+            ca.posted_at,
+            CONCAT(p.professor_first_name, ' ', p.professor_last_name) AS author
+        FROM course_announcements ca
+        LEFT JOIN professors p
+            ON ca.author_professor_id = p.professor_id
+        WHERE ca.class_id = %s
+        ORDER BY ca.posted_at DESC
+    """, (class_id,))
+
+    return render_template(
+        "student/course_announcements.html",
+        user=user,
+        course=course,
+        announcements=announcements,
+    )
+
+@bp.route("/course/<int:class_id>/assignments")
+@login_required
+def course_assignments(class_id):
+    user, course = _get_course_context_or_redirect(class_id)
+    if not course:
+        return redirect(url_for("main.courses"))
+
+    student_id = user.get("student_id") if user["role"] == "student" else None
+
+    if student_id:
+        assignments = query_db("""
+            SELECT
+                a.assignment_id,
+                a.assignment_name AS name,
+                a.assignment_type AS type,
+                a.due_at,
+                a.max_points,
+                ag.status,
+                ag.score
+            FROM assignments a
+            JOIN work_load w
+                ON w.assignment_id = a.assignment_id
+               AND w.student_id = %s
+            LEFT JOIN assignment_grades ag
+                ON ag.assignment_id = a.assignment_id
+               AND ag.student_id = %s
+            WHERE a.class_id = %s
+            ORDER BY a.due_at IS NULL, a.due_at
+        """, (student_id, student_id, class_id))
+    else:
+        # Instructor/admin view: just show assignments
+        assignments = query_db("""
+            SELECT
+                a.assignment_id,
+                a.assignment_name AS name,
+                a.assignment_type AS type,
+                a.due_at,
+                a.max_points,
+                NULL AS status,
+                NULL AS score
+            FROM assignments a
+            WHERE a.class_id = %s
+            ORDER BY a.due_at IS NULL, a.due_at
+        """, (class_id,))
+
+    # Format for template
+    def format_due(dt):
+        return dt.strftime("%b %-d, %Y · %I:%M %p") if dt else "No due date"
+
+    formatted = []
+    for a in assignments:
+        due_str = format_due(a["due_at"]) if a["due_at"] else "No due date"
+        status = a["status"] or ("Not submitted" if student_id else "")
+        score_display = None
+        if a["score"] is not None:
+            score_display = f"{a['score']:.0f} / {a['max_points']}"
+        formatted.append(
+            {
+                "name": a["name"],
+                "type": a["type"],
+                "due": due_str,
+                "points": a["max_points"],
+                "status": status,
+                "score": score_display,
+            }
+        )
+
+    return render_template(
+        "student/course_assignments.html",
+        user=user,
+        course=course,
+        assignments=formatted,
+    )
+
+@bp.route("/course/<int:class_id>/quizzes")
+@login_required
+def course_quizzes(class_id):
+    user, course = _get_course_context_or_redirect(class_id)
+    if not course:
+        return redirect(url_for("main.courses"))
+
+    student_id = user.get("student_id") if user["role"] == "student" else None
+
+    if student_id:
+        quizzes = query_db("""
+            SELECT
+                a.assignment_name AS name,
+                a.due_at,
+                a.max_points,
+                ag.status,
+                ag.score
+            FROM assignments a
+            JOIN work_load w
+                ON w.assignment_id = a.assignment_id
+               AND w.student_id = %s
+            LEFT JOIN assignment_grades ag
+                ON ag.assignment_id = a.assignment_id
+               AND ag.student_id = %s
+            WHERE a.class_id = %s
+              AND a.assignment_type = 'Quiz'
+            ORDER BY a.due_at IS NULL, a.due_at
+        """, (student_id, student_id, class_id))
+    else:
+        quizzes = query_db("""
+            SELECT
+                a.assignment_name AS name,
+                a.due_at,
+                a.max_points,
+                NULL AS status,
+                NULL AS score
+            FROM assignments a
+            WHERE a.class_id = %s
+              AND a.assignment_type = 'Quiz'
+            ORDER BY a.due_at IS NULL, a.due_at
+        """, (class_id,))
+
+    def format_due(dt):
+        return dt.strftime("%b %-d, %Y · %I:%M %p") if dt else "No due date"
+
+    formatted = []
+    for q in quizzes:
+        formatted.append(
+            {
+                "name": q["name"],
+                "due": format_due(q["due_at"]),
+                "points": q["max_points"],
+                "status": q["status"] or "Not taken",
+            }
+        )
+
+    return render_template(
+        "student/course_quizzes.html",
+        user=user,
+        course=course,
+        quizzes=formatted,
+    )
+
+@bp.route("/course/<int:class_id>/cengage")
+@login_required
+def course_cengage(class_id):
+    user, course = _get_course_context_or_redirect(class_id)
+    if not course:
+        return redirect(url_for("main.courses"))
+
+    cengage_links = query_db("""
+        SELECT name, status
+        FROM course_cengage_links
+        WHERE class_id = %s
+        ORDER BY id
+    """, (class_id,))
+
+    return render_template(
+        "student/course_cengage.html",
+        user=user,
+        course=course,
+        cengage_links=cengage_links,
+    )
+
+@bp.route("/course/<int:class_id>/grades")
+@login_required
+def course_grades(class_id):
+    user, course = _get_course_context_or_redirect(class_id)
+    if not course:
+        return redirect(url_for("main.courses"))
+
+    student_id = user.get("student_id")
+    if user["role"] != "student" or not student_id:
+        flash("Grades are only available for student accounts.", "error")
+        return redirect(url_for("main.course_assignments", class_id=class_id))
+
+    rows = query_db("""
+        SELECT
+            a.assignment_name AS name,
+            a.assignment_type AS type,
+            a.max_points,
+            ag.score
+        FROM assignments a
+        JOIN work_load w
+            ON w.assignment_id = a.assignment_id
+           AND w.student_id = %s
+        LEFT JOIN assignment_grades ag
+            ON ag.assignment_id = a.assignment_id
+           AND ag.student_id = %s
+        WHERE a.class_id = %s
+        ORDER BY a.due_at IS NULL, a.due_at
+    """, (student_id, student_id, class_id))
+
+    grade_items = []
+    earned = 0.0
+    possible = 0.0
+
+    for r in rows:
+        pts = r["max_points"] or 0
+        score = r["score"]
+        grade_items.append(
+            {
+                "name": r["name"],
+                "type": r["type"],
+                "score": score,
+                "points": pts,
+            }
+        )
+        possible += pts
+        if score is not None:
+            earned += score
+
+    if possible > 0:
+        pct = earned / possible * 100
+        current_grade = f"{pct:.1f}%"
+        total_points = f"{earned:.0f} / {possible:.0f}"
+    else:
+        current_grade = "—"
+        total_points = "—"
+
+    return render_template(
+        "student/course_grades.html",
+        user=user,
+        course=course,
+        grade_items=grade_items,
+        current_grade=current_grade,
+        total_points=total_points,
+    )
+
+@bp.route("/course/<int:class_id>/people")
+@login_required
+def course_people(class_id):
+    user, course = _get_course_context_or_redirect(class_id)
+    if not course:
+        return redirect(url_for("main.courses"))
+
+    # Fetch instructor
+    instructor = query_db("""
+        SELECT p.professor_first_name AS first, p.professor_last_name AS last, 
+               u.email
+        FROM classes c
+        JOIN professors p ON c.professor_id = p.professor_id
+        LEFT JOIN users u ON u.professor_id = p.professor_id
+        WHERE c.class_id = %s
+    """, (class_id,), one=True)
+
+    # Fetch roster
+    students = query_db("""
+        SELECT s.student_first_name AS first, s.student_last_name AS last,
+               u.email
+        FROM schedule sc
+        JOIN students s ON sc.student_id = s.student_id
+        LEFT JOIN users u ON u.student_id = s.student_id
+        WHERE sc.class_id = %s
+    """, (class_id,))
+    
+    return render_template(
+        "student/course_people.html",
+        user=user,
+        course=course,
+        instructor=instructor,
+        students=students,
+    )
+
+@bp.route("/course/<int:class_id>/files")
+@login_required
+def course_files(class_id):
+    user, course = _get_course_context_or_redirect(class_id)
+    if not course:
+        return redirect(url_for("main.courses"))
+
+    files = query_db("""
+        SELECT file_name AS name,
+               folder,
+               CONCAT(file_size_kb, ' KB') AS size
+        FROM course_files
+        WHERE class_id = %s
+        ORDER BY folder, file_name
+    """, (class_id,))
+
+    return render_template(
+        "student/course_files.html",
+        user=user,
+        course=course,
+        files=files,
+    )
+
+@bp.route("/course/<int:class_id>/pages")
+@login_required
+def course_pages(class_id):
+    user, course = _get_course_context_or_redirect(class_id)
+    if not course:
+        return redirect(url_for("main.courses"))
+
+    pages = query_db("""
+        SELECT title, published
+        FROM course_pages
+        WHERE class_id = %s
+        ORDER BY title
+    """, (class_id,))
+
+    return render_template(
+        "student/course_pages.html",
+        user=user,
+        course=course,
+        pages=pages,
+    )
+
+@bp.route("/course/<int:class_id>/syllabus")
+@login_required
+def course_syllabus(class_id):
+    user, course = _get_course_context_or_redirect(class_id)
+    if not course:
+        return redirect(url_for("main.courses"))
+
+    row = query_db("""
+        SELECT description, learning_outcomes, grading_policy
+        FROM course_syllabus
+        WHERE class_id = %s
+    """, (class_id,), one=True)
+
+    if row:
+        course_description = row["description"]
+        learning_outcomes = [line.strip() for line in row["learning_outcomes"].split("\n") if line.strip()]
+        grading_policy = [line.strip() for line in row["grading_policy"].split("\n") if line.strip()]
+    else:
+        course_description = "Syllabus for this course has not been added yet."
+        learning_outcomes = []
+        grading_policy = []
+
+    return render_template(
+        "student/course_syllabus.html",
+        user=user,
+        course=course,
+        course_description=course_description,
+        learning_outcomes=learning_outcomes,
+        grading_policy=grading_policy,
+    )
+
+@bp.route("/course/<int:class_id>/analytics")
+@login_required
+def course_analytics(class_id):
+    user, course = _get_course_context_or_redirect(class_id)
+    if not course:
+        return redirect(url_for("main.courses"))
+
+    # Average grade across all students with scores
+    avg_row = query_db("""
+        SELECT AVG(ag.score / a.max_points) * 100 AS avg_pct
+        FROM assignment_grades ag
+        JOIN assignments a ON ag.assignment_id = a.assignment_id
+        WHERE a.class_id = %s
+          AND ag.score IS NOT NULL
+    """, (class_id,), one=True)
+
+    average_grade = f"{avg_row['avg_pct']:.1f}%" if avg_row and avg_row["avg_pct"] is not None else "—"
+
+    # Total/completed assignments for current student (if student)
+    completed = total = None
+    if user["role"] == "student" and user.get("student_id"):
+        row = query_db("""
+            SELECT
+                COUNT(*) AS total,
+                SUM(CASE WHEN ag.status IN ('submitted','graded','late') THEN 1 ELSE 0 END) AS completed
+            FROM assignments a
+            JOIN work_load w
+                ON w.assignment_id = a.assignment_id
+               AND w.student_id = %s
+            LEFT JOIN assignment_grades ag
+                ON ag.assignment_id = a.assignment_id
+               AND ag.student_id = %s
+            WHERE a.class_id = %s
+        """, (user["student_id"], user["student_id"], class_id), one=True)
+        total = row["total"]
+        completed = row["completed"]
+
+    analytics = {
+        "average_grade": average_grade,
+        "completed_assignments": completed,
+        "total_assignments": total,
+        # You can later add more stats (on-time rate, last_login, etc.)
+    }
+
+    return render_template(
+        "student/course_analytics.html",
+        user=user,
+        course=course,
+        analytics=analytics,
     )
 
 @bp.route("/calendar")
@@ -716,3 +1179,37 @@ def history():
         """, (user["student_id"],))
 
     return render_template("student/history.html", logs=logs, user=user)
+
+def _get_course_context_or_redirect(class_id):
+    """Fetch course + user; ensure student is enrolled."""
+    user = get_current_user()
+
+    course_row = query_db("""
+        SELECT
+            cl.class_id,
+            cl.class_type,
+            c.course_id,
+            c.course_name,
+            c.course_credits
+        FROM classes cl
+        JOIN courses c ON cl.course_id = c.course_id
+        WHERE cl.class_id = %s
+    """, (class_id,), one=True)
+
+    if not course_row:
+        flash("Course not found.", "error")
+        return None, None
+
+    # Optional safety: student must be enrolled
+    if user["role"] == "student" and user.get("student_id"):
+        enrolled = query_db("""
+            SELECT 1
+            FROM schedule
+            WHERE student_id = %s AND class_id = %s
+        """, (user["student_id"], class_id), one=True)
+
+        if not enrolled:
+            flash("You are not enrolled in this course.", "error")
+            return None, None
+
+    return user, course_row

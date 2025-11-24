@@ -18,14 +18,15 @@
 <div class="card-grid">
     {% if schedule %}
         {% for row in schedule %}
-        <div class="course-card">
+        <a class="course-card"
+           href="{{ url_for('main.course_shell', class_id=row.class_id) }}">
             <div class="course-card-banner"></div>
             <div class="course-card-body">
                 <div class="course-card-title">{{ row.course_name }}</div>
                 <div class="course-card-subtitle">{{ row.class_type }}</div>
                 <div class="course-card-term">{{ row.course_credits }} credits</div>
             </div>
-        </div>
+        </a>
         {% endfor %}
     {% else %}
         <p>No courses found in your schedule yet.</p>
@@ -33,7 +34,6 @@
 </div>
 {% endblock %}
 
-{# Optional: customize the right sidebar for dashboard #}
 {% block right_sidebar %}
 <section>
     <h3>To Do</h3>

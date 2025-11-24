@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% set active_page = 'courses' %}
+{% set active_course_page = 'people' %}
+
+{% block title %}{{ course.course_name }} – People{% endblock %}
+{% block header_title %}{{ course.course_name }}{% endblock %}
+{% block header_subtitle %}People{% endblock %}
+
+{% block content %}
+<div class="section-header">
+    <div>
+        <div class="section-title">People</div>
+        <div class="section-subtitle">
+            Instructor and classmates.
+        </div>
+    </div>
+</div>
+
+<div class="course-layout">
+    {% include "_course_nav.html" %}
+    <div class="course-main">
+
+        <h3>Instructor</h3>
+        <p><strong>{{ instructor.name }}</strong> ({{ instructor.role }})<br>
+           <a href="mailto:{{ instructor.email }}">{{ instructor.email }}</a><br>
+           Office Hours: {{ instructor.office_hours }}
+        </p>
+
+        <h3>Students</h3>
+        {% if students %}
+        <ul class="people-list">
+            {% for s in students %}
+            <li>{{ s.name }} – <a href="mailto:{{ s.email }}">{{ s.email }}</a></li>
+            {% endfor %}
+        </ul>
+        {% else %}
+            <p>No students listed yet.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

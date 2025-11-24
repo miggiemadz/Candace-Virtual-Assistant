@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% set active_page = 'courses' %}
+{% set active_course_page = 'quizzes' %}
+
+{% block title %}{{ course.course_name }} – Quizzes{% endblock %}
+{% block header_title %}{{ course.course_name }}{% endblock %}
+{% block header_subtitle %}Quizzes{% endblock %}
+
+{% block content %}
+<div class="section-header">
+    <div>
+        <div class="section-title">Quizzes</div>
+        <div class="section-subtitle">
+            Timed quizzes and knowledge checks.
+        </div>
+    </div>
+</div>
+
+<div class="course-layout">
+    {% include "_course_nav.html" %}
+    <div class="course-main">
+        {% if quizzes %}
+        <table class="table quizzes-table">
+            <thead>
+                <tr>
+                    <th>Quiz</th>
+                    <th>Due</th>
+                    <th>Points</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for q in quizzes %}
+                <tr>
+                    <td>{{ q.name }}</td>
+                    <td>{{ q.due }}</td>
+                    <td>{{ q.points }}</td>
+                    <td>{{ q.status }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <p>No quizzes are available yet.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% set active_page = 'courses' %}
+{% set active_course_page = 'analytics' %}
+
+{% block title %}{{ course.course_name }} – Course Analytics{% endblock %}
+{% block header_title %}{{ course.course_name }}{% endblock %}
+{% block header_subtitle %}Course Analytics{% endblock %}
+
+{% block content %}
+<div class="section-header">
+    <div>
+        <div class="section-title">Course Analytics</div>
+        <div class="section-subtitle">
+            Overview of engagement and performance (sample data).
+        </div>
+    </div>
+</div>
+
+<div class="course-layout">
+    {% include "_course_nav.html" %}
+    <div class="course-main analytics-grid">
+        <div class="analytics-card">
+            <div class="analytics-label">On-time submissions</div>
+            <div class="analytics-value">{{ analytics.on_time_submission_rate }}</div>
+        </div>
+        <div class="analytics-card">
+            <div class="analytics-label">Average grade</div>
+            <div class="analytics-value">{{ analytics.average_grade }}</div>
+        </div>
+        <div class="analytics-card">
+            <div class="analytics-label">Assignments completed</div>
+            <div class="analytics-value">
+                {{ analytics.completed_assignments }} / {{ analytics.total_assignments }}
+            </div>
+        </div>
+        <div class="analytics-card">
+            <div class="analytics-label">Last login</div>
+            <div class="analytics-value">{{ analytics.last_login }}</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

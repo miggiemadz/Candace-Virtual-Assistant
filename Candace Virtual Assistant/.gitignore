@@ -213,3 +213,6 @@ models/**/Meta-Llama*
 app/models/Meta-Llama*
 app/models/**/Meta-Llama*
 /*.gguf
+
+app/vectorstore/store/*
+!app/vectorstore/store/.gitkeep

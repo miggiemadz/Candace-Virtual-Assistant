@@ -1,10 +1,119 @@
 {% extends "base.html" %}
 {% set active_page = 'calendar' %}
 
-{% block title %}Calendar{% endblock %}
-{% block header_title %}Calendar{% endblock %}
-{% block header_subtitle %}Upcoming assignments & events{% endblock %}
+{% block title %}Academic Calendar{% endblock %}
+{% block header_title %}Academic Calendar{% endblock %}
+{% block header_subtitle %}Important UCNJ Academic Dates{% endblock %}
 
 {% block content %}
-<p>Calendar functionality coming soon.</p>
+
+<div class="section-header">
+    <div>
+        <div class="section-title">Academic Calendar</div>
+        <div class="section-subtitle">
+            Key academic deadlines and term dates for UCNJ.
+        </div>
+    </div>
+</div>
+
+<div class="calendar-container">
+
+    <!-- ========================================================= -->
+    <!-- FALL 2025 -->
+    <!-- ========================================================= -->
+    <div class="calendar-term">
+        <div class="calendar-term-header">Fall 2025</div>
+        <ul class="calendar-events">
+
+            <li><strong>Mar 17:</strong> Registration begins for Fall 2025 Regular Start & 7-week courses</li>
+            <li><strong>Aug 30:</strong> Cranford & Elizabeth Campuses open for student services (9 a.m.–2 p.m.)</li>
+            <li><strong>Sep 1:</strong> College Closed – Labor Day</li>
+            <li><strong>Sep 2:</strong> Last day to register for Regular Start & 1st 7-Week courses</li>
+            <li><strong>Sep 3:</strong> Fall 2025 Regular Start & 1st 7-week courses begin</li>
+            <li><strong>Sep 9:</strong> Drop period ends (Regular Start)</li>
+            <li><strong>Sep 17:</strong> Later Start courses begin</li>
+            <li><strong>Nov 12:</strong> Last day to withdraw (Regular/Later Start)</li>
+            <li><strong>Nov 27–30:</strong> Thanksgiving Recess (College Closed)</li>
+            <li><strong>Dec 19:</strong> Last day of Fall 2025 Semester</li>
+            <li><strong>Dec 21:</strong> Grades due 11:59 p.m.</li>
+
+        </ul>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- WINTER 2026 -->
+    <!-- ========================================================= -->
+    <div class="calendar-term">
+        <div class="calendar-term-header">Winter 2026</div>
+        <ul class="calendar-events">
+
+            <li><strong>Oct 6:</strong> Registration begins for Winter 2026</li>
+            <li><strong>Dec 29:</strong> First day of class (Winter 2026)</li>
+            <li><strong>Dec 29:</strong> Drop Day (No grade, 50% refund)</li>
+            <li><strong>Dec 30–Jan 1:</strong> Offices Closed</li>
+            <li><strong>Jan 9:</strong> Last day to withdraw</li>
+            <li><strong>Jan 14:</strong> Last day of Winter 2026 courses</li>
+            <li><strong>Jan 16:</strong> Grades due by 11:59 p.m.</li>
+
+        </ul>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- SPRING 2026 -->
+    <!-- ========================================================= -->
+    <div class="calendar-term">
+        <div class="calendar-term-header">Spring 2026</div>
+        <ul class="calendar-events">
+
+            <li><strong>Nov 3 (2025):</strong> Registration begins for Spring 2026</li>
+            <li><strong>Jan 20:</strong> Regular Start & 1st 7-week courses begin</li>
+            <li><strong>Jan 26:</strong> Drop period ends</li>
+            <li><strong>Feb 3:</strong> Later Start courses begin</li>
+            <li><strong>Mar 9–15:</strong> Spring Recess</li>
+            <li><strong>Apr 16:</strong> Last day to withdraw (Regular/Later Start)</li>
+            <li><strong>May 13:</strong> Last day of Spring Semester</li>
+            <li><strong>May 15:</strong> Grades due 11:59 p.m.</li>
+            <li><strong>May 20:</strong> Commencement</li>
+
+        </ul>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- SUMMER I 2026 -->
+    <!-- ========================================================= -->
+    <div class="calendar-term">
+        <div class="calendar-term-header">Summer I 2026</div>
+        <ul class="calendar-events">
+
+            <li><strong>Mar 2:</strong> Registration begins for Summer 2026</li>
+            <li><strong>May 22:</strong> Last day to register (in-person)</li>
+            <li><strong>May 25:</strong> College Closed – Memorial Day</li>
+            <li><strong>May 26:</strong> Summer I begins (6 & 10-week)</li>
+            <li><strong>Jun 17:</strong> Withdraw deadline (6-week)</li>
+            <li><strong>Jul 1:</strong> Withdraw deadline (10-week)</li>
+            <li><strong>Jul 2:</strong> Last day of 6-week session</li>
+            <li><strong>Jul 30:</strong> Last day of 10-week session</li>
+
+        </ul>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- SUMMER II 2026 -->
+    <!-- ========================================================= -->
+    <div class="calendar-term">
+        <div class="calendar-term-header">Summer II 2026</div>
+        <ul class="calendar-events">
+
+            <li><strong>Jul 2:</strong> Last day to register (in person)</li>
+            <li><strong>Jul 3:</strong> College Closed – Independence Day</li>
+            <li><strong>Jul 6:</strong> Summer II courses begin</li>
+            <li><strong>Aug 3:</strong> Last day to withdraw</li>
+            <li><strong>Aug 13:</strong> Last day of Summer II courses</li>
+            <li><strong>Aug 15:</strong> Grades due 11:59 p.m.</li>
+
+        </ul>
+    </div>
+
+</div>
+
 {% endblock %}

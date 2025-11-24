@@ -1,0 +1,76 @@
+<nav class="course-nav">
+    <ul>
+        <li>
+            <a href="{{ url_for('main.course_shell', class_id=course.class_id) }}"
+               class="course-nav-item {% if active_course_page == 'modules' %}is-active{% endif %}">
+                Home
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('main.course_announcements', class_id=course.class_id) }}"
+               class="course-nav-item {% if active_course_page == 'announcements' %}is-active{% endif %}">
+                Announcements
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('main.course_shell', class_id=course.class_id) }}"
+               class="course-nav-item {% if active_course_page == 'modules' %}is-active{% endif %}">
+                Modules
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('main.course_assignments', class_id=course.class_id) }}"
+               class="course-nav-item {% if active_course_page == 'assignments' %}is-active{% endif %}">
+                Assignments
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('main.course_quizzes', class_id=course.class_id) }}"
+               class="course-nav-item {% if active_course_page == 'quizzes' %}is-active{% endif %}">
+                Quizzes
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('main.course_cengage', class_id=course.class_id) }}"
+               class="course-nav-item {% if active_course_page == 'cengage' %}is-active{% endif %}">
+                Cengage
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('main.course_grades', class_id=course.class_id) }}"
+               class="course-nav-item {% if active_course_page == 'grades' %}is-active{% endif %}">
+                Grades
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('main.course_people', class_id=course.class_id) }}"
+               class="course-nav-item {% if active_course_page == 'people' %}is-active{% endif %}">
+                People
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('main.course_files', class_id=course.class_id) }}"
+               class="course-nav-item {% if active_course_page == 'files' %}is-active{% endif %}">
+                Files
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('main.course_pages', class_id=course.class_id) }}"
+               class="course-nav-item {% if active_course_page == 'pages' %}is-active{% endif %}">
+                Pages
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('main.course_syllabus', class_id=course.class_id) }}"
+               class="course-nav-item {% if active_course_page == 'syllabus' %}is-active{% endif %}">
+                Syllabus
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('main.course_analytics', class_id=course.class_id) }}"
+               class="course-nav-item {% if active_course_page == 'analytics' %}is-active{% endif %}">
+                Course Analytics
+            </a>
+        </li>
+    </ul>
+</nav>
