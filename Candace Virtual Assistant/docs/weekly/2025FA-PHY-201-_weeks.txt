@@ -1,0 +1,282 @@
+WEEK 1
+Review of Vector Math required
+Rectangular, Cylindrical, Spherical
+Coordinates
+Lecture
+Quizzes
+Reading of Text and su
+material
+Review of expected vec
+calculus skill set for cou
+Use in problem solving
+
+---------------------
+
+WEEK 2,3
+Charge, properties, charge transfer
+Coulomb's law, vector notation principle
+of superposition
+Electric field
+Electric field due to point charge
+Electric field due to continuous charge
+distributions
+Lecture
+On line simulations
+Quizzes
+Reading of Text and su
+material
+Review of lab activities
+Use in problem solving
+Video lecture from MIT
+
+---------------------
+
+WEEK 4,5
+Flux of a field
+Gauss's Law
+Divergence of the field
+Finding the E-field using Gauss's
+Law
+Lectures
+On line simulations
+Quizzes
+Reading of Text and su
+material
+Review of lab activities
+Use in problem solving
+Video lecture from MIT
+TEST 1 WEEK 4 (Chap
+Vector Math)
+
+---------------------
+
+WEEK 6,7 Electric Potential Energy
+Electric Potential of point charge
+E field from the electric potential
+Electric Potential of continuous charge
+distribution
+Capacitance
+Capacitance of different geometires
+Lectures
+On line simulations
+Quizzes
+Reading of Text and su
+material
+Review of lab activities
+Capacitors in parallel and in series
+Energy stored in capacitors
+Use in problem solving
+Video lecture from MIT
+
+---------------------
+
+WEEK 7,8
+Electric current, resistance. voltage
+Electromotive force
+Ohms Law
+Electrical power
+Resistor in series and parallel
+Kirchhoff's Law
+Lecture
+On line simulations
+Reading of Text
+Review of lab activities
+Use in problem solving
+Video lecture from MIT
+TEST 2 (take-home) (Chapt
+)
+
+---------------------
+
+WEEK 9, 10
+Magnetic Field
+Magnetic Force
+Motion of charge in a magnetic field
+Motion of charge in crossed fields
+Torque on current Loop in magnetic
+field
+Lectures
+On line simulations
+Quizzes
+Reading of Text and su
+material
+Review of lab activities
+Use in problem solving
+Video lecture from MIT
+TEST 3 WEEK 10 (Cha
+27,28,29)
+
+---------------------
+
+WEEK 11,12
+Biot-Savart Law,
+Ampere Law
+Field of solenoid
+Gauss's Law for magnets
+Faraday Law
+Lenz's Law
+Lecture
+On line simulations
+Reading of Text
+Review of lab activities
+Use in problem solving
+Video lecture from MIT
+
+---------------------
+
+WEEK 13, 14 Induced EMF
+Motors
+Inductors
+RL circuits,
+Energy in magnetic field,
+LC circuits
+Lecture
+On line simulations
+Reading of Text
+Review of lab activities
+Use in problem solving
+Video lecture from MIT
+E&M oscillations
+AC waveforms
+Reactance, Impedance
+RLC circuits
+TEST 4 WEEK 13 (Chapter
+
+---------------------
+
+WEEK 15 Final Exam
+Class Policies
+Attendance: Regular attendance is strongly encouraged. While not mandatory,
+absences may negatively impact performance.
+Participation: Active participation in class discussions, group work, and in-class
+activities is expected.
+Experiential Learning
+Students must complete an experiential learning activity that connects course content to
+career applications. This activity may be a content specific assignment or practical skill
+that is applied within a course assignment. This assignment supports the general
+education learning outcomes of scientific/critical thinking and quantitative reasoning; oral
+and written communication; and information literacy/technological competency.
+Academic Policies
+See College Catalog for more information: http://onlinecatalog.ucc.edu/index.php
+Americans with Disabilities Act (ADA)
+UCNJ Union College of Union County, NJ offers reasonable accommodations and/or
+services to persons with disabilities. Any student who has a documented disability and
+wishes to self-identify should contact the Director of Universal Accessibility Services and
+Veterans Affairs at (908) 709-7164, or email accessibility@ucc.edu. Accommodations
+are individualized and in accordance with Section 504 of the Rehabilitation Act of 1973
+and the Americans with Disabilities Act of 1992. In order to receive accommodations,
+students must be registered with Disability Support Services. Students should register
+with the office as soon as possible. Accommodations are not official until the Faculty
+Accommodations Alert Form(s) are issued from the student to his/her instructor(s).
+Family Educational Rights and Privacy Act (FERPA)
+The FERPA Statement can be found at https://www.ucc.edu/admissions/the-family-
+education-rights-and-privacy-act/.
+Equal Opportunity Statement
+UCNJ Union College of Union County, NJ does not discriminate and prohibits
+discrimination, as required by state and/or federal law, in all programs and activities,
+including employment and access to its career and technical programs.
+UCNJ Union College of Union County, NJ Mission Statement
+Transforming Our Community. . . One Student at a Time
+Suggested Teaching Methodologies
+Course activities vary from course to course and instructor to instructor.
+Below is a listing of the activities students will find in this course:
+Reading assignments: Students will gain knowledge from assigned textbooks and
+relevant source documents.
+Lectures: This format will include question and answer sessions to provide
+interactivity between students and instructor.
+Class Discussions and Problem Solving: Topics will be discussed to broaden
+student understanding and problems will be used to demonstrate how to apply
+gained knowledge.
+Mapping Course Learning Outcomes to Learning Activities and
+Evaluation Methods
+Course Learning Outcomes (CLOs) Learning Activities Evaluation
+Solve problems using calculus and vector
+based math.
+Review of expected vector
+arithmetic and calculus skill set
+Class participat
+Homework
+Manipulate vectors in i, j, k component form
+and as magnitude/direction.
+for course Quiz
+Test
+Perform vector operations such as addition,
+subtraction, scalar and cross product.
+Lecture
+On line readings
+Reading of Text
+Use in problem solving
+Class participat
+Homework
+Quiz
+Test
+Write Maxwell's equations in both integral
+and differential form indicating which
+equation is a statement of Gauss's,
+Faraday's and Ampere's Laws.
+Lecture
+On line readings
+Reading of Text
+Use in problem solving
+Class participat
+Homework
+Quiz
+Test
+Write and apply Coulomb's law and the
+principle of superposition to a system of
+point charges using vector notation in
+solving static and dynamic force problems.
+Write and apply Gauss's law to solve for the
+Electric field of symmetric charge
+distributions and
+Ampere's Law to solve for the Magnetic
+field of symmetric current distributions.
+Write and apply Ohm's Law and Kirchhoff's
+Laws to electric circuit problems with
+batteries, resistors, capacitors and inductors
+for both transient and steady state
+problems, as well as dc and ac circuits.
+Write and apply the Biot-Savart Law in
+calculating the B-field due to different
+source current distributions.
+Lecture
+On line simulations
+Reading of Text
+Review of lab activities
+Use in problem solving
+Class participat
+Homework
+Quiz
+Test
+Write and apply Faraday's Law and Lenz's
+law so solve induced currents and motional
+EMF problems.
+Calculate the E-field, potential difference
+and absolute potential due to point charge
+and continuous charge distributions over
+Lecture
+On line simulations
+Reading of Text
+Review of lab activities
+Use in problem solving
+Class participat
+Homework
+Quiz
+Test
+conducting and non-conducting lines.
+surfaces and volumes in both near and far
+field approximations.
+Calculate the capacitance for different
+conductor geometries
+Calculate the magnetic force on moving
+charges and current carrying wires in a
+magnetic field using vector notation and the
+Right Hand Rule.
+Please note: all programs must integrate in one or more courses, discipline-specific course
+learning outcomes that reflect the College learning outcomes of scientific/critical thinking and
+quantitative reasoning, oral/written communication, and information literacy.
+Visit https://app.teachinghow2s.com/library/science-technology-engineering-math-stem
+to access evidence-based-teaching techniques for this course.
+
+---------------------
+

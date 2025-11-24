@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% set active_page = 'courses' %}
+
+{% block title %}My Courses{% endblock %}
+{% block header_title %}Courses{% endblock %}
+{% block header_subtitle %}Current and previously completed courses{% endblock %}
+
+{% block content %}
+<h2>Current Courses</h2>
+<ul>
+    {% for c in current %}
+        <li>{{ c.course_name }} ({{ c.course_credits }} credits, {{ c.class_type }})</li>
+    {% else %}
+        <li>No current courses.</li>
+    {% endfor %}
+</ul>
+
+<hr style="margin:20px 0;">
+
+<h2>Completed Courses</h2>
+<ul>
+    {% for c in completed %}
+        <li>{{ c.course_name }} ({{ c.course_credits }} credits)</li>
+    {% else %}
+        <li>No completed courses recorded.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

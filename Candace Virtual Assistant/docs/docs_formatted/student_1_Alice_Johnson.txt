@@ -1,0 +1,5 @@
+[Student] Alice Johnson
+Major: Computer Science
+Courses Enrolled: Intro to Programming, Data Structures
+GPA: 3.8
+Credits: 90

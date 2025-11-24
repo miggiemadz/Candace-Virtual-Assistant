@@ -1,0 +1,5 @@
+[Student] David Nguyen
+Major: Psychology
+Courses Enrolled: Business Ethics
+GPA: 3.9
+Credits: 100

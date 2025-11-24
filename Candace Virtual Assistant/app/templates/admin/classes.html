@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% set active_page = 'admin' %}
+
+{% block title %}Classes | Candace Admin{% endblock %}
+{% block header_title %}Class Sections{% endblock %}
+{% block header_subtitle %}View each class/section with course and instructor info.{% endblock %}
+
+{% block content %}
+<div class="section-header">
+    <div>
+        <div class="section-title">Classes</div>
+        <div class="section-subtitle">
+            All class sections modeled in the LMS.
+        </div>
+    </div>
+</div>
+
+<form method="get" style="margin-bottom:16px; display:flex; gap:10px; flex-wrap:wrap;">
+    <input
+        type="text"
+        name="q"
+        value="{{ search }}"
+        placeholder="Search course or professor..."
+        style="padding:6px 8px; min-width:240px; border:1px solid var(--border-subtle); border-radius:4px;"
+    >
+
+    <button type="submit"
+            style="padding:6px 10px; background:var(--accent); color:#fff; border:none; border-radius:4px;">
+        Apply
+    </button>
+
+    {% if search %}
+    <a href="{{ url_for('main.admin_classes') }}" style="font-size:12px; margin-left:6px; text-decoration:none;">
+        Clear filter
+    </a>
+    {% endif %}
+</form>
+
+<div style="overflow-x:auto;">
+<table style="width:100%; border-collapse:collapse; font-size:13px;">
+    <thead>
+        <tr>
+            <th style="padding:6px; border-bottom:1px solid #d5dde5;">Class ID</th>
+            <th style="padding:6px; border-bottom:1px solid #d5dde5;">Course</th>
+            <th style="padding:6px; border-bottom:1px solid #d5dde5;">Major</th>
+            <th style="padding:6px; border-bottom:1px solid #d5dde5;">Credits</th>
+            <th style="padding:6px; border-bottom:1px solid #d5dde5;">Class Type</th>
+            <th style="padding:6px; border-bottom:1px solid #d5dde5;">Professor</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if classes %}
+        {% for c in classes %}
+        <tr>
+            <td style="padding:6px; border-bottom:1px solid #edf0f5;">{{ c.class_id }}</td>
+            <td style="padding:6px; border-bottom:1px solid #edf0f5;">{{ c.course_name }}</td>
+            <td style="padding:6px; border-bottom:1px solid #edf0f5;">{{ c.major_name or "—" }}</td>
+            <td style="padding:6px; border-bottom:1px solid #edf0f5;">{{ c.course_credits }}</td>
+            <td style="padding:6px; border-bottom:1px solid #edf0f5;">{{ c.class_type }}</td>
+            <td style="padding:6px; border-bottom:1px solid #edf0f5;">
+                {{ c.professor_first_name }} {{ c.professor_last_name }}
+            </td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="6" style="padding:10px; color:#777;">No class sections found.</td>
+        </tr>
+        {% endif %}
+    </tbody>
+</table>
+</div>
+
+{% endblock %}

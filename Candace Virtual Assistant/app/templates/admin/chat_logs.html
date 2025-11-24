@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% set active_page = 'admin' %}
+
+{% block title %}Chat Logs | Candace Admin{% endblock %}
+{% block header_title %}Chatbot Logs{% endblock %}
+{% block header_subtitle %}Review recent conversations between students and Candace.{% endblock %}
+
+{% block content %}
+<div class="section-header">
+    <div>
+        <div class="section-title">Recent Chatbot Activity</div>
+        <div class="section-subtitle">
+            Filter by student ID or search within user messages.
+        </div>
+    </div>
+</div>
+
+<form method="get"
+      style="margin-bottom: 16px; display:flex; flex-wrap:wrap; gap:8px; align-items:center; font-size:13px;">
+    <label>
+        Student ID:
+        <input
+            type="text"
+            name="student_id"
+            value="{{ student_id }}"
+            style="margin-left:4px; padding:4px 6px; border-radius:4px; border:1px solid var(--border-subtle); min-width:120px;"
+        >
+    </label>
+
+    <label>
+        Search:
+        <input
+            type="text"
+            name="q"
+            value="{{ search }}"
+            placeholder="user message contains..."
+            style="margin-left:4px; padding:4px 6px; border-radius:4px; border:1px solid var(--border-subtle); min-width:200px;"
+        >
+    </label>
+
+    <button type="submit"
+            style="padding:6px 10px; font-size:13px; border-radius:4px; border:none; background:var(--accent); color:#fff; cursor:pointer;">
+        Apply
+    </button>
+
+    {% if student_id or search %}
+    <a href="{{ url_for('main.admin_chat_logs') }}"
+       style="font-size:12px; margin-left:8px; text-decoration:none; color:var(--text-muted);">
+        Clear filters
+    </a>
+    {% endif %}
+</form>
+
+<div style="overflow-x:auto;">
+    <table style="width:100%; border-collapse:collapse; font-size:13px;">
+        <thead>
+            <tr>
+                <th style="border-bottom:1px solid #d5dde5; text-align:left; padding:6px;">Time</th>
+                <th style="border-bottom:1px solid #d5dde5; text-align:left; padding:6px;">Student</th>
+                <th style="border-bottom:1px solid #d5dde5; text-align:left; padding:6px;">User Message</th>
+                <th style="border-bottom:1px solid #d5dde5; text-align:left; padding:6px;">AI Response</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if logs %}
+                {% for log in logs %}
+                <tr>
+                    <td style="border-bottom:1px solid #edf0f5; padding:6px; white-space:nowrap;">
+                        {{ log.chat_timestamp }}
+                    </td>
+                    <td style="border-bottom:1px solid #edf0f5; padding:6px; white-space:nowrap;">
+                        {% if log.student_first_name %}
+                            {{ log.student_first_name }} {{ log.student_last_name }} ({{ log.student_id }})
+                        {% elif log.student_id %}
+                            ID {{ log.student_id }}
+                        {% else %}
+                            —
+                        {% endif %}
+                    </td>
+                    <td style="border-bottom:1px solid #edf0f5; padding:6px; max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                        {{ log.user_message }}
+                    </td>
+                    <td style="border-bottom:1px solid #edf0f5; padding:6px; max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                        {{ log.ai_response }}
+                    </td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="4" style="padding:8px; color:#6b7785;">
+                        No chat logs found for this filter.
+                    </td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

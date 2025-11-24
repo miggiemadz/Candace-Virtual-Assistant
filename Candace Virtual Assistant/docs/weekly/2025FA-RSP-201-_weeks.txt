@@ -1,0 +1,214 @@
+Week 15-TMC Practice
+Examination
+Class Policies
+1. Assignments are due by the date posted on Canvas. All assignments must be
+submitted to pass the course. Be sure to keep up with the assignments.
+2. If you are repeating this course, you must re-create all assignments. Be sure to create
+new files. Work submitted from a previous semester will not be accepted.
+3. Late work will be accepted; however, eleven points (11) will be deducted for each day
+the assignment is late unless specified otherwise on the assignment. A ZERO will be
+given for any work submitted more than three calendar days after the due date. During
+the last full week of class, no work will be accepted late. Be sure to check the calendar!
+4. All tests must be taken. Each test may be taken only one time; so be sure you are
+prepared to take the test. If testing is performed in the computer lab, or at home, while
+taking each test, you must disable all pop-up blockers that are enabled. Tests cannot be
+made up. A grade of zero will be given for any test. To receive a passing grade, all tests,
+research paper, and final exam must be taken.
+5. To appeal a grade you must send an email message to the instructor through
+CANVAS or the UCC email system within five days of the posted grade. Overdue
+appeals will not be considered
+6. It is important for you to log on to CANVAS a few times a week and to set reminders or
+alerts through CANVAS. Be sure to spend a minimum of eight hours a week completing
+the work for this class.
+7. Any acts of classroom disruption (including that of online courses) that go beyond the
+normal rights of students to question and discuss with instructors the educational process
+relative to subject content will not be tolerated, in accordance with the Academic Code of
+Conduct described in the Student Handbook. See the Student Handbook for the policy
+on “Academic Integrity.”
+8. Participation: The faculty view attending class and completing online activities and
+course activities as an integral part of the program and a critical step towards successful
+completion of each course. It is expected that each student will attend all classes,
+complete all assignments/activities; report for class on-time; and not be in the college
+laboratory or the testing center during class time. All students must attend classroom,
+online, and clinical orientation sessions. Virtual attendance is defined as video ON during
+class virtual lectures.
+9. Cellphone use: cellphones are permitted in the classroom, however they must not be a
+distraction so they must be silenced, placed on “do not disturb” mode as well as away in
+a bag. They should not be on the student desk. If they are found out, or in use, the
+faculty reserves the right to put the cellphone at the instructor’s lectern till the end of
+lecture sessions when they will be returned. If the device is considered disruptive or if the
+student refuses to comply with faculty request(s), the student will be asked to remove
+themselves from the lecture session resulting in an absence for that session.
+Additional Information
+10. Cheating Policy
+Students are expected to uphold the school’s standard of conduct relating to academic
+honesty. Students assume full responsibility for the content and integrity of the academic
+work they submit. The guiding principle of academic integrity shall be that a student’s
+submitted work, examinations, tests, assignments, papers, and projects must be that of
+the student’s own work. Students shall be guilty of violating the honor code if they:
+1. Represent the work of others as their own.
+2. Use or obtain unauthorized assistance in any academic work, including copying files.
+3. Give unauthorized assistance to other students
+4. Modify, without instructor approval, an exam, paper, record, or report for the purpose
+of obtaining additional credit.
+5. Misrepresent the content of submitted work.
+The penalty for violating the honor code is severe. Any student violating the honor code
+is subject to receive a failing grade for the course and may be subject to disciplinary
+action as described in the Student Handbook. If a student is unclear about whether a
+particular situation may constitute an honor code violation, the student should meet with
+the instructor to discuss the situation.
+For this class, it is permissible to assist classmates in general discussions of computing
+techniques. General advice and interaction are encouraged. Each person, however, must
+develop his or her own solutions to the assigned homework and lab exercises. Except
+when assignments are given as group assignments, students may not “work together” on
+graded assignments. Such collaboration constitutes cheating unless it is a grouped
+assignment. A student may not use or copy (by any means) another’s work (or portions
+of it) and represent it as his/her own. If you need help on an assignment, contact your
+instructor, not other classmates.
+Experiential Learning
+Students must complete an experiential learning activity that connects course content to
+career applications. This activity may be a content specific assignment or practical skill
+that is applied within a course assignment. This assignment supports the general
+education learning outcomes of scientific/critical thinking and quantitative reasoning; oral
+and written communication; and information literacy/technological competency.
+Academic Policies
+See College Catalog for more information: http://onlinecatalog.ucc.edu/index.php
+Americans with Disabilities Act (ADA)
+UCNJ Union College of Union County, NJ offers reasonable accommodations and/or
+services to persons with disabilities. Any student who has a documented disability and
+wishes to self-identify should contact the Director of Universal Accessibility Services and
+Veterans Affairs at (908) 709-7164, or email accessibility@ucc.edu. Accommodations
+are individualized and in accordance with Section 504 of the Rehabilitation Act of 1973
+and the Americans with Disabilities Act of 1992. In order to receive accommodations,
+students must be registered with Disability Support Services. Students should register
+with the office as soon as possible. Accommodations are not official until the Faculty
+Accommodations Alert Form(s) are issued from the student to his/her instructor(s).
+Family Educational Rights and Privacy Act (FERPA)
+The FERPA Statement can be found at https://www.ucc.edu/admissions/the-family-
+education-rights-and-privacy-act/.
+Equal Opportunity Statement
+UCNJ Union College of Union County, NJ does not discriminate and prohibits
+discrimination, as required by state and/or federal law, in all programs and activities,
+including employment and access to its career and technical programs.
+UCNJ Union College of Union County, NJ Mission Statement
+Transforming Our Community. . . One Student at a Time
+Suggested Teaching Methodologies
+Verbal demonstration and discussion
+Lecture and course material presentation
+Clinical Instruction
+EXPERIENTIAL LEARNING ACTIVITY:
+Students must complete an experiential learning activity that connects course content to
+career applications. This activity may be a content specific assignment or practical skill
+that is applied within a course assignment. This assignment supports the general
+education learning outcomes of scientific/critical thinking and quantitative reasoning; oral
+and written communication; and information literacy/technological competency.
+Mapping Course Learning Outcomes to Learning Activities and
+Evaluation Methods
+Course Learning
+Outcomes
+(CLO's)
+Learning Activities Evaluation Methods
+Discuss and explain the
+theoretical basis,
+interpretation and need for
+blood gas analysis &
+quality assurance testing of
+equipment.
+Classroom lecture and
+discussion Wilkins’ -
+Chapter 10
+Text review questions, and
+assignments.Topic specific
+written assignments and
+quizzes.Midterm and final
+examinations.
+Discuss and explain the
+theoretical basis,
+interpretation and need for
+spirometry testing which
+includes: lung volume
+testing, gas distribution
+testing, exercise and
+specialized testing,
+bronchoprovocation
+studies.
+Classroom lecture and
+discussion
+Ruppel Case Studies
+Egan’s Ch 20
+Wilkins Ch 9
+Text review questions, and
+assignments.Topic specific
+written assignments and
+quizzes.Midterm and final
+examinations.
+Course Learning
+Outcomes
+(CLO's)
+Learning Activities Evaluation Methods
+Discuss and explain the
+theoretical basis,
+interpretation and need for
+cardiopulmonary
+monitoring in the intensive
+care unit.
+Classroom lecture and
+discussion Wilkins’ -
+Chapter 15Egan’s -
+Chapter 46
+Text review questions, and
+assignments.
+Topic specific written
+assignments and quizzes.
+Midterm and final
+examinations.
+Discuss and explain the
+theoretical basis,
+interpretation and need for
+chest radiography.
+Classroom lecture and
+discussion
+Wilkins’ - Chapter 10
+Egan’s - Chapter 21
+Text review questions, and
+assignments.
+Topic specific written
+assignments and quizzes.
+Midterm and final
+examinations.
+Discuss and explain the
+theoretical basis,
+interpretation and need for
+electrocardiogram (ECG)
+testing
+Classroom lecture and
+discussion
+Wilkins’ - Chapter 11
+Egan’s - Chapter 17
+Text review questions, and
+assignments.Topic specific
+written assignments and
+quizzes.Midterm and final
+examinations.
+.Discuss and explain the
+theoretical basis,
+interpretation and need for
+hemodynamic monitoring.
+Classroom lecture and
+discussion
+Wilkins’ - Chapter 15
+Wilkins’ - Chapter 16
+Text review questions, and
+assignments.
+Topic specific written
+assignments and quizzes.
+Midterm and final
+examinations.
+Please note: all programs must integrate in one or more courses, discipline-specific
+course learning outcomes that reflect the College learning outcomes of scientific/critical
+thinking and quantitative reasoning, oral/written communication, and information literacy.
+Visit https://app.teachinghow2s.com/library/allied-sciences to access evidence-based-
+teaching techniques for this course.
+
+---------------------
+

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% set active_page = 'history' %}
+
+{% block title %}Chat History{% endblock %}
+{% block header_title %}Chat History{% endblock %}
+{% block header_subtitle %}Your AI assistant conversations{% endblock %}
+
+{% block content %}
+<h2>Recent Conversations</h2>
+
+<ul style="list-style:none; padding:0;">
+    {% for log in logs %}
+    <li style="margin-bottom:20px; padding-bottom:10px; border-bottom:1px solid #ddd;">
+        <strong>You:</strong> {{ log.user_message }}<br>
+        <strong>Candace:</strong> {{ log.ai_response }}<br>
+        <span style="font-size:12px; color:#777;">{{ log.chat_timestamp }}</span>
+    </li>
+    {% else %}
+    <p>No chat history yet.</p>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% set active_page = 'account' %}
+
+{% block title %}My Account{% endblock %}
+{% block header_title %}Account{% endblock %}
+{% block header_subtitle %}Your profile information{% endblock %}
+
+{% block content %}
+<h2 style="margin-bottom:14px;">Profile</h2>
+
+{% if student %}
+    <p><strong>Name:</strong> {{ student.student_first_name }} {{ student.student_last_name }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Major:</strong> {{ student.major_name }}</p>
+    <p><strong>GPA:</strong> {{ student.student_gpa }}</p>
+    <p><strong>Total Credits:</strong> {{ student.student_total_credits }}</p>
+{% else %}
+    <p>No student record linked to this account.</p>
+{% endif %}
+{% endblock %}

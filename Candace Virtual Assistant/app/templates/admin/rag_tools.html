@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% set active_page = 'admin' %}
+
+{% block title %}RAG Tools | Candace Admin{% endblock %}
+{% block header_title %}RAG & Catalog Tools{% endblock %}
+{% block header_subtitle %}Manage the indexed catalog and weekly schedules used by Candace.{% endblock %}
+
+{% block content %}
+<div class="section-header">
+    <div>
+        <div class="section-title">RAG Index Management</div>
+        <div class="section-subtitle">
+            Trigger ingestion of catalog / weekly schedule documents into the vector index Candace uses.
+        </div>
+    </div>
+</div>
+
+<div style="margin-bottom:18px; font-size:13px;">
+    <strong>Current index directory:</strong><br>
+    <code>{{ index_dir }}</code>
+</div>
+
+<div style="background:#fff; border-radius:6px; padding:16px; box-shadow:0 1px 3px rgba(15,23,42,0.12); font-size:13px;">
+    <h3 style="font-size:15px; margin-bottom:8px;">Ingest a folder</h3>
+    <p style="margin-bottom:10px; color:var(--text-muted);">
+        Provide an absolute path on the server that contains your
+        <strong>.txt</strong> or <strong>.pdf</strong> files
+        (for example, your <code>docs/</code> folder with catalog and weekly schedules).
+    </p>
+
+    <div style="display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:10px;">
+        <input
+            type="text"
+            id="rag-folder-input"
+            placeholder="/absolute/path/to/docs"
+            style="flex:1 1 260px; padding:6px 8px; border-radius:4px; border:1px solid var(--border-subtle); font-size:13px;"
+        >
+        <button
+            id="rag-ingest-btn"
+            style="padding:8px 12px; font-size:13px; border-radius:4px; border:none; background:var(--accent); color:#fff; cursor:pointer;">
+            Run Ingestion
+        </button>
+    </div>
+
+    <div id="rag-status" style="font-size:12px; color:var(--text-muted);">
+        Status: idle.
+    </div>
+
+    <pre id="rag-output" style="margin-top:10px; padding:8px; background:#f7f7f7; border-radius:4px; max-height:200px; overflow:auto; font-size:11px;"></pre>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const folderInput = document.getElementById("rag-folder-input");
+    const btn = document.getElementById("rag-ingest-btn");
+    const statusEl = document.getElementById("rag-status");
+    const outputEl = document.getElementById("rag-output");
+
+    if (!btn) return;
+
+    btn.addEventListener("click", async function () {
+        const folder = (folderInput.value || "").trim();
+        if (!folder) {
+            statusEl.textContent = "Status: please enter a folder path.";
+            return;
+        }
+
+        statusEl.textContent = "Status: running ingestion...";
+        outputEl.textContent = "";
+
+        try {
+            const res = await fetch("{{ url_for('main.rag_ingest') }}", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "same-origin",
+                body: JSON.stringify({ folder })
+            });
+
+            const data = await res.json();
+            if (!res.ok || !data.ok) {
+                statusEl.textContent = "Status: error during ingestion.";
+                outputEl.textContent = JSON.stringify(data, null, 2);
+                return;
+            }
+
+            statusEl.textContent = "Status: ingestion completed successfully.";
+            outputEl.textContent = JSON.stringify(data, null, 2);
+        } catch (err) {
+            console.error(err);
+            statusEl.textContent = "Status: network or server error.";
+            outputEl.textContent = String(err);
+        }
+    });
+});
+</script>
+{% endblock %}

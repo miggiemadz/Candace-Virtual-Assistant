@@ -1,0 +1,272 @@
+{
+    "MAJOR": [
+        {
+            "major_id": 1,
+            "major_name": "Computer Science",
+            "department": "Engineering"
+        },
+        {
+            "major_id": 2,
+            "major_name": "Mathematics",
+            "department": "Science"
+        },
+        {
+            "major_id": 3,
+            "major_name": "Psychology",
+            "department": "Humanities"
+        },
+        {
+            "major_id": 4,
+            "major_name": "Business Administration",
+            "department": "Business"
+        }
+    ],
+    "STUDENT": [
+        {
+            "student_id": 1,
+            "student_first_name": "Alice",
+            "student_last_name": "Johnson",
+            "student_gpa": 3.8,
+            "student_total_credits": 90,
+            "major_id": 1
+        },
+        {
+            "student_id": 2,
+            "student_first_name": "Bob",
+            "student_last_name": "Smith",
+            "student_gpa": 3.2,
+            "student_total_credits": 75,
+            "major_id": 2
+        },
+        {
+            "student_id": 3,
+            "student_first_name": "Clara",
+            "student_last_name": "Martinez",
+            "student_gpa": 3.6,
+            "student_total_credits": 85,
+            "major_id": 1
+        },
+        {
+            "student_id": 4,
+            "student_first_name": "David",
+            "student_last_name": "Nguyen",
+            "student_gpa": 3.9,
+            "student_total_credits": 100,
+            "major_id": 3
+        }
+    ],
+    "PROFESSOR": [
+        {
+            "professor_id": 1,
+            "professor_name": "Dr. Karen Liu",
+            "department": "Engineering"
+        },
+        {
+            "professor_id": 2,
+            "professor_name": "Dr. Michael Torres",
+            "department": "Science"
+        },
+        {
+            "professor_id": 3,
+            "professor_name": "Dr. Sophia Allen",
+            "department": "Humanities"
+        }
+    ],
+    "COURSE": [
+        {
+            "course_id": 1,
+            "course_name": "Intro to Programming",
+            "course_credits": 3,
+            "major_id": 1
+        },
+        {
+            "course_id": 2,
+            "course_name": "Data Structures",
+            "course_credits": 4,
+            "major_id": 1
+        },
+        {
+            "course_id": 3,
+            "course_name": "Calculus I",
+            "course_credits": 4,
+            "major_id": 2
+        },
+        {
+            "course_id": 4,
+            "course_name": "Cognitive Psychology",
+            "course_credits": 3,
+            "major_id": 3
+        },
+        {
+            "course_id": 5,
+            "course_name": "Business Ethics",
+            "course_credits": 3,
+            "major_id": 4
+        }
+    ],
+    "CLASS": [
+        {
+            "class_id": 1,
+            "professor_id": 1,
+            "course_id": 1,
+            "class_type": "Lecture"
+        },
+        {
+            "class_id": 2,
+            "professor_id": 2,
+            "course_id": 2,
+            "class_type": "Lab"
+        },
+        {
+            "class_id": 3,
+            "professor_id": 3,
+            "course_id": 3,
+            "class_type": "Lecture"
+        },
+        {
+            "class_id": 4,
+            "professor_id": 1,
+            "course_id": 4,
+            "class_type": "Seminar"
+        },
+        {
+            "class_id": 5,
+            "professor_id": 2,
+            "course_id": 5,
+            "class_type": "Lecture"
+        }
+    ],
+    "ASSIGNMENT": [
+        {
+            "assignment_id": 1,
+            "class_id": 1,
+            "assignment_name": "Project 1",
+            "assignment_type": "Project",
+            "assignment_score_weight": 0.3
+        },
+        {
+            "assignment_id": 2,
+            "class_id": 2,
+            "assignment_name": "Midterm Exam",
+            "assignment_type": "Exam",
+            "assignment_score_weight": 0.25
+        },
+        {
+            "assignment_id": 3,
+            "class_id": 3,
+            "assignment_name": "Essay",
+            "assignment_type": "Homework",
+            "assignment_score_weight": 0.2
+        },
+        {
+            "assignment_id": 4,
+            "class_id": 4,
+            "assignment_name": "Final Presentation",
+            "assignment_type": "Project",
+            "assignment_score_weight": 0.35
+        },
+        {
+            "assignment_id": 5,
+            "class_id": 5,
+            "assignment_name": "Group Report",
+            "assignment_type": "Homework",
+            "assignment_score_weight": 0.15
+        }
+    ],
+    "WORK_LOAD": [
+        {
+            "student_id": 1,
+            "assignment_id": 1
+        },
+        {
+            "student_id": 1,
+            "assignment_id": 2
+        },
+        {
+            "student_id": 2,
+            "assignment_id": 3
+        },
+        {
+            "student_id": 3,
+            "assignment_id": 4
+        },
+        {
+            "student_id": 4,
+            "assignment_id": 5
+        }
+    ],
+    "SCHEDULE": [
+        {
+            "student_id": 1,
+            "class_id": 1
+        },
+        {
+            "student_id": 1,
+            "class_id": 2
+        },
+        {
+            "student_id": 2,
+            "class_id": 3
+        },
+        {
+            "student_id": 3,
+            "class_id": 4
+        },
+        {
+            "student_id": 4,
+            "class_id": 5
+        }
+    ],
+    "STUDY_GUIDE": [
+        {
+            "sg_id": 1,
+            "class_id": 1
+        },
+        {
+            "sg_id": 2,
+            "class_id": 2
+        },
+        {
+            "sg_id": 3,
+            "class_id": 3
+        },
+        {
+            "sg_id": 4,
+            "class_id": 4
+        },
+        {
+            "sg_id": 5,
+            "class_id": 5
+        }
+    ],
+    "AI_CHAT_LOG": [
+        {
+            "log_id": 1,
+            "student_id": 1,
+            "timestamp": "2025-10-15T09:30:00",
+            "user_message": "What topics will the midterm cover?",
+            "ai_response": "The midterm will cover chapters 1-4, focusing on sorting and recursion."
+        },
+        {
+            "log_id": 2,
+            "student_id": 2,
+            "timestamp": "2025-10-15T10:00:00",
+            "user_message": "Generate a study plan for Calculus I.",
+            "ai_response": "Review limits, derivatives, and applications of differentiation this week."
+        },
+        {
+            "log_id": 3,
+            "student_id": 3,
+            "timestamp": "2025-10-15T10:30:00",
+            "user_message": "How can I improve my project design?",
+            "ai_response": "Focus on modular code and add documentation to your functions."
+        },
+        {
+            "log_id": 4,
+            "student_id": 4,
+            "timestamp": "2025-10-15T11:00:00",
+            "user_message": "Summarize the lecture on cognitive biases.",
+            "ai_response": "The lecture covered confirmation bias, anchoring, and availability heuristics."
+        }
+    ]
+}

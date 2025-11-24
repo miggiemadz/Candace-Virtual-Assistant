@@ -1,0 +1,5 @@
+[Student] Clara Martinez
+Major: Computer Science
+Courses Enrolled: Cognitive Psychology
+GPA: 3.6
+Credits: 85

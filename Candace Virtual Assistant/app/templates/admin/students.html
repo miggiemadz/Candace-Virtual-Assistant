@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% set active_page = 'admin' %}
+
+{% block title %}Students | Candace Admin{% endblock %}
+{% block header_title %}Student Records{% endblock %}
+{% block header_subtitle %}View all students in the LMS database.{% endblock %}
+
+{% block content %}
+<div class="section-header">
+    <div>
+        <div class="section-title">Students</div>
+        <div class="section-subtitle">
+            All enrolled student records with majors, GPA, credits, and account status.
+        </div>
+    </div>
+</div>
+
+<form method="get" style="margin-bottom:16px; display:flex; gap:10px; flex-wrap:wrap;">
+    <input name="q" value="{{ search }}" placeholder="Search by name..."
+           style="padding:6px 8px; min-width:200px; font-size:13px; border:1px solid var(--border-subtle); border-radius:4px;">
+
+    <select name="major" style="padding:6px 8px; font-size:13px; border-radius:4px;">
+        <option value="">All majors</option>
+        {% for m in majors %}
+            <option value="{{ m.major_name }}" {% if major_filter == m.major_name %}selected{% endif %}>
+                {{ m.major_name }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <button type="submit"
+            style="padding:6px 10px; background:var(--accent); color:#fff; border:none; border-radius:4px; cursor:pointer;">
+        Apply
+    </button>
+
+    {% if search or major_filter %}
+        <a href="{{ url_for('main.admin_students') }}" style="font-size:12px; text-decoration:none; margin-left:6px;">
+            Clear filters
+        </a>
+    {% endif %}
+</form>
+
+<div style="overflow-x:auto;">
+<table style="width:100%; border-collapse:collapse; font-size:13px;">
+    <thead>
+        <tr>
+            <th style="padding:6px; border-bottom:1px solid #d5dde5;">ID</th>
+            <th style="padding:6px; border-bottom:1px solid #d5dde5;">Name</th>
+            <th style="padding:6px; border-bottom:1px solid #d5dde5;">Major</th>
+            <th style="padding:6px; border-bottom:1px solid #d5dde5;">GPA</th>
+            <th style="padding:6px; border-bottom:1px solid #d5dde5;">Credits</th>
+            <th style="padding:6px; border-bottom:1px solid #d5dde5;">Account</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if students %}
+            {% for s in students %}
+            <tr>
+                <td style="padding:6px; border-bottom:1px solid #edf0f5;">{{ s.student_id }}</td>
+                <td style="padding:6px; border-bottom:1px solid #edf0f5;">
+                    {{ s.student_first_name }} {{ s.student_last_name }}
+                </td>
+                <td style="padding:6px; border-bottom:1px solid #edf0f5;">
+                    {{ s.major_name or "—" }}
+                </td>
+                <td style="padding:6px; border-bottom:1px solid #edf0f5;">{{ s.student_gpa }}</td>
+                <td style="padding:6px; border-bottom:1px solid #edf0f5;">{{ s.student_total_credits }}</td>
+                <td style="padding:6px; border-bottom:1px solid #edf0f5;">
+                    {% if s.has_account %}
+                        <span style="color:green; font-weight:600;">Yes</span>
+                    {% else %}
+                        <span style="color:#999;">No</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="6" style="padding:10px; color:#777;">No matching students found.</td>
+        </tr>
+        {% endif %}
+    </tbody>
+</table>
+</div>
+
+{% endblock %}

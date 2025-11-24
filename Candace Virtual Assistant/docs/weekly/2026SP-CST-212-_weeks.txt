@@ -1,0 +1,220 @@
+Week 1 Introduction, syllabus, books,
+storage media, course
+expectations labs
+Reading: Chapter 1
+Written Assn: What is information
+systems, Case Study 1
+
+---------------------
+
+Week 2 Installing the Android Studio
+SDK
+Reading:Continue with Chapter 1
+Voilla! Meet the Android Written Assn: Employment within
+Information Systems
+
+---------------------
+
+Week 3 Simplify! The Android User
+Interface
+Research Paper: Explanation
+Reading: Chapter 2
+Written Assn: Review questions, Case
+Study.
+
+---------------------
+
+Week 4 Engage! Android User Input,
+Variables, and Operations
+Test 1: Material covered in previous
+classes
+Reading: Corresponding chapter 3
+Written Assn
+
+---------------------
+
+Week 5 Explore! Icons and Decision-
+Making Controls
+Reading chapter 4and Written Assn
+Review Questions, Case Study
+
+---------------------
+
+Week 6 Investigate! Android Lists,
+Arrays, and Web Browsers
+Reading: Corresponding chapter 6
+Written Assn Review Questions, Case
+Study
+
+---------------------
+
+Week 7 Jam! Implementing Audio in
+Android Apps
+Test 2: Material covered in previous
+classes
+Readings and written assn.
+Corresponding chapter, Review
+Questions, Case Study
+
+---------------------
+
+Week 8 Reveal! Displaying Pictures
+in a Gallery
+Reading: Corresponding chapter 7
+Written Assn Review Questions, Case
+Study
+
+---------------------
+
+Week 9 Design! Using a DatePicker
+on a Tablet
+Research Paper: Outline due
+Reading: Corresponding chapter 8
+Written Assn Review Questions, Case
+Study
+
+---------------------
+
+Week 10 Customize! Navigating with
+Master/Detail Flow Activity
+Test 3 – Material covered in previous
+chapters
+on a Tablet Reading: Corresponding chapter 9
+Written Assn Review Questions, Case
+Study
+
+---------------------
+
+Week 11 Move! Creating Animation Reading: Corresponding chapter 10
+Written Assn: Review Questions, Case
+Study
+
+---------------------
+
+Week 12 Discover! Persistent Data Reading: Corresponding chapter 11
+Written Assn Review Questions, Case
+Study
+
+---------------------
+
+Week 13 Finale! Publishing your
+Android App
+Reading: Corresponding chapter 12
+Written Assn Review Questions, Case
+Study
+
+---------------------
+
+Week 14 Review Test 4 – Material covered in previous
+
+---------------------
+
+Week 15 Final Examination
+Additional Information
+1. Assignments are due by the date posted on the Web calendar. All assignments
+must be submitted in order to pass the course. Be sure to keep up with the
+assignments.
+2. If you are repeating this course, you must re-create all assignments. Be sure to
+create new files. Work submitted from a previous semester will not be accepted.
+3. Late work will be accepted; however, eleven points will be deducted for each day
+the assignment is late. No work will be accepted more than three calendar days
+after the due date. During the last full week of class, no work will be accepted late.
+Be sure to check the calendar!
+4. All tests must be taken. Each test may be taken only one time; so be sure you are
+prepared to take the test. While taking each test, you must disable any and all pop-
+up blockers that are enabled. You are on the honor system – no books, notes, or
+any type of assistance is permitted while taking tests. You may take the test at any
+time the test is available up to the closing date of the test. Tests cannot be made
+up. A grade of zero will be given for any test. In order to receive a passing grade,
+all tests, research paper, and final exam must be taken.
+5. To appeal a grade you must send a mail message to the instructor through ANGEL
+within five days of the posted grade. Overdue appeals will not be considered.
+6. It is important for you to log on to the class site a few times a week. Be sure to
+spend a minimum of eight hours a week completing the work for this class.
+7. Any acts of classroom disruption (including that of online courses) that go beyond
+the normal rights of students to question and discuss with instructors the
+educational process relative to subject content will not be tolerated, in accordance
+with the Academic Code of Conduct described in the Student Handbook. See the
+Student Handbook for the policy on “Academic Integrity.” I strongly support the
+policy regarding academic behavior and disruptive behavior.
+Experiential Learning
+Students must complete an experiential learning activity that connects course content to
+career applications. This activity may be a content specific assignment or practical skill
+that is applied within a course assignment. This assignment supports the general
+education learning outcomes of scientific/critical thinking and quantitative reasoning; oral
+and written communication; and information literacy/technological competency.
+Academic Policies
+See College Catalog for more information: http://onlinecatalog.ucc.edu/index.php
+Americans with Disabilities Act (ADA)
+UCNJ Union College of Union County, NJ offers reasonable accommodations and/or
+services to persons with disabilities. Any student who has a documented disability and
+wishes to self-identify should contact the Director of Universal Accessibility Services and
+Veterans Affairs at (908) 709-7164, or email accessibility@ucc.edu. Accommodations
+are individualized and in accordance with Section 504 of the Rehabilitation Act of 1973
+and the Americans with Disabilities Act of 1992. In order to receive accommodations,
+students must be registered with Disability Support Services. Students should register
+with the office as soon as possible. Accommodations are not official until the Faculty
+Accommodations Alert Form(s) are issued from the student to his/her instructor(s).
+Family Educational Rights and Privacy Act (FERPA)
+The FERPA Statement can be found at https://www.ucc.edu/admissions/the-family-
+education-rights-and-privacy-act/.
+Equal Opportunity Statement
+UCNJ Union College of Union County, NJ does not discriminate and prohibits
+discrimination, as required by state and/or federal law, in all programs and activities,
+including employment and access to its career and technical programs.
+UCNJ Union College of Union County, NJ Mission Statement
+Transforming Our Community. . . One Student at a Time
+Suggested Teaching Methodologies
+1. Lecture, group discussion, presentations, multimedia/technology, projects,
+experiments, demonstrations, etc.
+2. Indication of the percentages or emphasis given to teaching methodologies used
+will assist faculty members in course preparation and implementation.
+Mapping Course Learning Outcomes to Learning Activities and
+Evaluation Methods
+Program Outcomes Course Learning Outcomes Assessment of
+Outcomes
+Use software methods
+and algorithmic thinking
+to design technological
+solutions for a variety of
+different fields.
+Build simple mobile
+applications for Android devices
+Implement icons and themes in
+an application
+Written: Exams and
+programming assignments.
+Verbal: Class discussion
+and responses, group
+discussion and responses.
+Design, implement,
+test, and evaluate
+complete, logical
+programs with
+documentation that
+meet defined
+specifications.
+Create control structures in an
+application
+Use lists and arrays in an
+application
+Use current techniques,
+skills, and tools with
+computer programming
+languages to solve real-
+world problems.
+Implement audio, graphics and
+animation in an application
+Written: Exams and
+programming assignments.
+Verbal: Class discussion
+and responses, group
+discussion and responses
+Please note: all programs must integrate in one or more courses, discipline-specific
+course learning outcomes that reflect the College learning outcomes of scientific/critical
+thinking and quantitative reasoning, oral/written communication, and information literacy.
+Visit https://app.teachinghow2s.com/library/science-technology-engineering-math-stem
+to access evidence-based-teaching techniques for this course.
+
+---------------------
+

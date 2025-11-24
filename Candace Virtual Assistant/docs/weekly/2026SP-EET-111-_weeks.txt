@@ -1,0 +1,268 @@
+WEEK 1
+Number systems, Decimal,
+Binary, Hexadecimal
+Binary addition
+Signed Numbers
+Binary Subtraction
+BCD code and other codes
+Lecture
+Reading of Text
+Use in problem
+solving
+Intro
+WEEK
+2,3
+Truth Tables
+Gates
+Switching Algebra properties
+DeMorgan Theorems
+Compliment
+Laboratory
+Lecture
+Reading of Text
+Use in problem
+solving
+LAB1
+LAB 2
+WEEK
+4,5
+SOP,POS, maxterm, minterm,
+Canonical Sum and Products
+Truth table to algebraic
+expression
+Universal gatee, Nand, Nor
+Exor gates
+Laboratory
+Lecture
+Reading of Text
+Use in problem
+solving
+LAB 3
+LAB 4
+Week Unit/Content Learning Activities Lab
+WEEK
+6,7
+Delays in combinational,
+circuits,
+Adders
+Comparator
+Binary decoders,
+Encoders
+Multiplexer
+Demultiplexser
+3-state gate
+Rom, PLA, PAL
+Laboratory
+Lecture
+Reading of Text
+Use in problem
+solving
+LAB 5
+LAB 6
+
+---------------------
+
+WEEK 9,
+10,11 Sequential Logic
+State Tables,
+State Diagrams
+SR Latches
+D FF, JK FF, T FF
+Laboratory
+Lecture
+Reading of Text
+Use in problem
+solving
+LAB 7
+LAB 8
+Analysis of sequential systems
+WEEK
+12,13
+Design Techniques
+Design of Synchronous Counters
+Design of Asynchronous Counters
+Synthesis
+Laboratory
+Lecture
+Reading of Text
+Use in problem
+solving
+LAB 9
+WEEK
+14
+Shift registers,
+counters
+Laboratory
+Lecture
+Reading of Text
+Use in problem
+solving
+LAB
+ASSESSME
+LABORATORIES
+LAB #1 – TTL Gates
+LAB #2 - Laws of Boolean Algebra and DeMorgan’s Theorems -
+LAB #3 - ADVANCED LOGIC GATES -
+LAB #4 - LOGIC IMPLEMENTATION AND SIMPLIFICATION -
+LAB #5 - MAGNITUDE COMPARATOR –
+LAB #6 - ENCODERS/DECODERS
+LAB #7 - FLIP FLOPS –
+LAB #8 - BINARY COUNTERS –
+LAB #9 - DECADE COUNTERS AND SHIFT REGISTERS –
+Experiential Learning
+Students must complete an experiential learning activity that connects course content to
+career applications. This activity may be a content specific assignment or practical skill
+that is applied within a course assignment. This assignment supports the general
+education learning outcomes of scientific/critical thinking and quantitative reasoning; oral
+and written communication; and information literacy/technological competency.
+Academic Policies
+See College Catalog for more information: http://onlinecatalog.ucc.edu/index.php
+Americans with Disabilities Act (ADA)
+UCNJ Union College of Union County, NJ offers reasonable accommodations and/or
+services to persons with disabilities. Any student who has a documented disability and
+wishes to self-identify should contact the Director of Universal Accessibility Services and
+Veterans Affairs at (908) 709-7164, or email accessibility@ucc.edu. Accommodations
+are individualized and in accordance with Section 504 of the Rehabilitation Act of 1973
+and the Americans with Disabilities Act of 1992. In order to receive accommodations,
+students must be registered with Disability Support Services. Students should register
+with the office as soon as possible. Accommodations are not official until the Faculty
+Accommodations Alert Form(s) are issued from the student to his/her instructor(s).
+Family Educational Rights and Privacy Act (FERPA)
+The FERPA Statement can be found at https://www.ucc.edu/admissions/the-family-
+education-rights-and-privacy-act/.
+Equal Opportunity Statement
+UCNJ Union College of Union County, NJ does not discriminate and prohibits
+discrimination, as required by state and/or federal law, in all programs and activities,
+including employment and access to its career and technical programs.
+UCNJ Union College of Union County, NJ Mission Statement
+Transforming Our Community. . . One Student at a Time
+Suggested Teaching Methodologies
+1. Reading assignments: Students will gain knowledge from assigned textbooks and relevant
+source documents.
+2. Lectures: This format will include question and answer sessions to provide interactivity
+between students and instructor.
+3. Class Discussions and Problem Solving: Topics will be discussed to broaden student
+understanding and problems will be used to demonstrate how to apply gained knowledge.
+Mapping Course Learning Outcomes to Learning Activities and
+Evaluation Methods
+Course Learning Outcomes
+(CLOs)
+Learning Activities Evaluation M
+1. Understand basic logic
+functions and logic gates.
+Laboratory
+Lecture
+Reading of Text
+Use in problem solving
+Class participation
+Homework
+Lab Report
+Quiz
+Test
+2. Be proficient in the use of
+various digital number
+systems.
+Lecture
+Reading of Text
+Use in problem solving
+Class participation
+Homework
+Quiz
+Test
+3. Apply the laws of Boolean
+algebra and DeMorgan’s
+theorem to digital circuits.
+Laboratory
+Lecture
+Reading of Text
+Use in problem solving
+Class participation
+Homework
+Lab Report
+Quiz
+Test
+4. Design adders, subtractors,
+and comparators using logic
+gates.
+Laboratory
+Lecture
+Reading of Text
+Use in problem solving
+Class participation
+Homework
+Lab Report
+Quiz
+Test
+5. Understand encoders,
+decoders, and multiplexers.
+Laboratory
+Lecture
+Reading of Text
+Use in problem solving
+Class participation
+Homework
+Lab Report
+Quiz
+Test
+6. Understand basic flip-flop
+operations and design.
+Laboratory
+Lecture
+Reading of Text
+Use in problem solving
+Class participation
+Homework
+Lab Report
+Quiz
+Test
+7. Understand basic computer
+architecture
+Lecture
+Reading of Text
+Quiz
+Test
+8. Design and test counters,
+shift registers, and data
+selectors using flip-flops.
+Laboratory
+Lecture
+Reading of Text
+Class participation
+Homework
+Lab Report
+Quiz
+Use in problem solving Test
+9. In laboratory, construct and
+test various circuits using
+laboratory equipment and
+digital components.
+Laboratory
+Lecture
+Reading of Text
+Use in problem solving
+Class participation
+Homework
+Lab Report
+Quiz
+Test
+10. Use computer applications
+and computer based
+electronic simulation
+software to enhance the
+laboratory experience.
+Laboratory
+Lab Report
+11. Use research resources to
+retrieve, analyze,
+summarize, and critique
+information
+Laboratory
+Lab Report
+Please note: all programs must integrate in one or more courses, discipline-specific course
+learning outcomes that reflect the College learning outcomes of scientific/critical thinking and
+quantitative reasoning, oral/written communication, and information literacy.
+Visit https://app.teachinghow2s.com/library/science-technology-engineering-math-stem
+to access evidence-based-teaching techniques for this course.
+
+---------------------
+

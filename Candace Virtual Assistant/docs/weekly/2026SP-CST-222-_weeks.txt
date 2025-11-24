@@ -1,0 +1,281 @@
+Week 1 Introduction, syllabus, books,
+storage media, course
+expectations labs
+Reading: Syllabus and Preface
+
+---------------------
+
+Week 2 The 7 layer model of the modern
+computer
+Reading: Preface & Chapter 1
+Written Assn: word problems
+
+---------------------
+
+Week 3 The applications layer (level 7) Reading: Chapter 2
+Written asgn: word problems, small java
+programs
+
+---------------------
+
+Week 4 Higher language Level (level 6)
+Program control structures &
+data representation
+Recursive solutions
+Reading Chapter 3
+Recursion problem using Java
+
+---------------------
+
+Week 5 ISA level 3: Data representation
+systems; Binary, octal and
+hexadecimal representations; 2s
+complement and IEEE 754
+Reading: Chapter 4
+Arithmetic problems
+Conversion algorithms
+
+---------------------
+
+Week 6 Examination #1
+Von Neumann’s Machine (ISA
+level 3)
+Reading: Chapter 4 (cont),
+
+---------------------
+
+Week 7 Von Neumann’s Machine cycle Investigation of object codes for
+machine operations; analyze memory
+The interaction of registers,
+processor and memory devices
+dumps and decode operation codes
+and operands
+
+---------------------
+
+Week 8 Review of Boolean operations
+Simple multi-step operations
+Reading: Chapter 5
+Simple multi-step object (machine-level)
+programs
+
+---------------------
+
+Week 9 Higher level language program
+constructs – ifs, loops, switch &
+methods
+Examination #2
+Examination of set and test sequence
+with branching, examine status
+registers
+
+---------------------
+
+Week 10 Higher level language program
+constructs – ifs, loops, switch &
+methods (cont)
+Simple assembly programming
+assignment
+
+---------------------
+
+Week 11 Data Modeling and the higher
+and lower levels
+Array representation and
+implementation
+Convert higher level programs into
+lower (assembly) level equivalents.
+
+---------------------
+
+Week 12 Array Processing.
+Procedure implementation at the
+lower level – call and return
+sequence
+Programming assignment using strings,
+arrays and procedures
+
+---------------------
+
+Week 13 Basic theorems of Boolean
+Algebra, truth tables and logic
+circuits.
+Reading: Chapter 10
+Boolean algebra proofs.
+
+---------------------
+
+Week 14 Digital Logic (con’t) logic
+diagrams, truth tables
+Examination #3
+Reading Chapter 10 (cont)
+Word problems; convert Boolean
+expressions to diagrams & truth tables
+
+---------------------
+
+Week 15 Combinational Designs &
+Devices, Karnaugh Maps.
+Course review
+Final Examination
+Class Policies
+See College Catalog and Student Handbook for more information on UCNJ website:
+Grading (click on link below) http://onlinecatalog.ucc.edu/content.php?
+catoid=5&navoid=824&hl=%22plagiarism%22&returnto=search#grading-grading
+Student Code of Conduct (click on link below)
+https://www.ucc.edu/documents/academics/2024-25-UCNJ-Student-Handbook.pdf
+Plagiarism Policies (click on link below) http://onlinecatalog.ucc.edu/content.php?
+catoid=5&navoid=824&hl=%22plagiarism%22&returnto=search#cheating-plagiarism.
+Experiential Learning
+Students must complete an experiential learning activity that connects course content to
+career applications. This activity may be a content specific assignment or practical skill
+that is applied within a course assignment. This assignment supports the general
+education learning outcomes of scientific/critical thinking and quantitative reasoning; oral
+and written communication; and information literacy/technological competency.
+Academic Policies
+See College Catalog for more information: http://onlinecatalog.ucc.edu/index.php
+Americans with Disabilities Act (ADA)
+UCNJ Union College of Union County, NJ offers reasonable accommodations and/or
+services to persons with disabilities. Any student who has a documented disability and
+wishes to self-identify should contact the Director of Universal Accessibility Services and
+Veterans Affairs at (908) 709-7164, or email accessibility@ucc.edu. Accommodations
+are individualized and in accordance with Section 504 of the Rehabilitation Act of 1973
+and the Americans with Disabilities Act of 1992. In order to receive accommodations,
+students must be registered with Disability Support Services. Students should register
+with the office as soon as possible. Accommodations are not official until the Faculty
+Accommodations Alert Form(s) are issued from the student to his/her instructor(s).
+Family Educational Rights and Privacy Act (FERPA)
+The FERPA Statement can be found at https://www.ucc.edu/admissions/the-family-
+education-rights-and-privacy-act/.
+Equal Opportunity Statement
+UCNJ Union College of Union County, NJ does not discriminate and prohibits
+discrimination, as required by state and/or federal law, in all programs and activities,
+including employment and access to its career and technical programs.
+UCNJ Union College of Union County, NJ Mission Statement
+Transforming Our Community. . . One Student at a Time
+Suggested Teaching Methodologies
+1. Lecture, group discussion, presentations, multimedia/technology, projects, experiments,
+demonstrations, etc.
+2. Indication of the percentages or emphasis given to teaching methodologies used will assist
+faculty members in course preparation and implementation.
+Mapping Course Learning Outcomes to Learning Activities and
+Evaluation Methods
+Course Learning
+Outcomes (CLO’s)
+Learning Activities Evaluation Methods
+Describe the operational
+components of a Von
+Neumann Machine and
+explain how they work
+together to as a modern
+computer.
+Read text
+Lecture
+Group discussions
+Classroom demonstration
+research,
+report(s)
+Chapter quizzes
+Chapter Exercises &
+Problems
+Information Literacy
+Project
+Midterm Exam
+Final Exam
+Design higher-level
+language program control
+Read text
+Lecture
+Chapter quizzes
+constructs using a lower-
+level (assembly-level)
+language.
+Group discussions
+Classroom demonstration
+research,
+report(s)
+Chapter Exercises &
+Problems
+Information Literacy
+Project
+Midterm Exam
+Final Exam
+Model higher-level
+language data structures
+such as arrays, queues and
+stacks, using a lower-level
+language.
+Read text
+Lecture
+Group discussions
+Classroom demonstration
+research,
+report(s)
+Chapter quizzes
+Chapter Exercises &
+Problems
+Information Literacy
+Project
+Midterm Exam
+Final Exam
+Representation of
+expressions using source
+language code (HLL &
+ASM), circuit sequences
+and Boolean Algebra.
+Read text
+Lecture
+Group discussions
+Classroom demonstration
+research,
+report(s)
+Chapter quizzes
+Chapter Exercises &
+Problems
+Information Literacy
+Project
+Midterm Exam
+Final Exam
+Solve arithmetic problem
+when numbers are
+represented in bases other
+than decimal (in binary,
+octal and hexadecimal).
+Read text
+Lecture
+Group discussions
+Classroom demonstration
+research,
+report(s)
+Chapter quizzes
+Chapter Exercises &
+Problems
+Information Literacy
+Project
+Midterm Exam
+Final Exam
+Locate and identify data
+and instructions
+represented in memory
+dumps.
+Read text
+Lecture
+Group discussions
+Classroom demonstration
+research,
+report(s)
+Chapter quizzes
+Chapter Exercises &
+Problems
+Information Literacy
+Project
+Midterm Exam
+Final Exam
+Please note: all programs must integrate in one or more courses, discipline-specific course
+learning outcomes that reflect the College learning outcomes of scientific/critical thinking and
+quantitative reasoning, oral/written communication, and information literacy.
+Visit https://app.teachinghow2s.com/library/science-technology-engineering-math-stem
+to access evidence-based-teaching techniques for this course.
+
+---------------------
+

@@ -1,0 +1,451 @@
+WEEK 1, 2
+Physics defined
+Review of Math required
+Units
+Significant Figures
+Coordinate Systems
+Vectors
+Review of expected alg
+trigonometric and calcu
+for course.
+Dimensional analysis
+Lecture
+On line simulations
+Reading of Text
+Review of lab activities
+TEST 1 WEEK 2 (Cha
+Unit conversions
+Use in problem solving
+
+---------------------
+
+WEEK 3
+Kinematics one dimension
+Velocity
+Acceleration
+Graphical relations between the
+three kinematic quantities
+Constant acceleration
+Free fall
+Kinematic Equations
+Graphical Analysis of m
+problems
+Lecture
+On line simulations
+Reading of Text
+Review of lab activities
+
+---------------------
+
+WEEK 4 Kinematics in two dimensions
+TEST 2 WEEK 5 (Cha
+3)
+Use in problem solving
+Position vector
+Displacement
+Motion in two dimensions
+Projectile Motion
+Tangential and Radial acceleration
+Relative Velocity
+
+---------------------
+
+WEEK 5, 6
+Classical Mechanics
+Philosophy of interactions via
+forces
+Newton’s 3 Laws
+Four forces and GUT,
+Internal, external forces
+Physical force laws: Hooke’s Law,
+Gravitational, Weight, Electrical,
+Normal, Frictional and tension
+Free Body Diagrams
+Equilibrium
+Life on an incline plane
+Apparent Weight
+Drawing of Free Body Di
+Lecture
+On line simulations
+Reading of Text
+Review of lab activities
+Use in problem solving
+
+---------------------
+
+WEEK 7
+Circular Motion and other applications
+of Newton's Laws
+Angular quantities
+Tangential quantities
+Centripetal acceleration
+Angular Acceleration
+Constant angular acceleration
+Bank Curves
+Non Constant Circular motion
+Motion with Resistive Forces
+Drawing of Free Body Di
+Lecture
+On line simulations
+Reading of Text
+Review of lab activities
+Use in problem solving
+TEST 3 WEEK 8 (Chapt
+
+---------------------
+
+WEEK 8,9 Energy and Work
+Energy
+Work
+Lecture
+On line simulations
+Conservative forces
+Kinetic Energy
+Work-Energy for a point particle
+Potential Energy, Gravitational,
+Elastic
+Mechanical Energy
+Conservation of Energy
+Power
+Reading of Text
+Review of lab activities
+Use in problem solving
+
+---------------------
+
+WEEK 10
+Momentum
+Newton 2nd law recast
+Impulse-Momentum theorem
+Conservation of Momentum
+Center of Mass
+Motion of COM
+One Dim collisions
+Two Dim collisions
+Lecture
+On line simulations
+Reading of Text
+Review of lab activities
+TEST 4 WEEK 11 (Chap
+6)
+Use in problem solving
+
+---------------------
+
+WEEK 11, 12
+Dynamics of Rotation
+Rotational Inertia
+Rotational kinetic energy
+Torque
+Center of Gravity
+Work
+Rotational Equilibrium
+Angular momentum
+Kepler's Laws
+Drawing of Free Body Di
+Lecture
+On line simulations
+Reading of Text
+Review of lab activities
+Use in problem solving
+
+---------------------
+
+WEEK 13 Static Equilibrium and Elasticity
+Rigid Bodies in equilibrium
+Center of Gravity
+Elastic Mediums
+Stress, Strain, Young’s modulus
+Hooke’s Law
+Drawing of Free Body Di
+Lecture
+On line simulations
+Reading of Text
+Review of lab activities
+TEST 5 WEEK 14 (Chap
+and 9)
+Use in problem solving
+
+---------------------
+
+WEEK 14
+Fluids
+Definition of a fluid
+Pressure Pascal’s Principle
+Archimedes Principle
+Fluid Flow
+Bernoulli’s Equation
+Lecture
+On line simulations
+Reading of Text
+Review of lab activities
+Use in problem solving
+
+---------------------
+
+WEEK 15 Final Exam
+Class Policies
+Attendance: Regular attendance is strongly encouraged. While not mandatory,
+absences may negatively impact performance.
+Participation: Active participation in class discussions, group work, and in-class
+activities is expected.
+Experiential Learning
+Students must complete an experiential learning activity that connects course content to
+career applications. This activity may be a content specific assignment or practical skill
+that is applied within a course assignment. This assignment supports the general
+education learning outcomes of scientific/critical thinking and quantitative reasoning; oral
+and written communication; and information literacy/technological competency.
+Academic Policies
+See College Catalog for more information: http://onlinecatalog.ucc.edu/index.php
+Americans with Disabilities Act (ADA)
+UCNJ Union College of Union County, NJ offers reasonable accommodations and/or
+services to persons with disabilities. Any student who has a documented disability and
+wishes to self-identify should contact the Director of Universal Accessibility Services and
+Veterans Affairs at (908) 709-7164, or email accessibility@ucc.edu. Accommodations
+are individualized and in accordance with Section 504 of the Rehabilitation Act of 1973
+and the Americans with Disabilities Act of 1992. In order to receive accommodations,
+students must be registered with Disability Support Services. Students should register
+with the office as soon as possible. Accommodations are not official until the Faculty
+Accommodations Alert Form(s) are issued from the student to his/her instructor(s).
+Family Educational Rights and Privacy Act (FERPA)
+The FERPA Statement can be found at https://www.ucc.edu/admissions/the-family-
+education-rights-and-privacy-act/.
+Equal Opportunity Statement
+UCNJ Union College of Union County, NJ does not discriminate and prohibits
+discrimination, as required by state and/or federal law, in all programs and activities,
+including employment and access to its career and technical programs.
+UCNJ Union College of Union County, NJ Mission Statement
+Transforming Our Community. . . One Student at a Time
+Suggested Teaching Methodologies
+Course activities vary from course to course and instructor to instructor.
+Below is a listing of the activities students will find in this course:
+1. Reading assignments: Students will gain knowledge from assigned textbooks and
+relevant source documents.
+2. Lectures: This format will include question and answer sessions to provide
+interactivity between students and instructor.
+3. Class Discussions and Problem Solving: Topics will be discussed to broaden
+student understanding and problems will be used to demonstrate how to apply
+gained knowledge.
+Mapping Course Learning Outcomes to Learning Activities and
+Evaluation Methods
+Course Learning
+Outcomes
+(CLO's)
+Learning Activities Evaluation Methods
+1. Solve problems using
+algebraic and trigonometric
+based math
+Lecture
+On line simulations
+Reading of Text
+Review of lab activities
+Unit conversions
+Class participation
+Homework
+Quizzes
+Tests
+2. Manipulate as
+magnitude/direction
+Lecture
+On line simulations
+Reading of Text
+Review of lab activities
+Unit conversions
+Class participation
+Homework
+Quizzes
+Tests
+3. Perform vector
+operations such as addition
+and subtraction
+Lecture
+On line simulations
+Reading of Text
+Review of lab activities
+Unit conversions
+Class participation
+Homework
+Quizzes
+Tests
+Course Learning
+Outcomes
+(CLO's)
+Learning Activities Evaluation Methods
+4. Use Metric System (SI)
+of Units and correct use of
+significant figures in
+answering questions
+Lecture
+On line simulations
+Reading of Text
+Review of lab activities
+Unit conversions
+Class participation
+Homework
+Quizzes
+Tests
+5. State the definitions and
+relationships between
+kinematic scalar and vector
+quantities
+Lecture
+On line simulations
+Reading of Text
+Review of lab activities
+Unit conversions
+Class participation
+Homework
+Quizzes
+Tests
+6. Apply the equations
+governing linear(1-D/2-D)
+and circular constant
+acceleration of a point
+mass and of a rigid body in
+solving problems for
+various initial conditions.
+Lecture
+On line simulations
+Reading of Text
+Review of lab activities
+Unit conversions
+Class participation
+Homework
+Quizzes
+Tests
+7. State and write the
+Three Laws of Newtonian
+Mechanics
+Lecture
+On line simulations
+Reading of Text
+Review of lab activities
+Unit conversions
+Class participation
+Homework
+Quizzes
+Tests
+Course Learning
+Outcomes
+(CLO's)
+Learning Activities Evaluation Methods
+8. Apply the 3 laws of
+Newtonian Mechanics and
+Free Body diagram
+technique in solving
+problems for linear (1-D/2-
+D) and circular motion of a
+point mass and of a rigid
+body with and without
+frictional forces (torques)
+Lecture
+On line simulations
+Reading of Text
+Review of lab activities
+Unit conversions
+Class participation
+Homework
+Quizzes
+Tests
+9. State the definitions and
+relationships between work
+, energy, power for a point
+mass and a rigid body
+Lecture
+On line simulations
+Reading of Text
+Review of lab activities
+Unit conversions
+Class participation
+Homework
+Quizzes
+Tests
+10. Apply the application of
+work-energy, and
+conservation of energy
+principles to solving
+mechanical and non-
+conservative system
+problems for a point mass
+and a rigid body
+Lecture
+On line simulations
+Reading of Text
+Review of lab activities
+Unit conversions
+Class participation
+Homework
+Quizzes
+Tests
+11. State the definitions
+and relationships between
+momentum and impulse for
+a point mass and a rigid
+body
+Lecture
+On line simulations
+Reading of Text
+Review of lab activities
+Unit conversions
+Class participation
+Homework
+Quizzes
+Tests
+Course Learning
+Outcomes
+(CLO's)
+Learning Activities Evaluation Methods
+12. Apply the equations
+governing linear and
+angular momentum,
+impulse, and collisions to
+solve problems for various
+initial conditions of point
+masses and rigid bodies
+Lecture
+On line simulations
+Reading of Text
+Review of lab activities
+Unit conversions
+Class participation
+Homework
+Quizzes
+Tests
+13. Apply the equations
+governing motion , the 3
+Laws of Newtonian
+Mechanics and Energy
+considerations to solve
+problems for Newton's Law
+of Gravitation and Elastic
+medium.
+Lecture
+On line simulations
+Reading of Text
+Review of lab activities
+Unit conversions
+Class participation
+Homework
+Quizzes
+Tests
+14. Apply the 3 Laws of
+Newtonian Mechanics and
+Energy considerations to
+solve problems for fluids
+Lecture
+On line simulations
+Reading of Text
+Review of lab activities
+Unit conversions
+Class participation
+Homework
+Quizzes
+Tests
+Please note: all programs must integrate in one or more courses, discipline-specific
+course learning outcomes that reflect the College learning outcomes of scientific/critical
+thinking and quantitative reasoning, oral/written communication, and information literacy.
+Visit https://app.teachinghow2s.com/library/science-technology-engineering-math-stem
+to access evidence-based-teaching techniques for this course.
+
+---------------------
+

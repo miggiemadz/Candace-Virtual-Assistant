@@ -1,0 +1,257 @@
+WEEK1: Temperature and Ideal Gas
+Temperature
+Temperature Scales
+Thermal expansion of solids and liquids
+Molecular picture of a gas
+Absolute temperature and the ideal Gas
+Kinetic theory of the ideal gas
+Temperature and reaction rates
+Collision between gas Molecules
+
+---------------------
+
+WEEK 2: Heat
+Internal energy
+Heat
+Heat capacity and specific heat
+Specific heat of an ideal gas
+Calorimetry
+Phase transitions
+
+---------------------
+
+WEEK 3: Heat Transfer
+Conduction
+Convection
+Radiation
+
+---------------------
+
+WEEK 4: Thermodynamics
+The first law of thermodynamics
+Thermodynamic processes
+Reversible and irreversible processes
+Heat engines/pumps
+Carnot Cycle
+Entropy
+TEST 1 (Ch 10, 11, 12)
+
+---------------------
+
+WEEK 5: Elasticity and Oscillations
+Elastic deformation of solids
+Hooke's Law
+Simple Harmonic motion
+The pendulum
+
+---------------------
+
+WEEK 6: Waves
+Waves and Energy Transport
+Transverse and longitudinal waves
+Speed of waves on a string
+Principle of superposition
+Reflection and refraction
+Interference and diffraction
+Standing waves
+
+---------------------
+
+WEEK 7: Sound
+Sound Waves
+The speed of sound
+Amplitude and intensity of sound waves
+The human ear
+Beats
+The Doppler effect
+
+---------------------
+
+WEEK 8: Electromagnetic Waves
+Electromagnetic spectrum
+Speed of E&M waves
+Polarization
+Doppler effect
+TEST 2 (Ch 13, 14)
+
+---------------------
+
+WEEK 9: Reflection and Refraction
+Wavefronts, Huygens ‘s Principle
+Reflection of light
+Refraction of light
+Total internal reflection
+Brewster's angle
+Image Formation
+(Thin lenses
+Optical Instruments
+Lenses in combination
+Cameras
+The eye
+Simple magnifier; Physical Optics
+Interference
+Diffraction
+
+---------------------
+
+WEEK 10: Electric Forces and Fields
+Electric Charge
+Coulomb’s law
+Electric Field
+Gauss’s law
+
+---------------------
+
+WEEK 11: Electric Potential
+Electric potential energy
+Electric potential
+Capacitors
+Serie and parallel capacitors
+Electric Current and Circuits
+Electric Currents
+EMF and Circuits
+Resistance
+Serie and Parallel Resistors
+Kirchhoff's Laws
+Power Energy in Circuits
+RC Circuits
+TEST 3 (Ch 15, 16, 17)
+
+---------------------
+
+WEEK12: Magnetic Forces and Fields
+Magnetic Fields
+Magnetic Force on a point charge
+Motion of a charged particle in a B field
+
+---------------------
+
+WEEK 13: Magnetic Forces and Fields (continued)
+Crossed E and B fields
+Magnetic Force on a current carrying wire
+Torque on a current loop
+Ampere’s Law
+Electromagnetic Induction
+Motional EMF
+Electric Generators
+Faraday's Law
+Lenz's Law
+TEST 4 (Ch 19, 20)
+
+---------------------
+
+WEEK 14: AC CIRCUITS
+Inductance
+LR, LRC Circuits
+AC Circuits
+
+---------------------
+
+WEEK 15: Final Exam
+Class Policies
+Attendance: Regular attendance is strongly encouraged. While not mandatory,
+absences may negatively impact performance.
+Participation: Active participation in class discussions, group work, and in-class
+activities is expected.
+Additional Information
+The activities students will find in this course:
+Reading assignments: Students will gain knowledge from assigned textbooks and
+relevant source documents.
+Lectures: This format will include question and answer sessions to provide
+interactivity between students and instructor.
+Homework Problems: Students will apply knowledge from textbook readings and
+lectures to solve related real-world problems
+Experiential Learning
+Students must complete an experiential learning activity that connects course content to
+career applications. This activity may be a content specific assignment or practical skill
+that is applied within a course assignment. This assignment supports the general
+education learning outcomes of scientific/critical thinking and quantitative reasoning; oral
+and written communication; and information literacy/technological competency.
+Academic Policies
+See College Catalog for more information: http://onlinecatalog.ucc.edu/index.php
+Americans with Disabilities Act (ADA)
+UCNJ Union College of Union County, NJ offers reasonable accommodations and/or
+services to persons with disabilities. Any student who has a documented disability and
+wishes to self-identify should contact the Director of Universal Accessibility Services and
+Veterans Affairs at (908) 709-7164, or email accessibility@ucc.edu. Accommodations
+are individualized and in accordance with Section 504 of the Rehabilitation Act of 1973
+and the Americans with Disabilities Act of 1992. In order to receive accommodations,
+students must be registered with Disability Support Services. Students should register
+with the office as soon as possible. Accommodations are not official until the Faculty
+Accommodations Alert Form(s) are issued from the student to his/her instructor(s).
+Family Educational Rights and Privacy Act (FERPA)
+The FERPA Statement can be found at https://www.ucc.edu/admissions/the-family-
+education-rights-and-privacy-act/.
+Equal Opportunity Statement
+UCNJ Union College of Union County, NJ does not discriminate and prohibits
+discrimination, as required by state and/or federal law, in all programs and activities,
+including employment and access to its career and technical programs.
+UCNJ Union College of Union County, NJ Mission Statement
+Transforming Our Community. . . One Student at a Time
+Suggested Teaching Methodologies
+Reading assignments: Students will gain knowledge from assigned textbooks and
+relevant source documents.
+Lectures: This format will include question and answer sessions to provide
+interactivity between students and instructor.
+Homework Problems: Students will apply knowledge from textbook readings and
+lectures to solve related real-world problems.
+Mapping Course Learning Outcomes to Learning Activities and
+Evaluation Methods
+General Education Goals
+Program Outcomes
+Student Learning
+Course Outcomes
+Assessment
+Methods
+Student will demonstrate an
+understanding of scientific
+measurement, the metric
+system and unit conversions.
+Learn to convert units.
+Demonstrate an understanding
+of the metric system.
+Homework
+assignments.
+Written test.
+Student will demonstrate critical
+thinking and problem-solving
+skills.
+Demonstrate the ability to work
+effectively as a member of a
+team.
+Homework
+assignments.
+Written test.
+Student will demonstrate the
+ability to utilize algebra and
+trigonometry in applying physics
+principles in problem solving.
+Learn to use spreadsheets in
+data collection, analysis and
+presentation.
+Demonstrate an understanding
+of the experiment through the
+writing of a laboratory report.
+Homework
+assignments.
+Written test.
+Student will demonstrate the
+ability to create graphs and
+analyze data.
+Provide hands on experiments
+Expose the student to
+acceptable scientific methods of
+testing, measurement and
+analysis.
+Homework
+assignments.
+Written test.
+SPRING 2025
+Please note: all programs must integrate in one or more courses, discipline-specific
+course learning outcomes that reflect the College learning outcomes of scientific/critical
+thinking and quantitative reasoning, oral/written communication, and information literacy.
+Visit https://app.teachinghow2s.com/library/science-technology-engineering-math-stem
+to access evidence-based-teaching techniques for this course.
+
+---------------------
+

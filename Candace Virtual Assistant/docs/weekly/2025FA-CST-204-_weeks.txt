@@ -1,0 +1,241 @@
+Week 1 Course Introduction
+Databases and Concepts
+Read Chapters 1 & 2
+Assignment 1
+
+---------------------
+
+Week 2 Relational Database Model Read Chapter 3
+Assignment 2
+
+---------------------
+
+Week 3 Entity Relationship Modeling Read Chapter 4 & 5
+Assignment 4
+
+---------------------
+
+Week 4 Normalization Read Chapter 6
+Assignment 5
+
+---------------------
+
+Week 5 Exam 1
+Final Project introduction
+Exam covers chapters 1- 6
+Final project introduction
+
+---------------------
+
+Week 6 Introduction to SQL Language Read Chapter 7
+Assignment 6
+
+---------------------
+
+Week 7 Advanced SQL Read Chapter 8
+Assignment 7
+
+---------------------
+
+Week 8 Database Design Read Chapter 9
+Assignment 8
+
+---------------------
+
+Week 9 Transaction Management
+Optimization
+Read Chapter 10 & 11
+Assignment 9
+
+---------------------
+
+Week 10 Exam 2 Exam covers chapters 7 - 11
+Continue work on final project
+ERD for project due
+
+---------------------
+
+Week 11 Distributed DBMS/ BI & Data
+Warehouses
+Read Chapter 12 & 13
+Assignment 9
+
+---------------------
+
+Week 12 Big Data & NoSQL Read Chapter 14
+Assignment 10
+
+---------------------
+
+Week 13 Database Connectivity Read Chapter 15
+Assignment 11
+
+---------------------
+
+Week 14 Administration & Security Read Chapter 16
+
+---------------------
+
+Week 15 Exam 3 Exam covers chapters 12 -16
+Final Project
+Experiential Learning
+Students must complete an experiential learning activity that connects course content to
+career applications. This activity may be a content specific assignment or practical skill
+that is applied within a course assignment. This assignment supports the general
+education learning outcomes of scientific/critical thinking and quantitative reasoning; oral
+and written communication; and information literacy/technological competency.
+Academic Policies
+See College Catalog for more information: http://onlinecatalog.ucc.edu/index.php
+Americans with Disabilities Act (ADA)
+UCNJ Union College of Union County, NJ offers reasonable accommodations and/or
+services to persons with disabilities. Any student who has a documented disability and
+wishes to self-identify should contact the Director of Universal Accessibility Services and
+Veterans Affairs at (908) 709-7164, or email accessibility@ucc.edu. Accommodations
+are individualized and in accordance with Section 504 of the Rehabilitation Act of 1973
+and the Americans with Disabilities Act of 1992. In order to receive accommodations,
+students must be registered with Disability Support Services. Students should register
+with the office as soon as possible. Accommodations are not official until the Faculty
+Accommodations Alert Form(s) are issued from the student to his/her instructor(s).
+Family Educational Rights and Privacy Act (FERPA)
+The FERPA Statement can be found at https://www.ucc.edu/admissions/the-family-
+education-rights-and-privacy-act/.
+Equal Opportunity Statement
+UCNJ Union College of Union County, NJ does not discriminate and prohibits
+discrimination, as required by state and/or federal law, in all programs and activities,
+including employment and access to its career and technical programs.
+UCNJ Union College of Union County, NJ Mission Statement
+Transforming Our Community. . . One Student at a Time
+Suggested Teaching Methodologies
+1. Lecture, group discussion, presentations, multimedia/technology, projects, experiments,
+demonstrations, etc.
+2. Indication of the percentages or emphasis given to teaching methodologies used will assist
+faculty members in course preparation and implementation.
+Mapping Course Learning Outcomes to Learning Activities and
+Evaluation Methods
+Course Learning Learning Activities Evaluation Methods
+Outcomes (CLO’s)
+Explain the importance of
+data models and how they
+are used, relational
+database operators, the
+data dictionary, and the
+system catalog.
+Read text
+Lecture
+Group discussions
+Classroom demonstration
+research,
+report(s)
+Chapter quizzes
+Chapter Exercises &
+Problems
+Information Literacy
+Project
+Midterm Exam
+Final Exam
+Summarize normalization
+and what role it plays in the
+database design process.
+Read text
+Lecture
+Group discussions
+Classroom demonstration
+research,
+report(s)
+Chapter quizzes
+Chapter Exercises &
+Problems
+Information Literacy
+Project
+Midterm Exam
+Final Exam
+List the characteristics of
+good primary keys and how
+to select them.
+Read text
+Lecture
+Group discussions
+Classroom demonstration
+research,
+report(s)
+Chapter quizzes
+Chapter Exercises &
+Problems
+Information Literacy
+Project
+Midterm Exam
+Final Exam
+Use the basic commands
+and functions of SQL.
+Read text
+Lecture
+Group discussions
+Classroom demonstration
+research,
+report(s)
+Chapter quizzes
+Chapter Exercises &
+Problems
+Information Literacy
+Project
+Midterm Exam
+Final Exam
+Design, implement, test,
+and evaluate databases as
+part of information systems.
+Read text
+Lecture
+Group discussions
+Classroom demonstration
+research,
+report(s)
+Chapter quizzes
+Chapter Exercises &
+Problems
+Information Literacy
+Project
+Midterm Exam
+Final Exam
+Describe database
+administration and the skills
+required by a DBA including
+communication and ethical
+skills.
+Read text
+Lecture
+Group discussions
+Classroom demonstration
+research,
+report(s)
+Chapter quizzes
+Chapter Exercises &
+Problems
+Information Literacy
+Project
+Midterm Exam
+Final Exam
+Locate, discern, and
+effectively use information
+to solve issues and/or
+problems.
+Read text
+Lecture
+Group discussions
+Classroom demonstration
+research,
+report(s)
+Chapter quizzes
+Chapter Exercises &
+Problems
+Information Literacy
+Project
+Midterm Exam
+Final Exam
+Please note: all programs must integrate in one or more courses, discipline-specific course
+learning outcomes that reflect the College learning outcomes of scientific/critical thinking and
+quantitative reasoning, oral/written communication, and information literacy.
+Visit https://app.teachinghow2s.com/library/science-technology-engineering-math-stem
+to access evidence-based-teaching techniques for this course.
+
+---------------------
+

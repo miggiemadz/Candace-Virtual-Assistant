@@ -1,0 +1,153 @@
+week 4 (Units 1, 2 and 3)
+4 Parametric Constraints
+Fundamentals.
+Fully constrained geometry, over-constraining
+relations, constraint management, driven dime
+5 Geometric Construction Tools. Dragging entities, auto dimensioning, fillets, p
+sketches, offset cut features.
+6 Parent/Child Relationships and the
+BORN Technique
+BORN technique, parent/child relationships, fe
+suppression, design changes.
+7 Part Drawings and 3D Model-Based Drawing sheet format, 2-D paper space, creat
+Definition. views, view scale, repositioning views, center
+Quiz week 8 (Units 4, 5, 6 and 7)
+8 Datum Features and Auxiliary Views. Work features, auxiliary views, angled work p
+work planes, projected geometry, solid feature
+9 Symmetrical Features in Designs. Revolved designs, the sketch plane, creating
+patterns, creating drawing templates, retrieve
+10 Advanced 3-D Construction Tools. Thin wall design, lofted features, rounds and f
+operation, pattern leader, rectangular pattern,
+feature. Quiz week 11 (Units 8,9 and 10)
+11,12 Assembly Modeling - Putting It All
+Together.
+Methodology, multiple parts, degrees of freed
+constraints, exploded views, creating parts lis
+prototype - 3D printer
+13 ,14 Content Center and Basic Motion
+Analysis.
+Autodesk Content Center Libraries, Analyze I
+Tool, The Drive Constraint tool to create Basic
+Analysis, The 3D Grips Editing Approach. Qu
+(Units 11 and 12)
+15 Review Final. Review Project, and Test.
+Class Policies
+Attendance: Regular attendance is strongly encouraged. While not mandatory,
+absences may negatively impact performance.
+Participation: Active participation in class discussions, group work, and in-class
+activities is expected.
+Experiential Learning
+Students must complete an experiential learning activity that connects course content to
+career applications. This activity may be a content specific assignment or practical skill
+that is applied within a course assignment. This assignment supports the general
+education learning outcomes of scientific/critical thinking and quantitative reasoning; oral
+and written communication; and information literacy/technological competency.
+Academic Policies
+See College Catalog for more information: http://onlinecatalog.ucc.edu/index.php
+Americans with Disabilities Act (ADA)
+UCNJ Union College of Union County, NJ offers reasonable accommodations and/or
+services to persons with disabilities. Any student who has a documented disability and
+wishes to self-identify should contact the Director of Universal Accessibility Services and
+Veterans Affairs at (908) 709-7164, or email accessibility@ucc.edu. Accommodations
+are individualized and in accordance with Section 504 of the Rehabilitation Act of 1973
+and the Americans with Disabilities Act of 1992. In order to receive accommodations,
+students must be registered with Disability Support Services. Students should register
+with the office as soon as possible. Accommodations are not official until the Faculty
+Accommodations Alert Form(s) are issued from the student to his/her instructor(s).
+Family Educational Rights and Privacy Act (FERPA)
+The FERPA Statement can be found at https://www.ucc.edu/admissions/the-family-
+education-rights-and-privacy-act/.
+Equal Opportunity Statement
+UCNJ Union College of Union County, NJ does not discriminate and prohibits
+discrimination, as required by state and/or federal law, in all programs and activities,
+including employment and access to its career and technical programs.
+UCNJ Union College of Union County, NJ Mission Statement
+Transforming Our Community. . . One Student at a Time
+Suggested Teaching Methodologies
+1. Lecture and display of sample industrial drawings.
+2. Lecture and discuss techniques, processes and standard symbols.
+3. Demonstrate use of standard measuring instruments.
+4. Introduce the various American National Standards Institute publications and explain their
+uses.
+Mapping Course Learning Outcomes to Learning Activities and
+Evaluation Methods
+Course Learning Outcomes (CLOs) Learning Activities Evaluation
+Start up Autodesk 2D/3D software,
+and be familiar with the user interface.
+Create extruded solid models with
+parametric dimensions. Understand
+and use Inventor’s Part Browser.
+Learn the user interface, menus
+and toolbars, file management,
+help options, browser, mouse
+buttons. 2D Multiview drawing with
+AutoCad.
+Creating rough sketches, shape vs.
+size concept, geometric
+constraints, isometric view,
+dynamic viewing, join extruding.
+Create compute
+and for homewo
+Test.
+Modify and update feature
+dimensions. Perform basic design
+changes. Create, display and modify
+parametric relations. Display, add and
+delete geometric constraints.
+Create placed features, and offset
+work planes.
+Constructive Solid Geometry
+Concepts. Binary tree, grid and
+snap, base feature, model
+dimensions, editing dimensions,
+cut extrusions, placed features.
+Create compute
+and for homewo
+Test.
+Create 2-D orthographic views with
+dimensions from 3-D models.
+Determine the views necessary to
+properly represent a part. Create
+revolved and mirrored features, and
+section views. Add borders and title
+blocks to 2-D orthographic drawings.
+Create auxiliary views using 2-D
+orthographic views.
+Drawing sheet format, 2-D paper
+space, creating projected views,
+view scale, repositioning views,
+center and lines. Work features,
+auxiliary views, angled work plane,
+offset work planes, projected
+geometry, solid features.
+Create compute
+and for homewo
+Test.
+Create assembly models and
+exploded assemblies. Simulating
+motion and assembly.
+Methodology, multiple parts,
+degrees of freedom and
+constraints, exploded views,
+creating parts lists. The Drive
+Create compute
+and for homewo
+Test.
+constraint tool to Create Basic
+Motion Analysis, the 3D Grips
+Editing approach, the associated
+Simulation Video file
+Use 3D printer to print prototypes as a
+critical part of design process. Browse
+the Internet and search for requested
+topics.
+Class discussion, Rapid prototype -
+3D printer. Class discussio
+Please note: all programs must integrate in one or more courses, discipline-specific course
+learning outcomes that reflect the College learning outcomes of scientific/critical thinking and
+quantitative reasoning, oral/written communication, and information literacy.
+Visit https://app.teachinghow2s.com/library/science-technology-engineering-math-stem
+to access evidence-based-teaching techniques for this course.
+
+---------------------
+

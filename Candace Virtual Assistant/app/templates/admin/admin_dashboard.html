@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% set active_page = 'admin' %}
+
+{% block title %}Admin Dashboard | Candace{% endblock %}
+{% block header_title %}Admin Dashboard{% endblock %}
+{% block header_subtitle %}System overview and tools for Candace LMS.{% endblock %}
+
+{% block content %}
+<div class="section-header">
+    <div>
+        <div class="section-title">System Overview</div>
+        <div class="section-subtitle">
+            High-level stats for students, users, and courses.
+        </div>
+    </div>
+</div>
+
+<div class="card-grid">
+
+    <!-- Students (now clickable) -->
+    <a href="{{ url_for('main.admin_students') }}"
+       class="course-card"
+       style="text-decoration:none; color:inherit; cursor:pointer;">
+        <div class="course-card-banner"></div>
+        <div class="course-card-body">
+            <div class="course-card-title">Students</div>
+            <div class="course-card-subtitle">Total student records</div>
+            <div class="course-card-term">{{ student_count }}</div>
+        </div>
+    </a>
+
+    <!-- Users -->
+    <a href="{{ url_for('main.admin_users') }}"
+       class="course-card"
+       style="text-decoration:none; color:inherit; cursor:pointer;">
+        <div class="course-card-banner"></div>
+        <div class="course-card-body">
+            <div class="course-card-title">Users</div>
+            <div class="course-card-subtitle">Login-enabled accounts</div>
+            <div class="course-card-term">{{ user_count }}</div>
+        </div>
+    </a>
+
+    <!-- Courses -->
+    <a href="{{ url_for('main.admin_courses') }}"
+       class="course-card"
+       style="text-decoration:none; color:inherit; cursor:pointer;">
+        <div class="course-card-banner"></div>
+        <div class="course-card-body">
+            <div class="course-card-title">Courses</div>
+            <div class="course-card-subtitle">Catalog courses in system</div>
+            <div class="course-card-term">{{ course_count }}</div>
+        </div>
+    </a>
+
+    <!-- Classes (now clickable) -->
+    <a href="{{ url_for('main.admin_classes') }}"
+       class="course-card"
+       style="text-decoration:none; color:inherit; cursor:pointer;">
+        <div class="course-card-banner"></div>
+        <div class="course-card-body">
+            <div class="course-card-title">Classes</div>
+            <div class="course-card-subtitle">Sections currently modeled</div>
+            <div class="course-card-term">{{ class_count }}</div>
+        </div>
+    </a>
+
+    <!-- RAG Tools -->
+    <a href="{{ url_for('main.admin_rag') }}"
+       class="course-card"
+       style="text-decoration:none; color:inherit; cursor:pointer;">
+        <div class="course-card-banner"></div>
+        <div class="course-card-body">
+            <div class="course-card-title">RAG Tools</div>
+            <div class="course-card-subtitle">Ingest catalog & weekly schedules into Candace.</div>
+            <div class="course-card-term">Manage index</div>
+        </div>
+    </a>
+
+    <!-- Chat Logs -->
+    <a href="{{ url_for('main.admin_chat_logs') }}"
+       class="course-card"
+       style="text-decoration:none; color:inherit; cursor:pointer;">
+        <div class="course-card-banner"></div>
+        <div class="course-card-body">
+            <div class="course-card-title">Chat Logs</div>
+            <div class="course-card-subtitle">Review recent conversations with students.</div>
+            <div class="course-card-term">Monitor usage</div>
+        </div>
+    </a>
+
+</div>
+
+<hr style="margin: 24px 0; border: none; border-top: 1px solid #d5dde5;">
+
+<h3 style="font-size:16px; margin-bottom:10px;">Recent Chatbot Activity</h3>
+<table style="width:100%; border-collapse: collapse; font-size:13px;">
+    <thead>
+        <tr>
+            <th style="border-bottom:1px solid #d5dde5; text-align:left; padding:6px;">Time</th>
+            <th style="border-bottom:1px solid #d5dde5; text-align:left; padding:6px;">Student</th>
+            <th style="border-bottom:1px solid #d5dde5; text-align:left; padding:6px;">User Message</th>
+            <th style="border-bottom:1px solid #d5dde5; text-align:left; padding:6px;">AI Response</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if recent_logs %}
+            {% for log in recent_logs %}
+            <tr>
+                <td style="border-bottom:1px solid #edf0f5; padding:6px; white-space:nowrap;">
+                    {{ log.chat_timestamp }}
+                </td>
+                <td style="border-bottom:1px solid #edf0f5; padding:6px;">
+                    {% if log.student_first_name %}
+                        {{ log.student_first_name }} {{ log.student_last_name }}
+                    {% else %}
+                        —
+                    {% endif %}
+                </td>
+                <td style="border-bottom:1px solid #edf0f5; padding:6px; max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                    {{ log.user_message }}
+                </td>
+                <td style="border-bottom:1px solid #edf0f5; padding:6px; max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                    {{ log.ai_response }}
+                </td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="4" style="padding:8px; color:#6b7785;">No chat logs yet.</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
+{% endblock %}

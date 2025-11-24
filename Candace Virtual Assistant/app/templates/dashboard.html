@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% set active_page = 'dashboard' %}
+
+{% block title %}Candace Dashboard{% endblock %}
+{% block header_title %}Dashboard{% endblock %}
+{% block header_subtitle %}Published Courses ({{ schedule|length or 0 }}){% endblock %}
+
+{% block content %}
+<div class="section-header">
+    <div>
+        <div class="section-title">Published Courses</div>
+        <div class="section-subtitle">
+            These are your current classes in Candace.
+        </div>
+    </div>
+</div>
+
+<div class="card-grid">
+    {% if schedule %}
+        {% for row in schedule %}
+        <div class="course-card">
+            <div class="course-card-banner"></div>
+            <div class="course-card-body">
+                <div class="course-card-title">{{ row.course_name }}</div>
+                <div class="course-card-subtitle">{{ row.class_type }}</div>
+                <div class="course-card-term">{{ row.course_credits }} credits</div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No courses found in your schedule yet.</p>
+    {% endif %}
+</div>
+{% endblock %}
+
+{# Optional: customize the right sidebar for dashboard #}
+{% block right_sidebar %}
+<section>
+    <h3>To Do</h3>
+    <div class="todo-item">
+        <div class="todo-title">No items yet</div>
+        <div class="todo-meta">When you add assignments, they’ll appear here.</div>
+    </div>
+</section>
+
+<section>
+    <h3>Coming Up</h3>
+    <div class="upcoming-item">
+        <div class="todo-meta">Check your weekly schedule for upcoming work.</div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% set active_page = 'admin' %}
+
+{% block title %}Manage Courses | Candace Admin{% endblock %}
+{% block header_title %}Manage Courses{% endblock %}
+{% block header_subtitle %}View all catalog courses and their sections.{% endblock %}
+
+{% block content %}
+<div class="section-header">
+    <div>
+        <div class="section-title">Courses</div>
+        <div class="section-subtitle">
+            Catalog courses in the system and how many classes/sections exist for each one.
+        </div>
+    </div>
+</div>
+
+<form method="get" class="admin-filter-bar"
+      style="margin-bottom: 16px; display:flex; flex-wrap:wrap; gap:8px; align-items:center;">
+    <label style="font-size:13px;">
+        Major:
+        <select name="major" style="margin-left:4px; padding:4px 6px; font-size:13px; min-width:160px;">
+            <option value="">All majors</option>
+            {% for m in majors %}
+                <option value="{{ m.major_name }}"
+                        {% if major_filter == m.major_name %}selected{% endif %}>
+                    {{ m.major_name }}
+                </option>
+            {% endfor %}
+        </select>
+    </label>
+
+    <label style="font-size:13px;">
+        Search:
+        <input
+            type="text"
+            name="q"
+            value="{{ search }}"
+            placeholder="course name contains..."
+            style="margin-left:4px; padding:4px 6px; font-size:13px; min-width:200px;"
+        >
+    </label>
+
+    <button type="submit"
+            style="padding:6px 10px; font-size:13px; border-radius:4px; border:none; background:var(--accent); color:#fff; cursor:pointer;">
+        Apply
+    </button>
+
+    {% if major_filter or search %}
+    <a href="{{ url_for('main.admin_courses') }}"
+       style="font-size:12px; margin-left:8px; text-decoration:none; color:var(--text-muted);">
+        Clear filters
+    </a>
+    {% endif %}
+</form>
+
+<div style="overflow-x:auto;">
+    <table style="width:100%; border-collapse:collapse; font-size:13px;">
+        <thead>
+            <tr>
+                <th style="border-bottom:1px solid #d5dde5; text-align:left; padding:6px;">ID</th>
+                <th style="border-bottom:1px solid #d5dde5; text-align:left; padding:6px;">Course</th>
+                <th style="border-bottom:1px solid #d5dde5; text-align:left; padding:6px;">Credits</th>
+                <th style="border-bottom:1px solid #d5dde5; text-align:left; padding:6px;">Major</th>
+                <th style="border-bottom:1px solid #d5dde5; text-align:left; padding:6px;"># Classes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if courses %}
+                {% for c in courses %}
+                <tr>
+                    <td style="border-bottom:1px solid #edf0f5; padding:6px; white-space:nowrap;">
+                        {{ c.course_id }}
+                    </td>
+                    <td style="border-bottom:1px solid #edf0f5; padding:6px;">
+                        {{ c.course_name }}
+                    </td>
+                    <td style="border-bottom:1px solid #edf0f5; padding:6px;">
+                        {{ c.course_credits }}
+                    </td>
+                    <td style="border-bottom:1px solid #edf0f5; padding:6px;">
+                        {{ c.major_name or "—" }}
+                    </td>
+                    <td style="border-bottom:1px solid #edf0f5; padding:6px;">
+                        {{ c.num_classes }}
+                    </td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="5" style="padding:8px; color:#6b7785;">
+                        No courses found for this filter.
+                    </td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

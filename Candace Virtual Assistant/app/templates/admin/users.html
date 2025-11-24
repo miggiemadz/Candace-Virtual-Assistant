@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% set active_page = 'admin' %}
+
+{% block title %}Manage Users | Candace Admin{% endblock %}
+{% block header_title %}Manage Users{% endblock %}
+{% block header_subtitle %}View all Candace accounts and their linked records.{% endblock %}
+
+{% block content %}
+<div class="section-header">
+    <div>
+        <div class="section-title">Users</div>
+        <div class="section-subtitle">
+            All login-enabled accounts in Candace. Filter by role or search by email.
+        </div>
+    </div>
+</div>
+
+<form method="get" class="admin-filter-bar" style="margin-bottom: 16px; display:flex; flex-wrap:wrap; gap:8px; align-items:center;">
+    <label style="font-size:13px;">
+        Role:
+        <select name="role" style="margin-left:4px; padding:4px 6px; font-size:13px;">
+            <option value="">All</option>
+            <option value="student" {% if role_filter == 'student' %}selected{% endif %}>Student</option>
+            <option value="instructor" {% if role_filter == 'instructor' %}selected{% endif %}>Instructor</option>
+            <option value="admin" {% if role_filter == 'admin' %}selected{% endif %}>Admin</option>
+        </select>
+    </label>
+
+    <label style="font-size:13px;">
+        Search:
+        <input
+            type="text"
+            name="q"
+            value="{{ search }}"
+            placeholder="email contains..."
+            style="margin-left:4px; padding:4px 6px; font-size:13px; min-width:180px;"
+        >
+    </label>
+
+    <button type="submit"
+            style="padding:6px 10px; font-size:13px; border-radius:4px; border:none; background:var(--accent); color:#fff; cursor:pointer;">
+        Apply
+    </button>
+
+    {% if role_filter or search %}
+    <a href="{{ url_for('main.admin_users') }}"
+       style="font-size:12px; margin-left:8px; text-decoration:none; color:var(--text-muted);">
+        Clear filters
+    </a>
+    {% endif %}
+</form>
+
+<div style="overflow-x:auto;">
+    <table style="width:100%; border-collapse:collapse; font-size:13px;">
+        <thead>
+            <tr>
+                <th style="border-bottom:1px solid #d5dde5; text-align:left; padding:6px;">ID</th>
+                <th style="border-bottom:1px solid #d5dde5; text-align:left; padding:6px;">Email</th>
+                <th style="border-bottom:1px solid #d5dde5; text-align:left; padding:6px;">Role</th>
+                <th style="border-bottom:1px solid #d5dde5; text-align:left; padding:6px;">Linked Record</th>
+                <th style="border-bottom:1px solid #d5dde5; text-align:left; padding:6px;">Created</th>
+                <!-- Future: actions (promote/demote, reset pw, etc.) -->
+            </tr>
+        </thead>
+        <tbody>
+            {% if users %}
+                {% for u in users %}
+                <tr>
+                    <td style="border-bottom:1px solid #edf0f5; padding:6px; white-space:nowrap;">
+                        {{ u.id }}
+                    </td>
+                    <td style="border-bottom:1px solid #edf0f5; padding:6px;">
+                        {{ u.email }}
+                    </td>
+                    <td style="border-bottom:1px solid #edf0f5; padding:6px; text-transform:capitalize;">
+                        {{ u.role }}
+                    </td>
+                    <td style="border-bottom:1px solid #edf0f5; padding:6px;">
+                        {% if u.student_id %}
+                            Student #{{ u.student_id }}
+                            {% if u.student_first_name %}
+                                – {{ u.student_first_name }} {{ u.student_last_name }}
+                            {% endif %}
+                        {% elif u.professor_id %}
+                            Instructor #{{ u.professor_id }}
+                            {% if u.professor_first_name %}
+                                – {{ u.professor_first_name }} {{ u.professor_last_name }}
+                            {% endif %}
+                        {% else %}
+                            —
+                        {% endif %}
+                    </td>
+                    <td style="border-bottom:1px solid #edf0f5; padding:6px; white-space:nowrap;">
+                        {{ u.created_at }}
+                    </td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="5" style="padding:8px; color:#6b7785;">
+                        No users found for this filter.
+                    </td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
