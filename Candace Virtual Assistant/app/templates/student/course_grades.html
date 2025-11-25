@@ -14,45 +14,106 @@
             View your performance in this course.
         </div>
     </div>
+
+    <div class="grades-controls">
+        <div class="grades-arrange">
+            <label for="arrange-by">Arrange By</label>
+            <select id="arrange-by" name="arrange-by">
+                <option selected>Due Date</option>
+                <option>Assignment Name</option>
+                <option>Module</option>
+            </select>
+            <button class="btn-apply" type="button">Apply</button>
+        </div>
+        <button class="btn-print" type="button">Print Grades</button>
+    </div>
 </div>
 
 <div class="course-layout">
     {% include "_course_nav.html" %}
+
     <div class="course-main">
-        <div class="grade-summary">
-            <div><strong>Current Grade:</strong> {{ current_grade }}</div>
-            <div><strong>Total Points:</strong> {{ total_points }}</div>
-        </div>
 
         {% if grade_items %}
         <table class="table grades-table">
             <thead>
                 <tr>
-                    <th>Item</th>
-                    <th>Category</th>
+                    <th>Name</th>
+                    <th>Due</th>
+                    <th>Submitted</th>
+                    <th>Status</th>
                     <th>Score</th>
-                    <th>Points</th>
                 </tr>
             </thead>
             <tbody>
                 {% for g in grade_items %}
                 <tr>
-                    <td>{{ g.name }}</td>
-                    <td>{{ g.type }}</td>
                     <td>
-                        {% if g.score is not none %}
-                            {{ g.score }}
-                        {% else %}
-                            —
+                        <div class="grade-name">{{ g.name }}</div>
+                        {% if g.type %}
+                            <div class="grade-category">{{ g.type }}</div>
                         {% endif %}
                     </td>
-                    <td>{{ g.points }}</td>
+                    <td>{{ g.due or "—" }}</td>
+                    <td>{{ g.submitted or "—" }}</td>
+                    <td>{{ g.status or "—" }}</td>
+                    <td>
+                        {% if g.score is not none %}
+                            {{ "%.0f"|format(g.score) }} / {{ g.points }}
+                        {% else %}
+                            - / {{ g.points }}
+                        {% endif %}
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
+
+            <tfoot>
+                <tr class="grades-total-row">
+                    <td colspan="4"><strong>Total</strong></td>
+                    <td>
+                        {% if current_grade %}
+                            {{ current_grade }}
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </td>
+                </tr>
+            </tfoot>
         </table>
         {% else %}
             <p>No grade data is available yet.</p>
+        {% endif %}
+
+        {# ============================
+           Group summary, Canvas-style
+           (Assignments, Project, Midterm, etc.)
+           Expect an optional grade_groups list:
+           [{ name, earned, possible }, ...]
+           ============================ #}
+        {% if grade_groups %}
+        <table class="table grades-summary-table">
+            <tbody>
+                {% for grp in grade_groups %}
+                <tr>
+                    <td>{{ grp.name }}</td>
+                    <td>
+                        {{ "%.2f"|format(grp.earned) }} / {{ "%.2f"|format(grp.possible) }}
+                    </td>
+                </tr>
+                {% endfor %}
+                <tr class="grades-total-row">
+                    <td><strong>Total</strong></td>
+                    <td>
+                        {% if overall_earned is defined and overall_possible is defined %}
+                            {{ "%.2f"|format(overall_earned) }} / {{ "%.2f"|format(overall_possible) }}
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
         {% endif %}
     </div>
 </div>

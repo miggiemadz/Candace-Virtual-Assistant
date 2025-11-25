@@ -7,50 +7,119 @@
 {% block header_subtitle %}Assignments{% endblock %}
 
 {% block content %}
+
 <div class="section-header">
     <div>
         <div class="section-title">Assignments</div>
         <div class="section-subtitle">
-            Your graded work for this course.
+            Your upcoming and completed work for this course.
         </div>
+    </div>
+
+    <div class="assignment-sort-buttons">
+        <button class="btn-sort active">Show by Date</button>
+        <button class="btn-sort">Show by Type</button>
     </div>
 </div>
 
 <div class="course-layout">
     {% include "_course_nav.html" %}
     <div class="course-main">
+
         {% if assignments %}
-        <table class="table assignments-table">
-            <thead>
-                <tr>
-                    <th>Assignment</th>
-                    <th>Type</th>
-                    <th>Due</th>
-                    <th>Points</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for a in assignments %}
-                <tr>
-                    <td>{{ a.name }}</td>
-                    <td>{{ a.type }}</td>
-                    <td>{{ a.due }}</td>
-                    <td>{{ a.points }}</td>
-                    <td>
-                        {% if a.score %}
-                            {{ a.score }}
-                        {% else %}
-                            {{ a.status }}
-                        {% endif %}
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+
+            <!-- ========================= -->
+            <!-- Group 1: Upcoming         -->
+            <!-- ========================= -->
+            <h3 class="assignment-group-title">Upcoming Assignments</h3>
+
+            {% for a in assignments %}
+                {% if a.bucket == "upcoming" %}
+                <div class="assignment-card">
+                    <div class="assignment-card-left">
+                        <div class="assignment-title">{{ a.name }}</div>
+                        <div class="assignment-meta">
+                            <span class="assignment-due">Due {{ a.due }}</span>
+                        </div>
+                    </div>
+
+                    <div class="assignment-card-right">
+                        <div class="assignment-points">{{ a.points }} pts</div>
+                        <div class="assignment-status">
+                            {% if a.score %}
+                                {{ a.score }}
+                            {% else %}
+                                {{ a.status }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+
+            <!-- ========================= -->
+            <!-- Group 2: Past             -->
+            <!-- ========================= -->
+            <h3 class="assignment-group-title" style="margin-top: 40px;">Past Assignments</h3>
+
+            {% for a in assignments %}
+                {% if a.bucket == "past" %}
+                <div class="assignment-card">
+                    <div class="assignment-card-left">
+                        <div class="assignment-title">{{ a.name }}</div>
+                        <div class="assignment-meta">
+                            <span class="assignment-due">Due {{ a.due }}</span>
+                        </div>
+                    </div>
+
+                    <div class="assignment-card-right">
+                        <div class="assignment-points">{{ a.points }} pts</div>
+                        <div class="assignment-status">
+                            {% if a.score %}
+                                {{ a.score }}
+                            {% else %}
+                                {{ a.status }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+
+            <!-- ========================= -->
+            <!-- Group 3: Undated          -->
+            <!-- ========================= -->
+            <h3 class="assignment-group-title" style="margin-top: 40px;">Undated Assignments</h3>
+
+            {% for a in assignments %}
+                {% if a.bucket == "undated" %}
+                <div class="assignment-card">
+                    <div class="assignment-card-left">
+                        <div class="assignment-title">{{ a.name }}</div>
+                        <div class="assignment-meta">
+                            <span class="assignment-due">No due date</span>
+                        </div>
+                    </div>
+
+                    <div class="assignment-card-right">
+                        <div class="assignment-points">{{ a.points }} pts</div>
+                        <div class="assignment-status">
+                            {% if a.score %}
+                                {{ a.score }}
+                            {% else %}
+                                {{ a.status }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+
         {% else %}
             <p>No assignments have been created yet.</p>
         {% endif %}
+
     </div>
 </div>
+
 {% endblock %}

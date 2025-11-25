@@ -533,3 +533,311 @@ body {
 .calendar-events li strong {
     color: #003366;
 }
+
+
+/* Canvas-style module cards */
+
+.modules-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.module-card {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    border: 1px solid #e5e7eb;
+    overflow: hidden;
+}
+
+.module-card-header {
+    padding: 14px 16px;
+    font-weight: 600;
+    font-size: 17px;
+    background: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.module-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.module-chevron {
+    transition: transform 0.15s ease;
+}
+
+.module-card-items {
+    display: none;
+    padding: 10px 18px 16px;
+}
+
+.module-card-items.open {
+    display: block;
+}
+
+.module-card-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 0;
+}
+
+.module-card-item a {
+    text-decoration: none;
+    color: #0065a3;
+}
+
+.module-card-item a:hover {
+    text-decoration: underline;
+}
+
+.module-item-icon {
+    opacity: 0.8;
+}
+
+.module-card-item.empty {
+    color: #999;
+    font-style: italic;
+}
+
+.module-card-body {
+    padding: 10px 18px 14px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.module-item-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.module-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 6px 0;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.module-item:last-child {
+    border-bottom: none;
+}
+
+.module-item-main {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.module-item-dot {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.module-item-link {
+    color: #0b63b6;
+    text-decoration: none;
+}
+
+.module-item-link:hover {
+    text-decoration: underline;
+}
+
+.module-item-meta {
+    font-size: 12px;
+    color: #6b7280;
+    white-space: nowrap;
+}
+
+.assignment-sort-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.btn-sort {
+    padding: 7px 14px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background: #fff;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-sort.active {
+    background: #009944;
+    color: white;
+    border-color: #009944;
+}
+
+.assignment-group-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 14px;
+}
+
+.assignment-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    border-radius: 8px;
+    background: #fafafa;
+    border: 1px solid #e5e5e5;
+    margin-bottom: 10px;
+}
+
+.assignment-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.assignment-meta {
+    font-size: 13px;
+    color: #666;
+}
+
+.assignment-card-right {
+    text-align: right;
+}
+
+.assignment-points {
+    font-size: 14px;
+    color: #333;
+}
+
+.assignment-status {
+    font-size: 13px;
+    margin-top: 4px;
+    color: #777;
+}
+
+.grades-controls {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.grades-arrange {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    font-size: 14px;
+}
+
+.grades-arrange select {
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.btn-apply {
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: 1px solid #e28f93;
+    background: #f6c3c5;
+    color: #a33;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn-print {
+    margin-left: auto;
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background: #fff;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.grades-table .grade-name {
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.grades-table .grade-category {
+    font-size: 12px;
+    color: #777;
+}
+
+.grades-total-row {
+    background: #fafafa;
+    border-top: 2px solid #ddd;
+}
+
+.grades-summary-table {
+    margin-top: 32px;
+}
+
+.grades-summary-table td {
+    padding: 6px 8px;
+}
+
+.grades-summary-table .grades-total-row td {
+    border-top: 2px solid #ddd;
+    font-weight: 600;
+}
+/* ---- Syllabus layout ---- */
+
+.syllabus-content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.syllabus-section {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 1.5rem 1.75rem;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    margin-bottom: 1.5rem;
+}
+
+.syllabus-heading {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.syllabus-body {
+    line-height: 1.6;
+    margin: 0;
+}
+
+.syllabus-body.muted {
+    color: #6b7280;
+}
+
+.syllabus-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+}
+
+.syllabus-column {
+    min-width: 0;
+}
+
+.syllabus-list {
+    margin: 0;
+    padding-left: 1.2rem;
+}
+
+.syllabus-list li {
+    margin-bottom: 0.35rem;
+}
+
+/* two columns on wider screens */
+@media (min-width: 900px) {
+    .syllabus-grid {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+}

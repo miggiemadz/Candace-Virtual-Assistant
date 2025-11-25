@@ -7,35 +7,82 @@
 {% block header_subtitle %}People{% endblock %}
 
 {% block content %}
+
 <div class="section-header">
     <div>
         <div class="section-title">People</div>
         <div class="section-subtitle">
-            Instructor and classmates.
+            View students and instructors enrolled in this course.
         </div>
     </div>
 </div>
 
 <div class="course-layout">
     {% include "_course_nav.html" %}
+
     <div class="course-main">
 
-        <h3>Instructor</h3>
-        <p><strong>{{ instructor.name }}</strong> ({{ instructor.role }})<br>
-           <a href="mailto:{{ instructor.email }}">{{ instructor.email }}</a><br>
-           Office Hours: {{ instructor.office_hours }}
-        </p>
+        <!-- Instructor Row -->
+        <h3 class="mb-2">Instructor</h3>
+        <table class="table people-table mb-5">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Login ID</th>
+                    <th>SIS ID</th>
+                    <th>Section</th>
+                    <th>Role</th>
+                    <th>Last Activity</th>
+                    <th>Total Activity</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if instructor %}
+                <tr>
+                    <td>{{ instructor.first }} {{ instructor.last }}</td>
+                    <td>{{ instructor.email.split("@")[0] if instructor.email else "—" }}</td>
+                    <td>{{ instructor.sis_id }}</td>
+                    <td>{{ section_name }}</td>
+                    <td>Instructor</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                {% else %}
+                <tr><td colspan="7">No instructor found.</td></tr>
+                {% endif %}
+            </tbody>
+        </table>
 
-        <h3>Students</h3>
-        {% if students %}
-        <ul class="people-list">
-            {% for s in students %}
-            <li>{{ s.name }} – <a href="mailto:{{ s.email }}">{{ s.email }}</a></li>
-            {% endfor %}
-        </ul>
-        {% else %}
-            <p>No students listed yet.</p>
-        {% endif %}
+        <!-- Students -->
+        <h3 class="mb-2">Students</h3>
+        <table class="table people-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Login ID</th>
+                    <th>SIS ID</th>
+                    <th>Section</th>
+                    <th>Role</th>
+                    <th>Last Activity</th>
+                    <th>Total Activity</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in students %}
+                <tr>
+                    <td>{{ s.first }} {{ s.last }}</td>
+                    <td>{{ s.email.split("@")[0] if s.email else "—" }}</td>
+                    <td>{{ s.sis_id }}</td>
+                    <td>{{ section_name }}</td>
+                    <td>Student</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
     </div>
 </div>
+
 {% endblock %}

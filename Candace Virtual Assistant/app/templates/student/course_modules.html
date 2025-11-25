@@ -10,6 +10,7 @@
 {% endblock %}
 
 {% block content %}
+
 <div class="section-header">
     <div>
         <div class="section-title">Modules</div>
@@ -20,35 +21,62 @@
 </div>
 
 <div class="course-layout">
-    {# _course_nav.html should be at templates/_course_nav.html #}
     {% include "_course_nav.html" %}
 
     <div class="course-main">
-        <div class="modules-container">
+       <div class="modules-container">
             {% for module in modules %}
-            <div class="module-block{% if not module['items'] %} empty-block{% endif %}">
-                <div class="module-header">
-                    <span class="module-chevron">▸</span>
-                    <span class="module-header-title">
-                        {{ module.title }}
-                        {% if module.hidden %}
-                            <span class="module-hidden-label">(Hidden)</span>
-                        {% endif %}
-                    </span>
-                </div>
-                <div class="module-items">
+            <article class="module-card{% if not module['items'] %} module-card-empty{% endif %}">
+                <header class="module-card-header">
+                    <div class="module-card-title-row">
+                        <span class="module-week-label">Week</span>
+                        <h2 class="module-card-title">
+                            {{ module.title }}
+                            {% if module.hidden %}
+                                <span class="module-hidden-label">(Hidden)</span>
+                            {% endif %}
+                        </h2>
+                    </div>
+                </header>
+
+                <div class="module-card-body">
                     {% if module['items'] %}
-                        {% for item in module['items'] %}
-                        <div class="module-item">
-                            <span class="module-item-icon">•</span>
-                            {{ item }}
-                        </div>
-                        {% endfor %}
+                        <ul class="module-item-list">
+                            {% for item in module['items'] %}
+                            <li class="module-item">
+                                <div class="module-item-main">
+                                    <span class="module-item-dot">•</span>
+
+                                    {# If backend still sends a plain string #}
+                                    {% if item is string %}
+                                        <span class="module-item-title">{{ item }}</span>
+
+                                    {# Future: when backend sends dicts with type/title/etc. #}
+                                    {% else %}
+                                        {% if item.type == 'assignment' and item.assignment_id %}
+                                            <a class="module-item-link"
+                                            href="{{ url_for('assignment_view', assignment_id=item.assignment_id) }}">
+                                                {{ item.title }}
+                                            </a>
+                                        {% else %}
+                                            <span class="module-item-title">{{ item.title }}</span>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+
+                                {% if item is not string and item.due_display %}
+                                    <div class="module-item-meta">
+                                        Due {{ item.due_display }}
+                                    </div>
+                                {% endif %}
+                            </li>
+                            {% endfor %}
+                        </ul>
                     {% else %}
                         <div class="module-item empty">No items added yet.</div>
                     {% endif %}
                 </div>
-            </div>
+            </article>
             {% endfor %}
         </div>
     </div>
@@ -72,4 +100,5 @@
         <div class="todo-meta">No upcoming assignments yet.</div>
     </div>
 </section>
+
 {% endblock %}

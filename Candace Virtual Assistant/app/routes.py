@@ -6,6 +6,7 @@ from .services.assistant.prompt_utils import build_prompt
 import os
 from werkzeug.security import generate_password_hash
 from .auth_utils import login_user, logout_user, login_required, get_current_user, verify_login_credentials, role_required
+from datetime import datetime
 
 bp = Blueprint("main", __name__)
 
@@ -659,6 +660,8 @@ def courses():
     user = get_current_user()
 
     current_courses = []
+    completed_courses = []
+
     if user.get("student_id"):
         current_courses = query_db("""
             SELECT
@@ -672,8 +675,6 @@ def courses():
             WHERE s.student_id = %s
         """, (user["student_id"],))
 
-    completed_courses = []
-    if user.get("student_id"):
         completed_courses = query_db("""
             SELECT DISTINCT
                 cl.class_id AS class_id,
@@ -685,6 +686,13 @@ def courses():
             JOIN courses c ON cl.course_id = c.course_id
             WHERE w.student_id = %s
         """, (user["student_id"],))
+
+        # 🔑 NEW: don’t show the same class as both current *and* completed
+        current_ids = {c["class_id"] for c in current_courses}
+        completed_courses = [
+            c for c in completed_courses
+            if c["class_id"] not in current_ids
+        ]
 
     return render_template(
         "student/courses.html",
@@ -789,15 +797,12 @@ def course_assignments(class_id):
                 ag.status,
                 ag.score
             FROM assignments a
-            JOIN work_load w
-                ON w.assignment_id = a.assignment_id
-               AND w.student_id = %s
             LEFT JOIN assignment_grades ag
                 ON ag.assignment_id = a.assignment_id
-               AND ag.student_id = %s
+            AND ag.student_id = %s
             WHERE a.class_id = %s
             ORDER BY a.due_at IS NULL, a.due_at
-        """, (student_id, student_id, class_id))
+        """, (student_id, class_id))
     else:
         # Instructor/admin view: just show assignments
         assignments = query_db("""
@@ -816,15 +821,32 @@ def course_assignments(class_id):
 
     # Format for template
     def format_due(dt):
-        return dt.strftime("%b %-d, %Y · %I:%M %p") if dt else "No due date"
+        if not dt:
+            return "No due date"
+        return dt.strftime("%b %d, %Y · %I:%M %p")
+
+    from datetime import datetime
+    now = datetime.utcnow()  # MySQL DATETIME is stored in UTC
 
     formatted = []
     for a in assignments:
-        due_str = format_due(a["due_at"]) if a["due_at"] else "No due date"
+        raw_due = a["due_at"]
+
+        # Determine bucket
+        if raw_due:
+            due_str = format_due(raw_due)
+            is_past = raw_due < now
+            bucket = "past" if is_past else "upcoming"
+        else:
+            due_str = "No due date"
+            bucket = "undated"
+
         status = a["status"] or ("Not submitted" if student_id else "")
+
         score_display = None
         if a["score"] is not None:
             score_display = f"{a['score']:.0f} / {a['max_points']}"
+
         formatted.append(
             {
                 "name": a["name"],
@@ -833,6 +855,7 @@ def course_assignments(class_id):
                 "points": a["max_points"],
                 "status": status,
                 "score": score_display,
+                "bucket": bucket,  # 🔑 ADD THIS
             }
         )
 
@@ -930,6 +953,8 @@ def course_cengage(class_id):
 @bp.route("/course/<int:class_id>/grades")
 @login_required
 def course_grades(class_id):
+    from datetime import datetime
+
     user, course = _get_course_context_or_redirect(class_id)
     if not course:
         return redirect(url_for("main.courses"))
@@ -941,44 +966,94 @@ def course_grades(class_id):
 
     rows = query_db("""
         SELECT
+            a.assignment_id,
             a.assignment_name AS name,
             a.assignment_type AS type,
+            a.due_at,
             a.max_points,
-            ag.score
+            ag.score,
+            ag.submitted_at,
+            ag.status
         FROM assignments a
-        JOIN work_load w
-            ON w.assignment_id = a.assignment_id
-           AND w.student_id = %s
         LEFT JOIN assignment_grades ag
             ON ag.assignment_id = a.assignment_id
-           AND ag.student_id = %s
+        AND ag.student_id = %s
         WHERE a.class_id = %s
         ORDER BY a.due_at IS NULL, a.due_at
-    """, (student_id, student_id, class_id))
+    """, (student_id, class_id))
 
+    # ================================
+    # Format + Compute Assignment Rows
+    # ================================
     grade_items = []
-    earned = 0.0
-    possible = 0.0
+
+    def format_ts(ts):
+        if not ts:
+            return "—"
+        return ts.strftime("%b %d at %I:%M%p")
+
+    now = datetime.utcnow()
 
     for r in rows:
-        pts = r["max_points"] or 0
-        score = r["score"]
-        grade_items.append(
-            {
-                "name": r["name"],
-                "type": r["type"],
-                "score": score,
-                "points": pts,
-            }
-        )
-        possible += pts
-        if score is not None:
-            earned += score
+        # Determine status (missing, graded, not submitted)
+        if r["score"] is None:
+            if r["due_at"] and r["due_at"] < now:
+                status = "missing"
+            else:
+                status = "not submitted"
+        else:
+            status = "graded"
 
-    if possible > 0:
-        pct = earned / possible * 100
+        grade_items.append({
+            "assignment_id": r["assignment_id"],
+            "name": r["name"],
+            "type": r["type"],
+            "due": format_ts(r["due_at"]),
+            "submitted": format_ts(r["submitted_at"]),
+            "status": status,
+            "score": r["score"],
+            "points": r["max_points"],
+        })
+
+    # ======================================
+    # GROUPING (Canvas-style grade categories)
+    # ======================================
+
+    # Auto-build groups by assignment_type
+    groups = {}  # { "homework": {earned, possible}, ... }
+
+    for g in grade_items:
+        grp = g["type"] or "Other"
+        if grp not in groups:
+            groups[grp] = {"earned": 0.0, "possible": 0.0}
+
+        groups[grp]["possible"] += g["points"]
+        if g["score"] is not None:
+            groups[grp]["earned"] += g["score"]
+
+    # Convert to list for the template
+    grade_groups = []
+    overall_earned = 0.0
+    overall_possible = 0.0
+
+    for grp_name, totals in groups.items():
+        earned = totals["earned"]
+        possible = totals["possible"]
+        grade_groups.append({
+            "name": grp_name,
+            "earned": earned,
+            "possible": possible,
+        })
+        overall_earned += earned
+        overall_possible += possible
+
+    # ============================
+    # Overall course grade summary
+    # ============================
+    if overall_possible > 0:
+        pct = overall_earned / overall_possible * 100
         current_grade = f"{pct:.1f}%"
-        total_points = f"{earned:.0f} / {possible:.0f}"
+        total_points = f"{overall_earned:.0f} / {overall_possible:.0f}"
     else:
         current_grade = "—"
         total_points = "—"
@@ -988,8 +1063,11 @@ def course_grades(class_id):
         user=user,
         course=course,
         grade_items=grade_items,
+        grade_groups=grade_groups,
         current_grade=current_grade,
         total_points=total_points,
+        overall_earned=overall_earned,
+        overall_possible=overall_possible,
     )
 
 @bp.route("/course/<int:class_id>/people")
@@ -999,30 +1077,46 @@ def course_people(class_id):
     if not course:
         return redirect(url_for("main.courses"))
 
+    # Build a friendly section name like "CST 161 – Computer Programming Fundamentals (Class 1004)"
+    section_name = f"{course['course_name']} (Class {class_id})"
+
     # Fetch instructor
-    instructor = query_db("""
-        SELECT p.professor_first_name AS first, p.professor_last_name AS last, 
-               u.email
+    instructor = query_db(
+        """
+        SELECT 
+            p.professor_first_name AS first,
+            p.professor_last_name AS last,
+            u.email
         FROM classes c
         JOIN professors p ON c.professor_id = p.professor_id
         LEFT JOIN users u ON u.professor_id = p.professor_id
         WHERE c.class_id = %s
-    """, (class_id,), one=True)
+        """,
+        (class_id,),
+        one=True,
+    )
 
     # Fetch roster
-    students = query_db("""
-        SELECT s.student_first_name AS first, s.student_last_name AS last,
-               u.email
+    students = query_db(
+        """
+        SELECT 
+            s.student_first_name AS first,
+            s.student_last_name AS last,
+            u.email
         FROM schedule sc
         JOIN students s ON sc.student_id = s.student_id
         LEFT JOIN users u ON u.student_id = s.student_id
         WHERE sc.class_id = %s
-    """, (class_id,))
-    
+        ORDER BY s.student_last_name, s.student_first_name
+        """,
+        (class_id,),
+    )
+
     return render_template(
         "student/course_people.html",
         user=user,
         course=course,
+        section_name=section_name,
         instructor=instructor,
         students=students,
     )
@@ -1213,3 +1307,79 @@ def _get_course_context_or_redirect(class_id):
             return None, None
 
     return user, course_row
+
+def get_course_modules_for_class(class_id):
+    rows = query_db(
+        """
+        SELECT
+            m.id          AS module_id,
+            m.title       AS module_title,
+            m.position    AS module_position,
+            m.is_hidden   AS module_hidden,
+
+            mi.id         AS item_id,
+            mi.item_type  AS item_type,
+            mi.title      AS item_title,
+            mi.assignment_id,
+
+            a.due_at      AS assignment_due_at,
+            a.assignment_name AS assignment_name
+        FROM course_modules m
+        LEFT JOIN course_module_items mi
+               ON mi.module_id = m.id
+        LEFT JOIN assignments a
+               ON a.assignment_id = mi.assignment_id
+        WHERE m.class_id = %s
+        ORDER BY m.position ASC, mi.position ASC, mi.id ASC
+        """,
+        (class_id,),
+    )
+
+    modules = []
+    current = None
+    current_id = None
+
+    for row in rows:
+        mid = row["module_id"]
+        if current_id != mid:
+            # start new module
+            current = {
+                "id": mid,
+                "title": row["module_title"],
+                "position": row["module_position"],
+                "hidden": bool(row["module_hidden"]),
+                "items": [],
+            }
+            modules.append(current)
+            current_id = mid
+
+        if row["item_id"] is None:
+            # module with no items yet
+            continue
+
+        due_at = row["assignment_due_at"]
+        if due_at is not None:
+            # format as a nice string for the template
+            due_display = due_at.strftime("%b %-d, %Y")  # e.g. "Sep 19, 2025"
+        else:
+            due_display = None
+
+        item = {
+            "type": row["item_type"],  # 'assignment', 'quiz', 'page', etc.
+            "title": row["assignment_name"] or row["item_title"],
+            "assignment_id": row["assignment_id"],
+            "due_display": due_display,
+        }
+        current["items"].append(item)
+
+    return modules
+
+@bp.route("/courses/<int:class_id>/modules")
+def course_modules(class_id):
+    course = get_course_info(class_id)  # whatever you already use
+    modules = get_course_modules_for_class(class_id)
+    return render_template(
+        "student/course_modules.html",
+        course=course,
+        modules=modules,
+    )

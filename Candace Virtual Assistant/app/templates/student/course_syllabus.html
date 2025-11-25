@@ -18,25 +18,52 @@
 
 <div class="course-layout">
     {% include "_course_nav.html" %}
-    <div class="course-main syllabus-content">
 
-        <h3>Course Description</h3>
-        <p>{{ course_description }}</p>
+    <div class="course-main">
+        <div class="syllabus-content">
 
-        <h3>Learning Outcomes</h3>
-        <ul>
-            {% for lo in learning_outcomes %}
-            <li>{{ lo }}</li>
-            {% endfor %}
-        </ul>
+            <!-- Course description card -->
+            <section class="syllabus-section">
+                <h3 class="syllabus-heading">Course Description</h3>
+                <p class="syllabus-body">
+                    {{ course_description }}
+                </p>
+            </section>
 
-        <h3>Grading Policy</h3>
-        <ul>
-            {% for g in grading_policy %}
-            <li>{{ g }}</li>
-            {% endfor %}
-        </ul>
+            <!-- Two-column grid for outcomes + grading -->
+            <section class="syllabus-section syllabus-grid">
+                <div class="syllabus-column">
+                    <h3 class="syllabus-heading">Learning Outcomes</h3>
+                    {% if learning_outcomes %}
+                        <ul class="syllabus-list">
+                            {% for lo in learning_outcomes %}
+                            <li>{{ lo }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="syllabus-body muted">
+                            Learning outcomes have not been added yet.
+                        </p>
+                    {% endif %}
+                </div>
 
+                <div class="syllabus-column">
+                    <h3 class="syllabus-heading">Grading Policy</h3>
+                    {% if grading_policy %}
+                        <ul class="syllabus-list">
+                            {% for g in grading_policy %}
+                            <li>{{ g }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="syllabus-body muted">
+                            Grading policy has not been added yet.
+                        </p>
+                    {% endif %}
+                </div>
+            </section>
+
+        </div>
     </div>
 </div>
 {% endblock %}
