@@ -153,3 +153,109 @@ CREATE TABLE users (
     FOREIGN KEY (professor_id) REFERENCES professors(professor_id)
         ON UPDATE CASCADE ON DELETE SET NULL
 ) ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS course_announcements;
+CREATE TABLE course_announcements (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    class_id INT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    body TEXT NOT NULL,
+    posted_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    author_professor_id INT NULL,
+    FOREIGN KEY (class_id) REFERENCES classes(class_id)
+        ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (author_professor_id) REFERENCES professors(professor_id)
+        ON UPDATE CASCADE ON DELETE SET NULL
+) ENGINE=InnoDB;
+
+-- ----------------------------------------
+-- COURSE MODULES + ITEMS
+-- ----------------------------------------
+DROP TABLE IF EXISTS course_module_items;
+DROP TABLE IF EXISTS course_modules;
+
+CREATE TABLE course_modules (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    class_id INT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    position INT NOT NULL,
+    is_hidden TINYINT(1) NOT NULL DEFAULT 0,
+    FOREIGN KEY (class_id) REFERENCES classes(class_id)
+        ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE course_module_items (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    module_id INT NOT NULL,
+    item_type ENUM('page','assignment','quiz','file','external') NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    assignment_id INT NULL,
+    external_url VARCHAR(500) NULL,
+    position INT NOT NULL,
+    FOREIGN KEY (module_id) REFERENCES course_modules(id)
+        ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (assignment_id) REFERENCES assignments(assignment_id)
+        ON UPDATE CASCADE ON DELETE SET NULL
+) ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS course_files;
+CREATE TABLE course_files (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    class_id INT NOT NULL,
+    folder VARCHAR(255) NOT NULL,
+    file_name VARCHAR(255) NOT NULL,
+    file_size_kb INT NULL,
+    FOREIGN KEY (class_id) REFERENCES classes(class_id)
+        ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS course_pages;
+CREATE TABLE course_pages (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    class_id INT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    body MEDIUMTEXT NOT NULL,
+    published TINYINT(1) NOT NULL DEFAULT 1,
+    FOREIGN KEY (class_id) REFERENCES classes(class_id)
+        ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS course_cengage_links;
+CREATE TABLE course_cengage_links (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    class_id INT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    status VARCHAR(255),
+    FOREIGN KEY (class_id) REFERENCES classes(class_id)
+        ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+ALTER TABLE assignments
+    ADD COLUMN due_at DATETIME NULL,
+    ADD COLUMN max_points INT NOT NULL DEFAULT 100;
+    
+DROP TABLE IF EXISTS assignment_grades;
+CREATE TABLE assignment_grades (
+    student_id INT NOT NULL,
+    assignment_id INT NOT NULL,
+    score DECIMAL(6,2),
+    submitted_at DATETIME NULL,
+    status ENUM('not_assigned','not_submitted','submitted','graded','late')
+        NOT NULL DEFAULT 'not_assigned',
+    PRIMARY KEY (student_id, assignment_id),
+    FOREIGN KEY (student_id) REFERENCES students(student_id)
+        ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (assignment_id) REFERENCES assignments(assignment_id)
+        ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS course_syllabus;
+CREATE TABLE course_syllabus (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    class_id INT NOT NULL UNIQUE,
+    description TEXT NOT NULL,
+    learning_outcomes TEXT NOT NULL, -- newline-separated bullets
+    grading_policy TEXT NOT NULL,    -- newline-separated bullets
+    FOREIGN KEY (class_id) REFERENCES classes(class_id)
+        ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB;
