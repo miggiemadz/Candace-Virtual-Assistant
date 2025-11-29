@@ -2,7 +2,10 @@ import os
 import threading
 from llama_cpp import Llama
 
-# Default path to your quantized model
+# Default path to your quantized model.  You can override this via the
+# LLAMA_GGUF_PATH environment variable.  Use an absolute path or a
+# path relative to the repository root.  When targeting GPU, make sure
+# the model is small enough to fit into your GPU memory.
 DEFAULT_GGUF_PATH = os.getenv(
     "LLAMA_GGUF_PATH",
     r".\models\Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf"
@@ -28,11 +31,30 @@ def _ensure_loaded(gguf_path: str = DEFAULT_GGUF_PATH):
         gguf_path = _resolve_path(gguf_path)
         if not os.path.exists(gguf_path):
             raise ValueError(f"[Candace] GGUF not found at: {gguf_path}")
+        # Determine how many layers of the model should be offloaded to the GPU.
+        # When n_gpu_layers is set to 0 the model will run entirely on CPU.
+        # Set LLAMA_N_GPU_LAYERS in your environment (e.g. via .env) to a
+        # positive integer or -1 to offload all layers to the GPU.  See
+        # https://github.com/ggerganov/llama.cpp for details.  Note that
+        # using GPU requires a CUDA-enabled build of llama-cpp-python.
+        n_gpu_layers_env = os.getenv("LLAMA_N_GPU_LAYERS", "-1")
+        try:
+            n_gpu_layers = int(n_gpu_layers_env)
+        except ValueError:
+            # Fallback to CPU if the env var cannot be parsed
+            n_gpu_layers = 0
+
+        n_ctx = int(os.getenv("LLAMA_N_CTX", "8192"))
+        # Use all available CPU cores for CPU-side work.  Even when using
+        # GPU offload, llama.cpp still uses CPU threads for some tasks.
+        n_threads = os.cpu_count() or 1
+
         _model = Llama(
             model_path=gguf_path,
-            n_ctx=int(os.getenv("LLAMA_N_CTX", "8192")),
-            n_threads=os.cpu_count(),
-            verbose=False
+            n_ctx=n_ctx,
+            n_threads=n_threads,
+            n_gpu_layers=n_gpu_layers,
+            verbose=False,
         )
 
 
@@ -41,7 +63,17 @@ def load(gguf_path: str = DEFAULT_GGUF_PATH):
     Explicit loader if you want to preload the model at app startup.
     """
     _ensure_loaded(gguf_path)
-    return _model, None, "cpu"
+    # Determine if the model is offloading any layers to GPU based on env. If
+    # LLAMA_N_GPU_LAYERS > 0, return 'gpu' as the device string. Otherwise
+    # return 'cpu'. This is purely informational; the device selection
+    # happens in _ensure_loaded.
+    device = "cpu"
+    try:
+        if int(os.getenv("LLAMA_N_GPU_LAYERS", "-1")) > 0:
+            device = "gpu"
+    except ValueError:
+        pass
+    return _model, None, device
 
 
 def generate_response(

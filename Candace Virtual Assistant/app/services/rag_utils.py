@@ -72,9 +72,37 @@ def _collect_paths(target: str) -> List[str]:
     return found
 
 def _load_embedder():
+    """
+    Lazily load the sentence embedding model.  When a CUDA-capable GPU is
+    available and PyTorch has been installed with CUDA support, offload
+    embeddings to the GPU to accelerate inference.  This behavior can be
+    disabled by setting the environment variable CANDACE_EMBED_DEVICE to
+    'cpu'.  If CANDACE_EMBED_DEVICE is set to 'cuda' the embedder will be
+    forced onto the GPU regardless of autodetection.
+    """
     global _sbert
     if _sbert is None:
-        _sbert = SentenceTransformer(EMBED_MODEL_ID)
+        # Determine device: use explicit env override if provided, otherwise
+        # automatically choose CUDA when available.
+        device_override = os.getenv("CANDACE_EMBED_DEVICE", None)
+        device = None
+        if device_override:
+            # Accept values like 'cpu' or 'cuda'
+            device = device_override.strip().lower()
+        else:
+            try:
+                import torch
+                if torch.cuda.is_available():
+                    device = "cuda"
+                else:
+                    device = "cpu"
+            except Exception:
+                device = "cpu"
+        try:
+            _sbert = SentenceTransformer(EMBED_MODEL_ID, device=device)
+        except Exception:
+            # Fallback to default loading semantics if specifying device fails
+            _sbert = SentenceTransformer(EMBED_MODEL_ID)
     return _sbert
 
 def _ensure_dirs(dirpath: str):
