@@ -8,9 +8,11 @@ from config import Config   # <-- USE YOUR CONFIG
 
 
 BASE_DIR = Path(__file__).resolve().parent
-SCHEMA_FILE = BASE_DIR / "schema.sql"
+SCHEMA_FILE = BASE_DIR / "database/schema.sql"
 
-SEEDS_DIR = BASE_DIR / "seeds"
+SECOND_FILE = BASE_DIR / "database/second_run.sql"
+
+SEEDS_DIR = BASE_DIR / "database/seeds"
 MODULE_DATA_DIR = SEEDS_DIR / "module_data"
 
 # Additional seed files
@@ -64,6 +66,12 @@ def main():
         run_sql_file(cursor, SCHEMA_FILE)
         cnx.commit()
 
+        print("\n===========================")
+        print("  Running setting up tables second_.sql")
+        print("===========================")
+        run_sql_file(cursor, SECOND_FILE)
+        cnx.commit()
+
         # 2) Module / assignment / item data
         module_files = sorted(MODULE_DATA_DIR.glob("*.sql"))
         print("\n===========================")
@@ -111,4 +119,4 @@ def main():
 if __name__ == "__main__":
     main()
 
-## Run: python database/seed_db.py
+## Run: python seed_db.py

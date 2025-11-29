@@ -7,6 +7,7 @@ import os
 from werkzeug.security import generate_password_hash
 from .auth_utils import login_user, logout_user, login_required, get_current_user, verify_login_credentials, role_required
 from datetime import datetime
+import re
 
 bp = Blueprint("main", __name__)
 
@@ -169,7 +170,7 @@ def ChatbotEndpoint():
     Main chatbot endpoint.
 
     - Requires login so we know who is asking.
-    - Uses MySQL to pull the student's profile + schedule.
+    - Uses MySQL to pull the student's profile + schedule (+ optional assignments/grades).
     - Uses RAG (rag_utils) for catalog/weekly/docs context.
     - Logs each exchange into ai_chat_log.
     """
@@ -189,6 +190,9 @@ def ChatbotEndpoint():
     # --------------------------------------------------
     student_context_parts = []
 
+    profile = None
+    schedule_rows = []
+
     if student_id:
         # Basic profile: name, major, gpa
         profile = query_db(
@@ -204,18 +208,27 @@ def ChatbotEndpoint():
             one=True,
         )
 
-        if profile:
-            name = f"{profile['student_first_name']} {profile['student_last_name']}"
-            major = profile.get("major_name") or "Undeclared"
-            gpa = profile.get("student_gpa")
-            credits = profile.get("student_total_credits")
+        # If we have a student_id from users table but
+        # no matching row in students → account not matched.
+        if not profile:
+            return jsonify({
+                "chatbot_response": (
+                    "Your account is not matched to any student record in the system. "
+                    "Please contact your instructor or support so they can fix your enrollment."
+                )
+            }), 200
 
-            student_context_parts.append(f"Student Name: {name}")
-            student_context_parts.append(f"Major: {major}")
-            if gpa is not None:
-                student_context_parts.append(f"GPA: {gpa}")
-            if credits is not None:
-                student_context_parts.append(f"Total Credits: {credits}")
+        name = f"{profile['student_first_name']} {profile['student_last_name']}"
+        major = profile.get("major_name") or "Undeclared"
+        gpa = profile.get("student_gpa")
+        credits = profile.get("student_total_credits")
+
+        student_context_parts.append(f"Student Name: {name}")
+        student_context_parts.append(f"Major: {major}")
+        if gpa is not None:
+            student_context_parts.append(f"GPA: {gpa}")
+        if credits is not None:
+            student_context_parts.append(f"Total Credits: {credits}")
 
         # Current course schedule
         schedule_rows = query_db(
@@ -242,10 +255,182 @@ def ChatbotEndpoint():
         student_context = "Student Context:\n" + "\n".join(student_context_parts)
 
     # --------------------------------------------------
-    # 2) Retrieve RAG context (catalog + weekly + docs)
+    # 1.5) Course-specific assignments and grades
+    #      (ENG 101 / ENG-101 etc.)
     # --------------------------------------------------
-    hits = rag_utils.retrieve(user_message, k=4)
-    rag_context = rag_utils.format_context(hits)
+    assignment_block = ""
+    grade_block = ""
+
+    # Detect intent
+    assignment_question = bool(
+        re.search(r"\bassignments?\b|\bhomework\b|\bessay\b", user_message, re.IGNORECASE)
+    )
+    grade_question = bool(
+        re.search(r"\bgrade\b|\baverage\b|\bpercent\b|\bscore\b", user_message, re.IGNORECASE)
+    )
+
+    # Try to detect a course code like ENG 101 / ENG-101
+    course_code_hint = detect_course_code(user_message)
+
+    # --- Assignments for a specific course ---
+    if assignment_question and student_id and course_code_hint:
+        like_pattern = f"{course_code_hint}%"
+        assignment_rows = query_db(
+            """
+            SELECT
+                c.course_name,
+                a.assignment_name,
+                a.assignment_type,
+                a.due_at,
+                a.max_points,
+                a.assignment_score_weight,
+                a.description
+            FROM schedule s
+            JOIN classes cl    ON s.class_id = cl.class_id
+            JOIN courses c     ON cl.course_id = c.course_id
+            JOIN assignments a ON a.class_id = cl.class_id
+            WHERE s.student_id = %s
+              AND c.course_name LIKE %s
+            ORDER BY a.due_at, a.assignment_name
+            """,
+            (student_id, like_pattern),
+        )
+
+        if assignment_rows:
+            lines = []
+            course_label = assignment_rows[0]["course_name"]
+            lines.append(f"Assignments for {course_label}:")
+            for row in assignment_rows:
+                line = f"- {row['assignment_name']} [{row['assignment_type']}]"
+                if row.get("due_at"):
+                    line += f" (Due: {row['due_at']})"
+                line += f" | Max Points: {row['max_points']}"
+                if row.get("assignment_score_weight") is not None:
+                    line += f" | Weight: {row['assignment_score_weight']}"
+                lines.append(line)
+            assignment_block = "\n".join(lines)
+        else:
+            # They clearly asked about assignments for a parsed course code,
+            # and DB has none → answer directly instead of hallucinating.
+            return jsonify({
+                "chatbot_response": (
+                    f"I checked the system, but I couldn't find any assignments "
+                    f"for {course_code_hint} in your current enrollment. "
+                    "It might be that assignments haven't been entered yet, or "
+                    "they're only visible directly in Canvas."
+                )
+            }), 200
+
+    # --- Grade summary for a specific course ---
+    if grade_question and student_id and course_code_hint:
+        summary = get_course_grade_summary(student_id, course_code_hint)
+        if summary is None:
+            return jsonify({
+                "chatbot_response": (
+                    f"I checked your record but couldn't find any graded assignments "
+                    f"for {course_code_hint} linked to your enrollment. "
+                    "It might be that grades haven't been entered yet or the course "
+                    "is tracked only in Canvas."
+                )
+            }), 200
+
+        lines = []
+        cname = summary["course_name"]
+        lines.append(f"Grade Summary for {cname}:")
+
+        if summary["current_percent"] is not None:
+            lines.append(
+                f"- Current weighted average: {summary['current_percent']:.1f}% "
+                f"(covering {summary['covered_weight']*100:.0f}% of the total grade)."
+            )
+        else:
+            lines.append(
+                "- There are no graded, weighted assignments yet, so a current average "
+                "cannot be calculated."
+            )
+
+        if summary["assignments"]:
+            lines.append("Assignments and scores:")
+            for a in summary["assignments"]:
+                line = f"  • {a['name']} [{a['type']}]"
+                if a["due_at"]:
+                    line += f" (Due: {a['due_at']})"
+                line += f" | Max: {a['max_points']}"
+                if a["score"] is not None:
+                    line += f" | Score: {a['score']} (status: {a['status']})"
+                else:
+                    line += f" | Score: — (status: {a['status']})"
+                if a["weight"] is not None:
+                    line += f" | Weight: {a['weight']}"
+                lines.append(line)
+
+        grade_block = "\n".join(lines)
+
+    # Attach blocks to student_context if present
+    extra_blocks = []
+    if assignment_block:
+        extra_blocks.append(assignment_block)
+    if grade_block:
+        extra_blocks.append(grade_block)
+
+    if extra_blocks:
+        if student_context:
+            student_context += "\n\n"
+        student_context += "\n\n".join(extra_blocks)
+
+    # --------------------------------------------------
+    # 2) Retrieve RAG context (catalog + weekly + docs)
+    #    and FILTER it so student-specific docs only
+    #    show for the logged-in student.
+    # --------------------------------------------------
+    raw_hits = rag_utils.retrieve(user_message, k=8)  # a bit more context than 4
+
+    def _get_hit_text(hit):
+        # Be robust to different rag_utils shapes
+        if isinstance(hit, dict):
+            return (
+                hit.get("chunk")
+                or hit.get("text")
+                or hit.get("content")
+                or ""
+            )
+        return str(hit)
+
+    filtered_hits = []
+    if raw_hits:
+        for h in raw_hits:
+            text = _get_hit_text(h)
+
+            # If chunk clearly has a STUDENT_ID marker, only keep if it matches.
+            m = re.search(r"STUDENT_ID:\s*(\d+)", text)
+            if m:
+                try:
+                    sid_in_doc = int(m.group(1))
+                except ValueError:
+                    continue
+                if student_id and sid_in_doc == student_id:
+                    filtered_hits.append(h)
+                # if it's another student's doc, skip it
+                continue
+
+            # Otherwise treat as global (catalog, weekly, pages, etc.) → keep
+            filtered_hits.append(h)
+
+    rag_context = rag_utils.format_context(filtered_hits)
+
+    # --------------------------------------------------
+    # 2.5) Handle "no data" case:
+    #      no student-specific context AND no RAG hits
+    # --------------------------------------------------
+    if not student_context_parts and not filtered_hits:
+        return jsonify({
+            "chatbot_response": (
+                "I checked your account and the available course documents, "
+                "but I couldn't find any information related to your question. "
+                "You may need to check your course syllabus or Canvas directly "
+                "for more details, or try asking in a different way."
+            )
+        }), 200
 
     # Combine student-specific context + RAG context
     combined_context = student_context
@@ -260,13 +445,13 @@ def ChatbotEndpoint():
         user_message=user_message,
         history=history,
         context=combined_context,
-        max_turns=4,
+        max_turns=6,
     )
 
     reply = llm_generate(
         prompt=prompt,
-        max_new_tokens=96,
-        temperature=0.0,
+        max_new_tokens=192,
+        temperature=0.2,
         do_sample=False,
     )
 
@@ -282,10 +467,106 @@ def ChatbotEndpoint():
             (student_id, user_message, reply),
         )
     except Exception as e:
-        # In dev: you can print/log this; don't break the chatbot on log failure.
         print(f"[ai_chat_log] insert failed: {e}")
 
     return jsonify({"chatbot_response": reply}), 200
+
+def get_course_grade_summary(student_id: int, course_code_hint: str):
+    """
+    Compute a grade summary for one course for a given student.
+
+    course_code_hint: something like "ENG 101" or "ENG-101" (we'll use LIKE).
+    Returns dict or None if no matching enrollment/assignments.
+    """
+
+    like_pattern = f"{course_code_hint}%"  # matches "ENG 101 - English Composition I"
+
+    rows = query_db(
+        """
+        SELECT
+            c.course_name,
+            a.assignment_name,
+            a.assignment_type,
+            a.assignment_score_weight,
+            a.max_points,
+            a.due_at,
+            ag.score,
+            ag.status
+        FROM schedule s
+        JOIN classes cl      ON s.class_id = cl.class_id
+        JOIN courses c       ON cl.course_id = c.course_id
+        JOIN assignments a   ON a.class_id = cl.class_id
+        LEFT JOIN assignment_grades ag
+               ON ag.assignment_id = a.assignment_id
+              AND ag.student_id = s.student_id
+        WHERE s.student_id = %s
+          AND c.course_name LIKE %s
+        ORDER BY a.due_at, a.assignment_name
+        """,
+        (student_id, like_pattern),
+    )
+
+    if not rows:
+        return None
+
+    course_name = rows[0]["course_name"]
+
+    # Compute weighted average from assignments that have a score + weight.
+    total_weight = 0.0
+    weighted_sum = 0.0
+    assignments = []
+
+    for r in rows:
+        w = float(r["assignment_score_weight"] or 0.0)
+        max_pts = float(r["max_points"] or 0.0)
+        score = r["score"]
+        status = r["status"] or "not_assigned"
+
+        # Build a per-assignment summary line
+        assignments.append({
+            "name": r["assignment_name"],
+            "type": r["assignment_type"],
+            "due_at": r["due_at"],
+            "max_points": r["max_points"],
+            "weight": r["assignment_score_weight"],
+            "score": r["score"],
+            "status": status,
+        })
+
+        # Only count graded/submitted work with weight and max_points
+        if (
+            score is not None
+            and max_pts > 0
+            and w > 0
+            and status in ("submitted", "graded", "late")
+        ):
+            pct = float(score) / max_pts  # fraction
+            weighted_sum += pct * w
+            total_weight += w
+
+    current_percent = None
+    if total_weight > 0:
+        current_percent = (weighted_sum / total_weight) * 100.0
+
+    remaining_weight = max(0.0, 1.0 - total_weight)
+
+    return {
+        "course_name": course_name,
+        "assignments": assignments,
+        "current_percent": current_percent,   # e.g. 88.5
+        "covered_weight": total_weight,       # e.g. 0.60 (60% of grade)
+        "remaining_weight": remaining_weight, # e.g. 0.40
+    }
+
+def detect_course_code(msg: str) -> str | None:
+    """
+    Try to detect a course code like ENG 101 or ENG-101 in the message.
+    Returns a normalized 'ENG 101' or None.
+    """
+    m = re.search(r"\b([A-Z]{2,4})[-\s]?(\d{3})\b", msg.upper())
+    if not m:
+        return None
+    return f"{m.group(1)} {m.group(2)}"
 
 @bp.post("/rag/ingest")
 @role_required("admin")

@@ -1,0 +1,23 @@
+STUDENT PROFILE
+========================================
+STUDENT_ID: 1000013
+NAME: Liam Brooks
+GPA: 3.10
+TOTAL_CREDITS: 12
+HAS_ACCOUNT: 1
+
+CURRENT SCHEDULE
+========================================
+- CLASS_ID: 1001 | ENG 101 - English Composition I (3 credits) [TYPE: Lecture]
+  INSTRUCTOR: Linda Morales
+
+- CLASS_ID: 1003 | MAT 171 - Unified Calculus I (4 credits) [TYPE: Lecture]
+  INSTRUCTOR: James Patel
+
+- CLASS_ID: 1002 | PSY 101 - General Psychology (3 credits) [TYPE: Lecture]
+  INSTRUCTOR: Linda Morales
+
+
+ASSIGNMENTS & GRADES OVERVIEW
+========================================
+No assignment grades on record.

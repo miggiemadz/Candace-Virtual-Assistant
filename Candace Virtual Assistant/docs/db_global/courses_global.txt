@@ -1,0 +1,56 @@
+GLOBAL COURSE CATALOG
+========================================
+
+COURSE_ID: 101
+COURSE_NAME: ENG 101 - English Composition I
+CREDITS: 3
+MAJOR: General Education
+DEPARTMENT: Liberal Arts
+
+COURSE_ID: 201
+COURSE_NAME: ENG 102 - English Composition II
+CREDITS: 3
+MAJOR: General Education
+DEPARTMENT: Liberal Arts
+
+COURSE_ID: 102
+COURSE_NAME: PSY 101 - General Psychology
+CREDITS: 3
+MAJOR: General Education
+DEPARTMENT: Liberal Arts
+
+COURSE_ID: 104
+COURSE_NAME: CST 161 - Computer Programming Fundamentals
+CREDITS: 4
+MAJOR: A.S. Data Science
+DEPARTMENT: STEM
+
+COURSE_ID: 205
+COURSE_NAME: CST 162 - Computer Algorithms
+CREDITS: 4
+MAJOR: A.S. Data Science
+DEPARTMENT: STEM
+
+COURSE_ID: 103
+COURSE_NAME: MAT 171 - Unified Calculus I
+CREDITS: 4
+MAJOR: A.S. Data Science
+DEPARTMENT: STEM
+
+COURSE_ID: 202
+COURSE_NAME: MAT 172 - Unified Calculus II
+CREDITS: 4
+MAJOR: A.S. Data Science
+DEPARTMENT: STEM
+
+COURSE_ID: 203
+COURSE_NAME: PHY 111 - Mechanics
+CREDITS: 3
+MAJOR: A.S. Data Science
+DEPARTMENT: STEM
+
+COURSE_ID: 204
+COURSE_NAME: PHYL 111 - Mechanics Laboratory
+CREDITS: 1
+MAJOR: A.S. Data Science
+DEPARTMENT: STEM

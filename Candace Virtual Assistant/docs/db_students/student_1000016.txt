@@ -1,0 +1,26 @@
+STUDENT PROFILE
+========================================
+STUDENT_ID: 1000016
+NAME: Grace Howard
+GPA: 3.50
+TOTAL_CREDITS: 12
+HAS_ACCOUNT: 1
+
+CURRENT SCHEDULE
+========================================
+- CLASS_ID: 2005 | CST 162 - Computer Algorithms (4 credits) [TYPE: Lecture]
+  INSTRUCTOR: Nicole Alvarez
+
+- CLASS_ID: 2002 | MAT 172 - Unified Calculus II (4 credits) [TYPE: Lecture]
+  INSTRUCTOR: Rebecca Cho
+
+- CLASS_ID: 2003 | PHY 111 - Mechanics (3 credits) [TYPE: Lecture]
+  INSTRUCTOR: Peter Dunn
+
+- CLASS_ID: 2004 | PHYL 111 - Mechanics Laboratory (1 credits) [TYPE: Lab]
+  INSTRUCTOR: Hannah Singh
+
+
+ASSIGNMENTS & GRADES OVERVIEW
+========================================
+No assignment grades on record.

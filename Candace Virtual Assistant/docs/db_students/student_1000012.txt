@@ -1,0 +1,43 @@
+STUDENT PROFILE
+========================================
+STUDENT_ID: 1000012
+NAME: Emily Rogers
+MAJOR: A.S. Data Science
+DEPARTMENT: STEM
+GPA: 3.70
+TOTAL_CREDITS: 14
+HAS_ACCOUNT: 1
+
+CURRENT SCHEDULE
+========================================
+- CLASS_ID: 1004 | CST 161 - Computer Programming Fundamentals (4 credits) [TYPE: Lecture]
+  INSTRUCTOR: Alan Greene
+
+- CLASS_ID: 2005 | CST 162 - Computer Algorithms (4 credits) [TYPE: Lecture]
+  INSTRUCTOR: Nicole Alvarez
+
+- CLASS_ID: 1001 | ENG 101 - English Composition I (3 credits) [TYPE: Lecture]
+  INSTRUCTOR: Linda Morales
+
+- CLASS_ID: 2001 | ENG 102 - English Composition II (3 credits) [TYPE: Lecture]
+  INSTRUCTOR: Stephen Price
+
+- CLASS_ID: 1003 | MAT 171 - Unified Calculus I (4 credits) [TYPE: Lecture]
+  INSTRUCTOR: James Patel
+
+- CLASS_ID: 2002 | MAT 172 - Unified Calculus II (4 credits) [TYPE: Lecture]
+  INSTRUCTOR: Rebecca Cho
+
+- CLASS_ID: 2003 | PHY 111 - Mechanics (3 credits) [TYPE: Lecture]
+  INSTRUCTOR: Peter Dunn
+
+- CLASS_ID: 2004 | PHYL 111 - Mechanics Laboratory (1 credits) [TYPE: Lab]
+  INSTRUCTOR: Hannah Singh
+
+- CLASS_ID: 1002 | PSY 101 - General Psychology (3 credits) [TYPE: Lecture]
+  INSTRUCTOR: Linda Morales
+
+
+ASSIGNMENTS & GRADES OVERVIEW
+========================================
+No assignment grades on record.
