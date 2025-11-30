@@ -1,6 +1,7 @@
 import os
 import threading
 from llama_cpp import Llama
+from config import Config
 
 # ---------------------------------------------------------------------------
 # Configuration: paths and environment variables
@@ -17,6 +18,10 @@ DEFAULT_GGUF_PATH = os.getenv(
 # Global singleton model + lock to avoid race conditions on first load
 _model = None
 _lock = threading.Lock()
+
+# Use Config as the single source of truth for context + max_new_tokens
+LLAMA_N_CTX = Config.LLAMA_N_CTX
+LLAMA_MAX_NEW_TOKENS = Config.LLAMA_MAX_NEW_TOKENS
 
 
 def _resolve_path(p: str) -> str:
@@ -61,7 +66,7 @@ def _ensure_loaded(gguf_path: str = DEFAULT_GGUF_PATH):
       - -1  => "all layers" offloaded (subject to GPU VRAM & build support)
 
     Other knobs:
-      - LLAMA_N_CTX    => context window (default: 8192)
+      - LLAMA_N_CTX    => context window (default from Config, e.g., 8192)
       - LLAMA_THREADS  => override number of CPU threads
     """
     global _model
@@ -84,8 +89,9 @@ def _ensure_loaded(gguf_path: str = DEFAULT_GGUF_PATH):
         # build of llama-cpp-python, you get GPU offload automatically.
         n_gpu_layers = _parse_int_env("LLAMA_N_GPU_LAYERS", default=-1)
 
-        # Context length
-        n_ctx = _parse_int_env("LLAMA_N_CTX", default=8192)
+        # Context length: use Config as the single source of truth
+        n_ctx = LLAMA_N_CTX
+        print(f"[Candace][LLAMA] Using n_ctx={n_ctx} (from Config)")
 
         # CPU threads: use environment override if set, otherwise all cores
         threads_env = os.getenv("LLAMA_THREADS", "").strip()
@@ -161,7 +167,7 @@ def load(gguf_path: str = DEFAULT_GGUF_PATH):
 def generate_response(
     prompt: str,
     gguf_path: str = DEFAULT_GGUF_PATH,
-    max_new_tokens: int = 160,
+    max_new_tokens: int | None = None,
     temperature: float = 0.2,
     top_p: float = 0.9,
     top_k: int = 40,
@@ -174,7 +180,8 @@ def generate_response(
     Args:
         prompt: The full prompt string (including any system / user formatting).
         gguf_path: Path to the GGUF model file (optional; defaults via env).
-        max_new_tokens: Maximum number of tokens to generate.
+        max_new_tokens: Maximum number of tokens to generate. If None, defaults
+                        to Config.LLAMA_MAX_NEW_TOKENS.
         temperature: Sampling temperature.
         top_p: Nucleus sampling probability mass.
         top_k: Top-k sampling cutoff.
@@ -184,6 +191,22 @@ def generate_response(
         The generated text (stripped of leading/trailing whitespace).
     """
     _ensure_loaded(gguf_path)
+
+    if max_new_tokens is None:
+        max_new_tokens = LLAMA_MAX_NEW_TOKENS
+
+    # Safety: don't ask for more tokens than the context window
+    if max_new_tokens > LLAMA_N_CTX:
+        print(
+            f"[Candace][LLAMA][WARN] max_new_tokens={max_new_tokens} > n_ctx={LLAMA_N_CTX}; "
+            f"clamping to n_ctx."
+        )
+        max_new_tokens = LLAMA_N_CTX
+
+    print(
+        f"[Candace][LLAMA] generate_response() with max_new_tokens={max_new_tokens}, "
+        f"temperature={temperature}, top_p={top_p}, top_k={top_k}"
+    )
 
     stop = stop_strings or ["\nUser:", "User:", "\nAssistant:", "Assistant:"]
     result = _model(

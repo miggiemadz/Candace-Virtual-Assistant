@@ -199,14 +199,85 @@ def _lazy_load_index():
     with open(meta_path, "r", encoding="utf-8") as f:
         _meta = json.load(f)
 
+def estimate_tokens(text: str) -> int:
+    """Rough token estimator so we can control context length."""
+    if not text:
+        return 0
+    # Simple heuristic: 1 token ≈ 4 chars
+    return max(1, len(text) // 4)
 
-def retrieve(query: str, k: int | None = None) -> List[dict]:
+
+def choose_top_k(query: str) -> int:
+    """Choose how many RAG chunks to retrieve based on question type."""
+    q = query.lower()
+
+    if any(w in q for w in ["list", "all assignments", "everything", "every assignment"]):
+        return 6      # big list-style question → more sources
+
+    if any(w in q for w in ["assignment", "due", "grade"]):
+        return 4      # course-specific
+
+    return 3          # simple question
+
+def budget_hits(student_context: str, hits: list[dict], max_tokens: int) -> list[dict]:
+    """
+    Keep only as many vector hits as will fit into the token budget.
+    """
+    used = estimate_tokens(student_context)
+    out = []
+
+    for h in hits:
+        chunk_tokens = estimate_tokens(h["chunk"])
+        if used + chunk_tokens > max_tokens:
+            break
+        out.append(h)
+        used += chunk_tokens
+
+    return out
+
+def build_trimmed_context(student_context: str, query: str, max_total_tokens: int) -> str:
+    """
+    Combine student context + RAG hits under a token budget.
+    """
+    print(
+        f"[RAG] build_trimmed_context: max_total_tokens={max_total_tokens}, "
+        f"query={query!r}, student_tokens≈{estimate_tokens(student_context)}"
+    )
+
+    k = choose_top_k(query)
+    hits = retrieve(query, k=k)
+
+    allowed = budget_hits(
+        student_context=student_context,
+        hits=hits,
+        max_tokens=max_total_tokens,
+    )
+
+    print(
+        f"[RAG] allowed_hits={len(allowed)} / {len(hits)} possible, "
+        f"total_tokens≈{estimate_tokens(student_context) + sum(estimate_tokens(h['chunk']) for h in allowed)}"
+    )
+
+    parts = [student_context]
+    for h in allowed:
+        parts.append(f"[Source: {os.path.basename(h['path'])}]\n{h['chunk']}")
+
+    return "\n\n".join(parts).strip()
+
+def retrieve(query: str, k: int | None = None) -> list[dict]:
     _lazy_load_index()
+
     if _faiss is None or not _meta:
         return []
+
+    # dynamic K selection if not given
+    if k is None:
+        k = choose_top_k(query)
+
     sbert = _load_embedder()
     q = sbert.encode([query], convert_to_numpy=True, normalize_embeddings=True)
-    D, I = _faiss.search(q, k or TOP_K)
+    D, I = _faiss.search(q, k)
+
     hits = []
     for score, idx in zip(D[0].tolist(), I[0].tolist()):
         if idx == -1:
@@ -217,8 +288,8 @@ def retrieve(query: str, k: int | None = None) -> List[dict]:
             "chunk": m["chunk"],
             "score": float(score),
         })
-    return hits
 
+    return hits
 
 def format_context(hits: List[dict]) -> str:
     if not hits:

@@ -117,6 +117,25 @@ body.show-chatbot .chatbot {
   line-height: 1.2;
 }
 
+.chatbot header .chat-clear-btn {
+  position: absolute;
+  right: 48px; /* leaves room for the close icon at 12px */
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 0.8rem;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+}
+
+.chatbot header .chat-clear-btn:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
 /* Close button in header */
 .chatbot header .close-btn {
   position: absolute;
