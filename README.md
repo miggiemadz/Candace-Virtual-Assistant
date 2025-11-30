@@ -10,6 +10,72 @@ An AI-powered Virtual Assistant currently in development as part of a **Fall 202
 Candace is a research-driven prototype that integrates **natural language processing** and **data management** to create an intelligent assistant for student productivity.  
 The project aims to explore how **LLM-based tools** can improve student engagement and time management in higher education.
 
+```
+Candace Virtual Assistant/
+├── APIs.env
+├── app/
+│   ├── __init__.py
+│   ├── auth_utils.py
+│   ├── crud.py
+│   ├── data/
+│   │   └── student_database_final.json
+│   ├── db_utils.py
+│   ├── main.py
+│   ├── models/
+│   │   └── README.md
+│   ├── routes.py
+│   ├── services/
+│   │   ├── __init__.py
+│   │   ├── assistant/
+│   │   │   ├── __init__.py
+│   │   │   ├── llama_utils.py
+│   │   │   └── prompt_utils.py
+│   │   └── rag_utils.py
+│   ├── static/
+│   │   ├── css/ (chatbot.css, style.css)
+│   │   ├── images/ (ucnj‑logo.png)
+│   │   └── js/ (chatbot.js)
+│   ├── templates/
+│   │   ├── base.html, login-page.html, sign-up-page.html, dashboard.html, _course_nav.html
+│   │   ├── admin/ (admin_dashboard.html, chat_logs.html, classes.html, courses.html, rag_tools.html, students.html, users.html)
+│   │   └── student/
+│   │       ├── account.html, calendar.html, courses.html, history.html, inbox.html
+│   │       ├── course_shell.html and other course pages (analytics, assignments, cengage, files, grades, modules, pages, people, quizzes, syllabus)
+│   ├── vectorstore/
+│   │   └── store/ (candace.faiss, meta.json)
+│   └── static/empty.py
+├── config.py
+├── database/
+│   ├── candace.db
+│   ├── schema.sql
+│   ├── second_run.sql
+│   ├── seeds/
+│   │   ├── course-syllabus-fake-data.sql
+│   │   ├── lecturers-fake-data.sql
+│   │   ├── student-fake-data.sql
+│   │   └── module_data/
+│   │       └── *.sql  (fake module data for various courses: CST‑161, ENG‑101, MAT‑171, etc.)
+│   └── testDatabase.py
+├── docs/
+│   ├── catalog/
+│   │   ├── catalog_all_courses.txt
+│   │   ├── current_term_courses.txt
+│   │   └── future_term_courses.txt
+│   ├── db_global/ (courses_global.txt, syllabi_global.txt)
+│   ├── db_students/ (student_1000001.txt, … student_1000016.txt)
+│   └── weekly/
+│       └── [many course-specific “_weeks.txt” files for terms 2025FA, 2026SP, 2026WI, etc.]
+├── export_db_rag_docs.py
+├── ingest_rag.py
+├── migrate_json_to_mysql.py
+├── requirements.txt
+├── run.py
+├── seed_db.py
+├── static/empty.py
+├── tests/ (demo_account.py, inference_test.py)
+└── README.md
+```
+
 ---
 
 ## 👥 Research Team

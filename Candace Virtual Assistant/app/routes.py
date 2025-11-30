@@ -8,6 +8,10 @@ from werkzeug.security import generate_password_hash
 from .auth_utils import login_user, logout_user, login_required, get_current_user, verify_login_credentials, role_required
 from datetime import datetime
 import re
+from config import Config
+
+LLAMA_N_CTX = Config.LLAMA_N_CTX
+LLAMA_MAX_NEW_TOKENS = Config.LLAMA_MAX_NEW_TOKENS
 
 bp = Blueprint("main", __name__)
 
@@ -256,7 +260,6 @@ def ChatbotEndpoint():
 
     # --------------------------------------------------
     # 1.5) Course-specific assignments and grades
-    #      (ENG 101 / ENG-101 etc.)
     # --------------------------------------------------
     assignment_block = ""
     grade_block = ""
@@ -310,8 +313,6 @@ def ChatbotEndpoint():
                 lines.append(line)
             assignment_block = "\n".join(lines)
         else:
-            # They clearly asked about assignments for a parsed course code,
-            # and DB has none → answer directly instead of hallucinating.
             return jsonify({
                 "chatbot_response": (
                     f"I checked the system, but I couldn't find any assignments "
@@ -383,7 +384,8 @@ def ChatbotEndpoint():
     #    and FILTER it so student-specific docs only
     #    show for the logged-in student.
     # --------------------------------------------------
-    raw_hits = rag_utils.retrieve(user_message, k=8)  # a bit more context than 4
+    # NOTE: let rag_utils.choose_top_k decide 'k' instead of hard-coding 8
+    raw_hits = rag_utils.retrieve(user_message)
 
     def _get_hit_text(hit):
         # Be robust to different rag_utils shapes
@@ -416,13 +418,47 @@ def ChatbotEndpoint():
             # Otherwise treat as global (catalog, weekly, pages, etc.) → keep
             filtered_hits.append(h)
 
-    rag_context = rag_utils.format_context(filtered_hits)
+    # --------------------------------------------------
+    # 2.25) Token-budgeted RAG context using rag_utils.budget_hits
+    # --------------------------------------------------
+    # Reserve some tokens for system prompt + instructions
+    safety_margin = 512
+    max_context_tokens = max(
+        1024,
+        LLAMA_N_CTX - LLAMA_MAX_NEW_TOKENS - safety_margin,
+    )
+
+    allowed_hits = rag_utils.budget_hits(
+        student_context=student_context or "",
+        hits=filtered_hits,
+        max_tokens=max_context_tokens,
+    )
+
+    rag_context = rag_utils.format_context(allowed_hits)
+
+    # Debug / logging (optional)
+    try:
+        current_app.logger.info(
+            "[Candace][RAG] raw_hits=%d, filtered_hits=%d, allowed_hits=%d, "
+            "max_context_tokens=%d, student_tokens≈%d",
+            len(raw_hits) if raw_hits else 0,
+            len(filtered_hits),
+            len(allowed_hits),
+            max_context_tokens,
+            rag_utils.estimate_tokens(student_context or ""),
+        )
+    except Exception:
+        print(
+            f"[Candace][RAG] raw_hits={len(raw_hits) if raw_hits else 0}, "
+            f"filtered_hits={len(filtered_hits)}, allowed_hits={len(allowed_hits)}, "
+            f"max_context_tokens={max_context_tokens}, "
+            f"student_tokens≈{rag_utils.estimate_tokens(student_context or '')}"
+        )
 
     # --------------------------------------------------
-    # 2.5) Handle "no data" case:
-    #      no student-specific context AND no RAG hits
+    # 2.5) Handle "no data" case
     # --------------------------------------------------
-    if not student_context_parts and not filtered_hits:
+    if not student_context_parts and not allowed_hits:
         return jsonify({
             "chatbot_response": (
                 "I checked your account and the available course documents, "
@@ -445,14 +481,15 @@ def ChatbotEndpoint():
         user_message=user_message,
         history=history,
         context=combined_context,
-        max_turns=6,
+        max_turns=3,
     )
 
     reply = llm_generate(
         prompt=prompt,
-        max_new_tokens=192,
+        max_new_tokens=LLAMA_MAX_NEW_TOKENS,
         temperature=0.2,
-        do_sample=False,
+        top_p=0.9,
+        top_k=40,
     )
 
     # --------------------------------------------------

@@ -4,6 +4,7 @@ const closeBtn = document.querySelector(".close-btn");
 const chatbox = document.querySelector(".chatbox");
 const chatInput = document.querySelector(".chat-input textarea");
 const sendChatBtn = document.querySelector(".chat-input span");
+const clearChatBtn = document.querySelector(".chat-clear-btn");
 
 // === State ===
 let isPending = false;
@@ -35,6 +36,12 @@ function saveHistory(history) {
 
 function saveOpenState(isOpen) {
   localStorage.setItem(LS_KEYS.open, isOpen ? "true" : "false");
+}
+
+function resetChat() {
+  history = [];
+  saveHistory(history);
+  renderHistory();
 }
 
 // In-memory mirror of history for convenience
@@ -164,6 +171,12 @@ chatbotToggler.addEventListener("click", () => {
     setTimeout(() => chatInput.focus(), 150);
   }
 });
+
+if (clearChatBtn) {
+  clearChatBtn.addEventListener("click", () => {
+    resetChat();
+  });
+}
 
 // === Boot: restore history and open state ===
 document.addEventListener("DOMContentLoaded", () => {

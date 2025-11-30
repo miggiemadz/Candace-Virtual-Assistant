@@ -1,74 +1,212 @@
 import os
 import threading
 from llama_cpp import Llama
+from config import Config
 
-# Default path to your quantized model
+# ---------------------------------------------------------------------------
+# Configuration: paths and environment variables
+# ---------------------------------------------------------------------------
+
+# Default path to your quantized model. You can override this via the
+# LLAMA_GGUF_PATH environment variable. Use an absolute path or a path
+# relative to the repository root (two levels up from this file).
 DEFAULT_GGUF_PATH = os.getenv(
     "LLAMA_GGUF_PATH",
-    r".\models\Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf"
+    r".\models\Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf",
 )
 
+# Global singleton model + lock to avoid race conditions on first load
 _model = None
 _lock = threading.Lock()
 
+# Use Config as the single source of truth for context + max_new_tokens
+LLAMA_N_CTX = Config.LLAMA_N_CTX
+LLAMA_MAX_NEW_TOKENS = Config.LLAMA_MAX_NEW_TOKENS
+
+
 def _resolve_path(p: str) -> str:
-    # If relative, resolve from repo root (this file’s parent’s parent)
+    """
+    Resolve a possibly-relative model path to an absolute path rooted at the
+    project root (two directories above this file).
+    """
     if not os.path.isabs(p):
         base = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
         p = os.path.abspath(os.path.join(base, p))
     return p
 
+
+def _parse_int_env(name: str, default: int) -> int:
+    """
+    Helper to safely parse integer environment variables.
+    Falls back to 'default' on any error and prints a debug message.
+    """
+    raw = os.getenv(name, None)
+    if raw is None:
+        return default
+    try:
+        value = int(raw)
+        print(f"[Candace][LLAMA] {name}={value} (from environment)")
+        return value
+    except ValueError:
+        print(
+            f"[Candace][LLAMA][WARN] Could not parse {name}={raw!r}; "
+            f"falling back to default={default}."
+        )
+        return default
+
+
 def _ensure_loaded(gguf_path: str = DEFAULT_GGUF_PATH):
+    """
+    Lazily load the Llama model as a process-wide singleton.
+
+    GPU OFFLOAD:
+      - Controlled by the environment variable LLAMA_N_GPU_LAYERS
+      -  0  => CPU only
+      - >0  => that many layers offloaded to GPU
+      - -1  => "all layers" offloaded (subject to GPU VRAM & build support)
+
+    Other knobs:
+      - LLAMA_N_CTX    => context window (default from Config, e.g., 8192)
+      - LLAMA_THREADS  => override number of CPU threads
+    """
     global _model
     if _model is not None:
         return
+
     with _lock:
         if _model is not None:
             return
+
+        # Resolve model path
         gguf_path = _resolve_path(gguf_path)
         if not os.path.exists(gguf_path):
-            raise ValueError(f"[Candace] GGUF not found at: {gguf_path}")
+            raise ValueError(f"[Candace][LLAMA] GGUF not found at: {gguf_path}")
+
+        # -------------------------------------------------------------------
+        # GPU configuration via LLAMA_N_GPU_LAYERS
+        # -------------------------------------------------------------------
+        # Default behavior: -1 (all layers) so that if you *do* have a CUDA
+        # build of llama-cpp-python, you get GPU offload automatically.
+        n_gpu_layers = _parse_int_env("LLAMA_N_GPU_LAYERS", default=-1)
+
+        # Context length: use Config as the single source of truth
+        n_ctx = LLAMA_N_CTX
+        print(f"[Candace][LLAMA] Using n_ctx={n_ctx} (from Config)")
+
+        # CPU threads: use environment override if set, otherwise all cores
+        threads_env = os.getenv("LLAMA_THREADS", "").strip()
+        if threads_env:
+            try:
+                n_threads = int(threads_env)
+                print(f"[Candace][LLAMA] LLAMA_THREADS={n_threads} (from environment)")
+            except ValueError:
+                n_threads = os.cpu_count() or 1
+                print(
+                    f"[Candace][LLAMA][WARN] Invalid LLAMA_THREADS={threads_env!r}; "
+                    f"using n_threads={n_threads}."
+                )
+        else:
+            n_threads = os.cpu_count() or 1
+            print(f"[Candace][LLAMA] Using n_threads={n_threads} (auto)")
+
+        # Informational logging about intended device
+        if n_gpu_layers == 0:
+            offload_str = "CPU only (n_gpu_layers=0)"
+        elif n_gpu_layers < 0:
+            offload_str = "attempting GPU offload for ALL layers (n_gpu_layers=-1)"
+        else:
+            offload_str = f"attempting GPU offload for {n_gpu_layers} layers"
+
+        print("[Candace][LLAMA] Loading model with:")
+        print(f"  - model_path   = {gguf_path}")
+        print(f"  - n_ctx        = {n_ctx}")
+        print(f"  - n_threads    = {n_threads}")
+        print(f"  - n_gpu_layers = {n_gpu_layers}  -> {offload_str}")
+
+        # -------------------------------------------------------------------
+        # Create the Llama model
+        # NOTE: GPU offload requires a CUDA-enabled build of llama-cpp-python.
+        # If you installed a CPU-only wheel, n_gpu_layers>0 will be ignored by
+        # the underlying library and everything will effectively run on CPU.
+        # -------------------------------------------------------------------
         _model = Llama(
             model_path=gguf_path,
-            n_ctx=int(os.getenv("LLAMA_N_CTX", "8192")),
-            n_threads=os.cpu_count(),
-            verbose=False
+            n_ctx=n_ctx,
+            n_threads=n_threads,
+            n_gpu_layers=n_gpu_layers,
+            verbose=False,
         )
+
+        print("[Candace][LLAMA] Model loaded successfully.")
 
 
 def load(gguf_path: str = DEFAULT_GGUF_PATH):
     """
-    Explicit loader if you want to preload the model at app startup.
+    Explicitly load the model and return it along with a simple "device" string.
+
+    Returns:
+        (model, tokenizer, device_str)
+        - tokenizer is None for llama.cpp, kept for API compatibility.
+        - device_str is 'gpu' if LLAMA_N_GPU_LAYERS > 0, else 'cpu'.
     """
     _ensure_loaded(gguf_path)
-    return _model, None, "cpu"
+
+    # Infer logical device from env (informational only; llama.cpp controls HW)
+    device = "cpu"
+    try:
+        if _parse_int_env("LLAMA_N_GPU_LAYERS", default=-1) > 0:
+            device = "gpu"
+    except Exception:
+        # If anything weird happens, stay conservative and say "cpu"
+        device = "cpu"
+
+    print(f"[Candace][LLAMA] load() reporting device='{device}'")
+    return _model, None, device
 
 
 def generate_response(
     prompt: str,
     gguf_path: str = DEFAULT_GGUF_PATH,
-    max_new_tokens: int = 160,
+    max_new_tokens: int | None = None,
     temperature: float = 0.2,
     top_p: float = 0.9,
     top_k: int = 40,
     stop_strings: list[str] | None = None,
-    **_
+    **_,
 ) -> str:
     """
-    Generates text using Meta-Llama-3.1-8B-Instruct GGUF via llama.cpp.
+    Generate a response from the LLaMA model.
 
     Args:
-        prompt (str): The formatted system+user prompt.
-        max_new_tokens (int): Max new tokens to generate.
-        temperature (float): Creativity level (0.0–1.0 typical).
-        top_p (float): Nucleus sampling cutoff.
-        top_k (int): Top-k sampling cutoff.
-        stop_strings (list): Strings that signal stop (e.g. "User:", "Assistant:").
+        prompt: The full prompt string (including any system / user formatting).
+        gguf_path: Path to the GGUF model file (optional; defaults via env).
+        max_new_tokens: Maximum number of tokens to generate. If None, defaults
+                        to Config.LLAMA_MAX_NEW_TOKENS.
+        temperature: Sampling temperature.
+        top_p: Nucleus sampling probability mass.
+        top_k: Top-k sampling cutoff.
+        stop_strings: Optional list of stop strings.
 
     Returns:
-        str: The model's generated text.
+        The generated text (stripped of leading/trailing whitespace).
     """
     _ensure_loaded(gguf_path)
+
+    if max_new_tokens is None:
+        max_new_tokens = LLAMA_MAX_NEW_TOKENS
+
+    # Safety: don't ask for more tokens than the context window
+    if max_new_tokens > LLAMA_N_CTX:
+        print(
+            f"[Candace][LLAMA][WARN] max_new_tokens={max_new_tokens} > n_ctx={LLAMA_N_CTX}; "
+            f"clamping to n_ctx."
+        )
+        max_new_tokens = LLAMA_N_CTX
+
+    print(
+        f"[Candace][LLAMA] generate_response() with max_new_tokens={max_new_tokens}, "
+        f"temperature={temperature}, top_p={top_p}, top_k={top_k}"
+    )
 
     stop = stop_strings or ["\nUser:", "User:", "\nAssistant:", "Assistant:"]
     result = _model(
@@ -89,7 +227,12 @@ def generate_response(
 
 def free():
     """
-    Releases model memory manually if needed.
+    Release the global model reference so it can be garbage-collected.
+
+    Note: llama-cpp-python may still keep some underlying resources until the
+    Python process exits. This is best-effort cleanup for long-running apps.
     """
     global _model
+    if _model is not None:
+        print("[Candace][LLAMA] Freeing model from memory.")
     _model = None
