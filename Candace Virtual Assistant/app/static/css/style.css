@@ -841,3 +841,85 @@ body {
         grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     }
 }
+
+  .month-section {
+    margin-bottom: 3rem;
+  }
+
+  .month-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 2px solid #e0e0e0;
+    color: #333;
+  }
+
+  .month-subtitle {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.75rem;
+  }
+
+  .month-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+  }
+
+  .month-day-card {
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #e2e2e2;
+    padding: 8px 10px;
+    font-size: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 80px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+
+  .month-day-card:hover {
+    border-color: #c7d7f5;
+    box-shadow: 0 2px 6px rgba(13,110,253,0.08);
+  }
+
+  .day-label {
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: #333;
+    font-size: 0.9rem;
+  }
+
+  .event-pill {
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .event-pill.fall  { background: #e1ecff; color: #0d47a1; }
+  .event-pill.winter{ background: #e3f2fd; color: #0d47a1; }
+  .event-pill.spring{ background: #e3f9e5; color: #176f2c; }
+  .event-pill.summer{ background: #fff4e5; color: #a35b00; }
+
+  .event-pill.holiday {
+    background: #e7f7e7;
+    color: #1f7a1f;
+  }
+
+  .event-pill.deadline {
+    background: #ffe5e5;
+    color: #9b1c1c;
+  }
+
+  .event-text {
+    margin-bottom: 3px;
+    line-height: 1.3;
+  }
+
+  .event-text:last-child {
+    margin-bottom: 0;
+  }

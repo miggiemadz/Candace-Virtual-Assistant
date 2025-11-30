@@ -41,4 +41,323 @@ CURRENT SCHEDULE
 
 ASSIGNMENTS & GRADES OVERVIEW
 ========================================
-No assignment grades on record.
+- CST 161 - Computer Programming Fundamentals | Getting Started: Canvas & zyBooks Setup [TYPE: homework]
+  MAX_POINTS: 20 | WEIGHT: 0.03
+  STATUS: graded
+  SCORE: 18.00
+  DUE_AT: 2025-09-05 23:59:00
+  SUBMITTED_AT: 2025-09-05 23:59:00
+
+- CST 161 - Computer Programming Fundamentals | Lab 1: Intro to Python & Ethics Reflection [TYPE: lab]
+  MAX_POINTS: 40 | WEIGHT: 0.05
+  STATUS: graded
+  SCORE: 36.00
+  DUE_AT: 2025-09-12 23:59:00
+  SUBMITTED_AT: 2025-09-12 23:59:00
+
+- CST 161 - Computer Programming Fundamentals | Homework 1: Variables & Expressions [TYPE: homework]
+  MAX_POINTS: 40 | WEIGHT: 0.05
+  STATUS: graded
+  SCORE: 37.00
+  DUE_AT: 2025-09-19 23:59:00
+  SUBMITTED_AT: 2025-09-19 23:59:00
+
+- CST 161 - Computer Programming Fundamentals | Homework 2: Decision Structures [TYPE: homework]
+  MAX_POINTS: 40 | WEIGHT: 0.05
+  STATUS: graded
+  SCORE: 35.00
+  DUE_AT: 2025-09-26 23:59:00
+  SUBMITTED_AT: 2025-09-26 23:59:00
+
+- CST 161 - Computer Programming Fundamentals | Semester Exam I: Chapters 1–3 [TYPE: exam]
+  MAX_POINTS: 100 | WEIGHT: 0.12
+  STATUS: graded
+  SCORE: 86.00
+  DUE_AT: 2025-09-30 18:00:00
+  SUBMITTED_AT: 2025-09-30 18:00:00
+
+- CST 161 - Computer Programming Fundamentals | Homework 3: Loops [TYPE: homework]
+  MAX_POINTS: 50 | WEIGHT: 0.06
+  STATUS: graded
+  SCORE: 46.00
+  DUE_AT: 2025-10-10 23:59:00
+  SUBMITTED_AT: 2025-10-10 23:59:00
+
+- CST 161 - Computer Programming Fundamentals | Project 1: Lists & Dictionaries Mini-Project [TYPE: project]
+  MAX_POINTS: 100 | WEIGHT: 0.10
+  STATUS: graded
+  SCORE: 91.00
+  DUE_AT: 2025-10-24 23:59:00
+  SUBMITTED_AT: 2025-10-24 23:59:00
+
+- CST 161 - Computer Programming Fundamentals | Quiz: Number Systems [TYPE: quiz]
+  MAX_POINTS: 30 | WEIGHT: 0.04
+  STATUS: graded
+  SCORE: 26.00
+  DUE_AT: 2025-10-31 23:59:00
+  SUBMITTED_AT: 2025-10-31 23:59:00
+
+- CST 161 - Computer Programming Fundamentals | Semester Exam II: Loops, Data Structures & Number Systems [TYPE: exam]
+  MAX_POINTS: 120 | WEIGHT: 0.15
+  STATUS: graded
+  SCORE: 94.00
+  DUE_AT: 2025-11-05 18:00:00
+  SUBMITTED_AT: 2025-11-05 18:00:00
+
+- CST 161 - Computer Programming Fundamentals | Homework 4: Files, Strings & Exceptions [TYPE: homework]
+  MAX_POINTS: 60 | WEIGHT: 0.07
+  STATUS: graded
+  SCORE: 55.00
+  DUE_AT: 2025-11-19 23:59:00
+  SUBMITTED_AT: 2025-11-19 23:59:00
+
+- CST 161 - Computer Programming Fundamentals | Project 2: Final Programming Project [TYPE: project]
+  MAX_POINTS: 150 | WEIGHT: 0.13
+  STATUS: submitted
+  DUE_AT: 2025-12-03 23:59:00
+  SUBMITTED_AT: 2025-12-03 23:59:00
+
+- CST 161 - Computer Programming Fundamentals | Final Exam: Comprehensive [TYPE: exam]
+  MAX_POINTS: 150 | WEIGHT: 0.15
+  STATUS: submitted
+  DUE_AT: 2025-12-10 18:00:00
+  SUBMITTED_AT: 2025-12-10 18:00:00
+
+- ENG 101 - English Composition I | Diagnostic Writing [TYPE: in-class]
+  MAX_POINTS: 20 | WEIGHT: 0.02
+  STATUS: graded
+  SCORE: 15.00
+  DUE_AT: 2025-09-05 23:59:00
+  SUBMITTED_AT: 2025-09-05 23:59:00
+
+- ENG 101 - English Composition I | Draft: Reflection/Narration Essay [TYPE: draft]
+  MAX_POINTS: 30 | WEIGHT: 0.03
+  STATUS: graded
+  SCORE: 25.00
+  DUE_AT: 2025-09-19 23:59:00
+  SUBMITTED_AT: 2025-09-19 23:59:00
+
+- ENG 101 - English Composition I | Final Reflection/Narrative Essay [TYPE: essay]
+  MAX_POINTS: 100 | WEIGHT: 0.10
+  STATUS: graded
+  SCORE: 63.00
+  DUE_AT: 2025-09-26 23:59:00
+  SUBMITTED_AT: 2025-09-26 23:59:00
+
+- ENG 101 - English Composition I | Draft: Comparison/Contrast Essay [TYPE: draft]
+  MAX_POINTS: 40 | WEIGHT: 0.04
+  STATUS: graded
+  SCORE: 30.00
+  DUE_AT: 2025-10-10 23:59:00
+  SUBMITTED_AT: 2025-10-10 23:59:00
+
+- ENG 101 - English Composition I | Final Comparison/Contrast Essay [TYPE: essay]
+  MAX_POINTS: 100 | WEIGHT: 0.12
+  STATUS: graded
+  SCORE: 72.00
+  DUE_AT: 2025-10-17 23:59:00
+  SUBMITTED_AT: 2025-10-17 23:59:00
+
+- ENG 101 - English Composition I | Draft: Research Essay [TYPE: draft]
+  MAX_POINTS: 40 | WEIGHT: 0.05
+  STATUS: graded
+  SCORE: 32.00
+  DUE_AT: 2025-11-01 23:59:00
+  SUBMITTED_AT: 2025-11-01 23:59:00
+
+- ENG 101 - English Composition I | Citation Quiz (MLA Format) [TYPE: quiz]
+  MAX_POINTS: 20 | WEIGHT: 0.03
+  STATUS: graded
+  SCORE: 12.00
+  DUE_AT: 2025-11-05 23:59:00
+  SUBMITTED_AT: 2025-11-05 23:59:00
+
+- ENG 101 - English Composition I | Final Research Essay [TYPE: essay]
+  MAX_POINTS: 120 | WEIGHT: 0.18
+  STATUS: graded
+  SCORE: 75.00
+  DUE_AT: 2025-11-12 23:59:00
+  SUBMITTED_AT: 2025-11-12 23:59:00
+
+- ENG 101 - English Composition I | Draft: Critical Analysis Essay [TYPE: draft]
+  MAX_POINTS: 40 | WEIGHT: 0.04
+  STATUS: graded
+  SCORE: 35.00
+  DUE_AT: 2025-11-29 23:59:00
+  SUBMITTED_AT: 2025-11-29 23:59:00
+
+- ENG 101 - English Composition I | Final Critical Analysis Essay [TYPE: essay]
+  MAX_POINTS: 120 | WEIGHT: 0.15
+  STATUS: submitted
+  DUE_AT: 2025-12-06 23:59:00
+  SUBMITTED_AT: 2025-12-06 23:59:00
+
+- ENG 101 - English Composition I | Final Exam [TYPE: exam]
+  MAX_POINTS: 150 | WEIGHT: 0.14
+  STATUS: submitted
+  DUE_AT: 2025-12-15 18:00:00
+  SUBMITTED_AT: 2025-12-15 18:00:00
+
+- MAT 171 - Unified Calculus I | Diagnostic Skills Quiz (Precalculus Review) [TYPE: quiz]
+  MAX_POINTS: 20 | WEIGHT: 0.02
+  STATUS: graded
+  SCORE: 17.00
+  DUE_AT: 2025-09-05 23:59:00
+  SUBMITTED_AT: 2025-09-05 23:59:00
+
+- MAT 171 - Unified Calculus I | Homework 1: Limits & Continuity (Sections 1.1–1.4) [TYPE: homework]
+  MAX_POINTS: 40 | WEIGHT: 0.06
+  STATUS: graded
+  SCORE: 36.00
+  DUE_AT: 2025-09-12 23:59:00
+  SUBMITTED_AT: 2025-09-12 23:59:00
+
+- MAT 171 - Unified Calculus I | Unit Test I: Limits & Their Properties [TYPE: exam]
+  MAX_POINTS: 100 | WEIGHT: 0.10
+  STATUS: graded
+  SCORE: 88.00
+  DUE_AT: 2025-09-23 18:00:00
+  SUBMITTED_AT: 2025-09-23 18:00:00
+
+- MAT 171 - Unified Calculus I | Homework 2: Basic Differentiation Rules (Sections 2.1–2.3) [TYPE: homework]
+  MAX_POINTS: 50 | WEIGHT: 0.08
+  STATUS: graded
+  SCORE: 44.00
+  DUE_AT: 2025-10-03 23:59:00
+  SUBMITTED_AT: 2025-10-03 23:59:00
+
+- MAT 171 - Unified Calculus I | Unit Test II: Differentiation [TYPE: exam]
+  MAX_POINTS: 120 | WEIGHT: 0.16
+  STATUS: graded
+  SCORE: 96.00
+  DUE_AT: 2025-10-10 18:00:00
+  SUBMITTED_AT: 2025-10-10 18:00:00
+
+- MAT 171 - Unified Calculus I | Homework 3: Applications of Derivatives (Sections 3.1–3.7) [TYPE: homework]
+  MAX_POINTS: 60 | WEIGHT: 0.08
+  STATUS: graded
+  SCORE: 52.00
+  DUE_AT: 2025-10-24 23:59:00
+  SUBMITTED_AT: 2025-10-24 23:59:00
+
+- MAT 171 - Unified Calculus I | Unit Test III: Applications of Differentiation [TYPE: exam]
+  MAX_POINTS: 120 | WEIGHT: 0.16
+  STATUS: graded
+  SCORE: 90.00
+  DUE_AT: 2025-11-07 18:00:00
+  SUBMITTED_AT: 2025-11-07 18:00:00
+
+- MAT 171 - Unified Calculus I | Homework 4: Integration & FTC [TYPE: homework]
+  MAX_POINTS: 70 | WEIGHT: 0.09
+  STATUS: submitted
+  DUE_AT: 2025-11-28 23:59:00
+  SUBMITTED_AT: 2025-11-28 23:59:00
+
+- MAT 171 - Unified Calculus I | Final Exam: Comprehensive Calculus I [TYPE: exam]
+  MAX_POINTS: 150 | WEIGHT: 0.31
+  STATUS: submitted
+  DUE_AT: 2025-12-15 18:00:00
+  SUBMITTED_AT: 2025-12-15 18:00:00
+
+- PSY 101 - General Psychology | Quiz 1: What is Psychology? [TYPE: quiz]
+  MAX_POINTS: 20 | WEIGHT: 0.03
+  STATUS: graded
+  SCORE: 18.00
+  DUE_AT: 2025-09-05 23:59:00
+  SUBMITTED_AT: 2025-09-05 23:59:00
+
+- PSY 101 - General Psychology | Quiz 2: Biology and Psychology [TYPE: quiz]
+  MAX_POINTS: 20 | WEIGHT: 0.03
+  STATUS: graded
+  SCORE: 17.00
+  DUE_AT: 2025-09-12 23:59:00
+  SUBMITTED_AT: 2025-09-12 23:59:00
+
+- PSY 101 - General Psychology | Quiz 3: Sensation and Perception [TYPE: quiz]
+  MAX_POINTS: 20 | WEIGHT: 0.03
+  STATUS: graded
+  SCORE: 19.00
+  DUE_AT: 2025-09-19 23:59:00
+  SUBMITTED_AT: 2025-09-19 23:59:00
+
+- PSY 101 - General Psychology | Quiz 4: Consciousness [TYPE: quiz]
+  MAX_POINTS: 20 | WEIGHT: 0.03
+  STATUS: graded
+  SCORE: 16.00
+  DUE_AT: 2025-09-26 23:59:00
+  SUBMITTED_AT: 2025-09-26 23:59:00
+
+- PSY 101 - General Psychology | Quiz 5: Learning [TYPE: quiz]
+  MAX_POINTS: 20 | WEIGHT: 0.03
+  STATUS: graded
+  SCORE: 18.00
+  DUE_AT: 2025-10-03 23:59:00
+  SUBMITTED_AT: 2025-10-03 23:59:00
+
+- PSY 101 - General Psychology | Information Literacy Project / Midterm [TYPE: project]
+  MAX_POINTS: 60 | WEIGHT: 0.10
+  STATUS: graded
+  SCORE: 54.00
+  DUE_AT: 2025-10-10 23:59:00
+  SUBMITTED_AT: 2025-10-10 23:59:00
+
+- PSY 101 - General Psychology | Quiz 6: Memory [TYPE: quiz]
+  MAX_POINTS: 20 | WEIGHT: 0.03
+  STATUS: graded
+  SCORE: 17.00
+  DUE_AT: 2025-10-17 23:59:00
+  SUBMITTED_AT: 2025-10-17 23:59:00
+
+- PSY 101 - General Psychology | Quiz 7: Thinking, Language, and Intelligence [TYPE: quiz]
+  MAX_POINTS: 20 | WEIGHT: 0.03
+  STATUS: graded
+  SCORE: 18.00
+  DUE_AT: 2025-10-24 23:59:00
+  SUBMITTED_AT: 2025-10-24 23:59:00
+
+- PSY 101 - General Psychology | Quiz 8: Motivation and Emotion [TYPE: quiz]
+  MAX_POINTS: 20 | WEIGHT: 0.03
+  STATUS: graded
+  SCORE: 19.00
+  DUE_AT: 2025-10-31 23:59:00
+  SUBMITTED_AT: 2025-10-31 23:59:00
+
+- PSY 101 - General Psychology | Evaluation Exam / Applied Paper [TYPE: exam]
+  MAX_POINTS: 100 | WEIGHT: 0.12
+  STATUS: graded
+  SCORE: 87.00
+  DUE_AT: 2025-11-07 18:00:00
+  SUBMITTED_AT: 2025-11-07 18:00:00
+
+- PSY 101 - General Psychology | Quiz 9: The Voyage Through the Life Span [TYPE: quiz]
+  MAX_POINTS: 20 | WEIGHT: 0.03
+  STATUS: graded
+  SCORE: 18.00
+  DUE_AT: 2025-11-14 23:59:00
+  SUBMITTED_AT: 2025-11-14 23:59:00
+
+- PSY 101 - General Psychology | Quiz 10: Personality [TYPE: quiz]
+  MAX_POINTS: 20 | WEIGHT: 0.03
+  STATUS: graded
+  SCORE: 17.00
+  DUE_AT: 2025-11-21 23:59:00
+  SUBMITTED_AT: 2025-11-21 23:59:00
+
+- PSY 101 - General Psychology | Quiz 11: Psychological Disorders [TYPE: quiz]
+  MAX_POINTS: 20 | WEIGHT: 0.03
+  STATUS: graded
+  SCORE: 16.00
+  DUE_AT: 2025-11-28 23:59:00
+  SUBMITTED_AT: 2025-11-28 23:59:00
+
+- PSY 101 - General Psychology | Quiz 12: Social Psychology [TYPE: quiz]
+  MAX_POINTS: 20 | WEIGHT: 0.03
+  STATUS: submitted
+  DUE_AT: 2025-12-05 23:59:00
+  SUBMITTED_AT: 2025-12-05 23:59:00
+
+- PSY 101 - General Psychology | Final Exam / Research Paper [TYPE: exam]
+  MAX_POINTS: 150 | WEIGHT: 0.18
+  STATUS: submitted
+  DUE_AT: 2025-12-15 18:00:00
+  SUBMITTED_AT: 2025-12-15 18:00:00

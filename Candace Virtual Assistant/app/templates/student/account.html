@@ -3,18 +3,297 @@
 
 {% block title %}My Account{% endblock %}
 {% block header_title %}Account{% endblock %}
-{% block header_subtitle %}Your profile information{% endblock %}
+{% block header_subtitle %}Manage your profile and academic details{% endblock %}
 
 {% block content %}
-<h2 style="margin-bottom:14px;">Profile</h2>
 
-{% if student %}
-    <p><strong>Name:</strong> {{ student.student_first_name }} {{ student.student_last_name }}</p>
-    <p><strong>Email:</strong> {{ user.email }}</p>
-    <p><strong>Major:</strong> {{ student.major_name }}</p>
-    <p><strong>GPA:</strong> {{ student.student_gpa }}</p>
-    <p><strong>Total Credits:</strong> {{ student.student_total_credits }}</p>
-{% else %}
-    <p>No student record linked to this account.</p>
-{% endif %}
+<style>
+  .account-wrapper {
+      max-width: 900px;
+      margin-top: 10px;
+  }
+
+  .account-card {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      background: #ffffff;
+      border-radius: 12px;
+      border: 1px solid #e1e4ea;
+      padding: 16px 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+      margin-bottom: 20px;
+  }
+
+  .account-avatar-section {
+      flex: 0 0 140px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-right: 1px solid #f0f0f0;
+      padding-right: 16px;
+  }
+
+  @media (max-width: 640px) {
+      .account-avatar-section {
+          border-right: none;
+          border-bottom: 1px solid #f0f0f0;
+          padding-right: 0;
+          padding-bottom: 12px;
+          flex: 1 1 100%;
+      }
+  }
+
+  .account-avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      border: 1px solid #d0d4dd;
+      background: #f5f5f7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin-bottom: 8px;
+  }
+
+  .account-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+  }
+
+  /* Simple grey silhouette for fallback */
+  .avatar-placeholder {
+      width: 60%;
+      height: 60%;
+      border-radius: 50%;
+      border: 2px solid #c0c4cc;
+      position: relative;
+  }
+
+  .avatar-placeholder::before,
+  .avatar-placeholder::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #c0c4cc;
+  }
+
+  .avatar-placeholder::before {
+      top: 12%;
+      width: 42%;
+      height: 42%;
+      border-radius: 50%;
+  }
+
+  .avatar-placeholder::after {
+      bottom: 12%;
+      width: 70%;
+      height: 40%;
+      border-radius: 40% 40% 50% 50%;
+  }
+
+  .avatar-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-align: center;
+      margin-bottom: 2px;
+  }
+
+  .avatar-email {
+      font-size: 0.8rem;
+      color: #666;
+      text-align: center;
+      margin-bottom: 8px;
+      word-break: break-all;
+  }
+
+  .avatar-button {
+      font-size: 0.78rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid #c5cee0;
+      background: #f3f6ff;
+      color: #26418f;
+      cursor: pointer;
+  }
+
+  .avatar-button:hover {
+      background: #e4ebff;
+  }
+
+  .account-details-section {
+      flex: 1 1 260px;
+      padding-left: 4px;
+  }
+
+  .account-details-title {
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 6px;
+  }
+
+  .account-details-subtitle {
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 10px;
+  }
+
+  .details-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 8px 18px;
+      font-size: 0.88rem;
+  }
+
+  .detail-label {
+      font-weight: 600;
+      color: #444;
+  }
+
+  .detail-value {
+      color: #333;
+  }
+
+  .detail-muted {
+      color: #999;
+  }
+
+  .gpa-pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      background: #e7f5ee;
+      color: #176f2c;
+      font-weight: 600;
+      margin-left: 4px;
+  }
+
+  .no-student-banner {
+      padding: 12px 16px;
+      border-radius: 8px;
+      border: 1px dashed #d0d4dd;
+      background: #fafbff;
+      font-size: 0.9rem;
+      color: #555;
+  }
+
+  .no-student-banner strong {
+      font-weight: 600;
+  }
+</style>
+
+<div class="account-wrapper">
+
+  <div class="account-card">
+    <!-- Avatar / basic identity -->
+    <div class="account-avatar-section">
+      {% set avatar_url = user.avatar_url if user and user.avatar_url else None %}
+
+      <div class="account-avatar">
+        {% if avatar_url %}
+          <img src="{{ avatar_url }}" alt="Profile photo">
+        {% else %}
+          <!-- grey fallback icon -->
+          <div class="avatar-placeholder"></div>
+        {% endif %}
+      </div>
+
+      <div class="avatar-name">
+        {% if student %}
+          {{ student.student_first_name }} {{ student.student_last_name }}
+        {% else %}
+          {{ user.email }}
+        {% endif %}
+      </div>
+      <div class="avatar-email">
+        {{ user.email }}
+      </div>
+
+      <!-- Placeholder button; wire this to a real route later if desired -->
+      <form method="post" action="{{ url_for('main.account') }}" enctype="multipart/form-data" style="margin-top:4px;">
+        <!-- You can wire this up later; for now it's just UI -->
+        <button type="button" class="avatar-button" disabled>
+          Upload / Change photo
+        </button>
+      </form>
+      <div style="font-size:0.7rem;color:#999;margin-top:4px;text-align:center;">
+        Photo upload coming soon.
+      </div>
+    </div>
+
+    <!-- Detailed profile info -->
+    <div class="account-details-section">
+      <div class="account-details-title">Profile</div>
+      <div class="account-details-subtitle">
+        Basic account details linked to your UCNJ student record.
+      </div>
+
+      {% if student %}
+        <div class="details-grid">
+          <div>
+            <div class="detail-label">Name</div>
+            <div class="detail-value">
+              {{ student.student_first_name }} {{ student.student_last_name }}
+            </div>
+          </div>
+
+          <div>
+            <div class="detail-label">Email</div>
+            <div class="detail-value">{{ user.email }}</div>
+          </div>
+
+          <div>
+            <div class="detail-label">Major</div>
+            <div class="detail-value">
+              {{ student.major_name if student.major_name else "Undeclared" }}
+            </div>
+          </div>
+
+          <div>
+            <div class="detail-label">GPA</div>
+            <div class="detail-value">
+              {% if student.student_gpa is not none %}
+                {{ "%.2f"|format(student.student_gpa) }}
+                <span class="gpa-pill">Good Standing</span>
+              {% else %}
+                <span class="detail-muted">Not available</span>
+              {% endif %}
+            </div>
+          </div>
+
+          <div>
+            <div class="detail-label">Total Credits</div>
+            <div class="detail-value">
+              {% if student.student_total_credits is not none %}
+                {{ student.student_total_credits }}
+              {% else %}
+                <span class="detail-muted">Not available</span>
+              {% endif %}
+            </div>
+          </div>
+
+          <div>
+            <div class="detail-label">Student ID</div>
+            <div class="detail-value">
+              {{ student.student_id }}
+            </div>
+          </div>
+        </div>
+      {% else %}
+        <div class="no-student-banner">
+          <strong>No student record linked to this account.</strong><br>
+          This login is not currently associated with a UCNJ student profile.
+          If you believe this is an error, please contact your instructor or
+          the support team so they can link your Canvas account.
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+</div>
+
 {% endblock %}

@@ -268,8 +268,20 @@ def ChatbotEndpoint():
     assignment_question = bool(
         re.search(r"\bassignments?\b|\bhomework\b|\bessay\b", user_message, re.IGNORECASE)
     )
-    grade_question = bool(
-        re.search(r"\bgrade\b|\baverage\b|\bpercent\b|\bscore\b", user_message, re.IGNORECASE)
+    
+    text = user_message.lower()
+    
+    grade_question = any(
+        kw in text
+        for kw in (
+            "grade",      # catches "grade" and "grades"
+            "average",
+            "percent",
+            "percentage",
+            "score",
+            "final",      # "final exam", "on the final"
+            "gpa",
+        )
     )
 
     # Try to detect a course code like ENG 101 / ENG-101
@@ -337,12 +349,16 @@ def ChatbotEndpoint():
 
         lines = []
         cname = summary["course_name"]
+        current = summary["current_percent"]
+        covered = summary.get("covered_weight", 0.0) or 0.0
+        remaining = max(0.0, 1.0 - covered)
+
         lines.append(f"Grade Summary for {cname}:")
 
-        if summary["current_percent"] is not None:
+        if current is not None and covered > 0:
             lines.append(
-                f"- Current weighted average: {summary['current_percent']:.1f}% "
-                f"(covering {summary['covered_weight']*100:.0f}% of the total grade)."
+                f"- Current weighted average: {current:.1f}% "
+                f"(covering {covered * 100:.0f}% of the total grade)."
             )
         else:
             lines.append(
@@ -350,6 +366,7 @@ def ChatbotEndpoint():
                 "cannot be calculated."
             )
 
+        # List assignments and scores
         if summary["assignments"]:
             lines.append("Assignments and scores:")
             for a in summary["assignments"]:
@@ -364,6 +381,41 @@ def ChatbotEndpoint():
                 if a["weight"] is not None:
                     line += f" | Weight: {a['weight']}"
                 lines.append(line)
+
+        # --------------------------------------------------
+        # Extra: "What do I need on the final?" logic
+        # --------------------------------------------------
+        target_percent = None
+
+        # Look for an explicit target like "80%" in the question
+        m = re.search(r"(\d+)\s*%", user_message)
+        if m:
+            target_percent = float(m.group(1))
+
+        # If no explicit %, but they say "pass", assume 70%
+        elif re.search(r"\bpass\b", user_message, re.IGNORECASE):
+            target_percent = 70.0
+
+        if target_percent is not None and current is not None and remaining > 0:
+            # Required average on remaining weighted work:
+            # final = current*covered + needed_avg*remaining
+            needed_avg = (target_percent - current * covered) / remaining
+            # Clamp to 0–100 for sanity
+            needed_avg = max(0.0, min(100.0, needed_avg))
+
+            lines.append("")
+            lines.append(
+                f"To finish {cname} with at least {target_percent:.1f}%, "
+                f"you would need to average about {needed_avg:.1f}% "
+                f"across the remaining {remaining * 100:.0f}% of the course grade."
+            )
+        elif target_percent is not None and remaining <= 0:
+            lines.append("")
+            lines.append(
+                f"Your course average for {cname} is already based on 100% of the "
+                "graded work, so there are no remaining weighted assignments to "
+                "change your grade."
+            )
 
         grade_block = "\n".join(lines)
 
@@ -1329,8 +1381,9 @@ def course_grades(class_id):
             "due": format_ts(r["due_at"]),
             "submitted": format_ts(r["submitted_at"]),
             "status": status,
-            "score": r["score"],
-            "points": r["max_points"],
+            # Cast DECIMAL -> float so math works cleanly
+            "score": float(r["score"]) if r["score"] is not None else None,
+            "points": float(r["max_points"]) if r["max_points"] is not None else 0.0,
         })
 
     # ======================================
