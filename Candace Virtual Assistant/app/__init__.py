@@ -22,8 +22,8 @@ def create_app():
     db_utils.init_app(app)
 
     # Initialize RAG system
-    index_dir = os.getenv("CANDACE_INDEX_DIR")  # optional custom location
-    rag_utils.init(app_root=app.root_path, index_dir=index_dir)
+    chroma_dir = os.getenv("CANDACE_CHROMA_DIR")  # optional custom location
+    rag_utils.init(app_root=app.root_path, chroma_dir=chroma_dir)
 
     # Register all routes
     app.register_blueprint(bp)

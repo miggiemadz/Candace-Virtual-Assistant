@@ -8,32 +8,34 @@ Usage:
 If no path is given, defaults to ./docs under the project root.
 """
 
-import sys, os
-from app import create_app
+import os
 from app.services import rag_utils
 
-def main():
-    target = sys.argv[1] if len(sys.argv) > 1 else "docs"
-    target = os.path.abspath(target)
+# --- CONFIGURATION ---
+# 1. Application root (where the 'app' folder is located)
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
-    app = create_app()
-    with app.app_context():
-        try:
-            docs, chunks = rag_utils.ingest_folder(target)
-            print(f"[SUCCESS] Indexed {docs} files, {chunks} chunks from: {target}")
-            print(f"[INFO] Index stored under: {rag_utils.INDEX_DIR}")
-        except Exception as e:
-            print(f"[ERROR] Ingestion failed: {e}")
-            # Extra diagnostics
-            if not (os.path.isdir(target) or os.path.isfile(target)):
-                print(f"[HINT] Path does not exist: {target}")
-            else:
-                print(f"[HINT] If this is a folder, ensure it contains .pdf/.txt/.md/.json")
-                print(f"[HINT] If this is a file, ensure its extension is one of: .pdf, .txt, .md, .json")
-            sys.exit(1)
+# 2. Point to your existing 'docs/' folder.
+PUBLIC_DOCS_PATH = os.path.join(APP_ROOT, "docs") # <-- CHANGE HERE
 
+# --- SCRIPT DE INGESTA ---
 if __name__ == "__main__":
-    main()
+    print("--- Ingesting documents for RAG with ChromaDB ---")
+
+    # Initialize RAG configuration
+    rag_utils.init(app_root=APP_ROOT)
+    
+    if not os.path.isdir(PUBLIC_DOCS_PATH):
+        print(f"[ERROR] Document folder does not exist: {PUBLIC_DOCS_PATH}")
+    else:
+        try:
+            print(f"Searching for documents in: {PUBLIC_DOCS_PATH}")
+            doc_count, chunk_count = rag_utils.ingest_folder(PUBLIC_DOCS_PATH)
+            print(f"\n[SUCCESS] Ingest completed.")
+            print(f"Processed {doc_count} documents and created {chunk_count} public chunks.")
+
+        except Exception as e:
+            print(f"\n[ERROR] Error: {e}")
 
 ## run this cript on terminal: python ingest_rag.py "C:/path/to/YourCourseDocs"
 ## python ingest_rag.py "C:\Users\emilio.vasquez\Documents\UG-Research\Candace-Virtual-Assistant\Candace Virtual Assistant\docs\docs_formatted"

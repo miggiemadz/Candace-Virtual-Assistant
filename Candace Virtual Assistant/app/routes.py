@@ -1,6 +1,6 @@
 from flask import Blueprint, redirect, url_for, request, render_template, jsonify, session, flash, current_app
 from .db_utils import query_db, execute_db
-from .services import rag_utils
+from .services import rag_utils, rag_router
 from .services.assistant.llama_utils import generate_response as llm_generate
 from .services.assistant.prompt_utils import build_prompt
 import os
@@ -185,73 +185,10 @@ def ChatbotEndpoint():
     student_id = user.get("student_id") if user else None
 
     # --------------------------------------------------
-    # 1) Build student-specific context from MySQL
+    # 1) Route the request to get the right context
     # --------------------------------------------------
-    student_context_parts = []
-
-    if student_id:
-        # Basic profile: name, major, gpa
-        profile = query_db(
-            """
-            SELECT s.student_first_name, s.student_last_name,
-                   s.student_gpa, s.student_total_credits,
-                   m.major_name, m.department
-            FROM students s
-            LEFT JOIN majors m ON s.major_id = m.major_id
-            WHERE s.student_id = %s
-            """,
-            (student_id,),
-            one=True,
-        )
-
-        if profile:
-            name = f"{profile['student_first_name']} {profile['student_last_name']}"
-            major = profile.get("major_name") or "Undeclared"
-            gpa = profile.get("student_gpa")
-            credits = profile.get("student_total_credits")
-
-            student_context_parts.append(f"Student Name: {name}")
-            student_context_parts.append(f"Major: {major}")
-            if gpa is not None:
-                student_context_parts.append(f"GPA: {gpa}")
-            if credits is not None:
-                student_context_parts.append(f"Total Credits: {credits}")
-
-        # Current course schedule
-        schedule_rows = query_db(
-            """
-            SELECT c.course_name, c.course_credits, cl.class_type
-            FROM schedule s
-            JOIN classes cl ON s.class_id = cl.class_id
-            JOIN courses c ON cl.course_id = c.course_id
-            WHERE s.student_id = %s
-            """,
-            (student_id,),
-        )
-
-        if schedule_rows:
-            student_context_parts.append("Current Enrolled Courses:")
-            for row in schedule_rows:
-                student_context_parts.append(
-                    f"- {row['course_name']} "
-                    f"({row['course_credits']} credits, {row['class_type']})"
-                )
-
-    student_context = ""
-    if student_context_parts:
-        student_context = "Student Context:\n" + "\n".join(student_context_parts)
-
-    # --------------------------------------------------
-    # 2) Retrieve RAG context (catalog + weekly + docs)
-    # --------------------------------------------------
-    hits = rag_utils.retrieve(user_message, k=4)
-    rag_context = rag_utils.format_context(hits)
-
-    # Combine student-specific context + RAG context
-    combined_context = student_context
-    if student_context and rag_context:
-        combined_context += "\n\n---\n\n"
-    combined_context += rag_context
+    router_result = rag_router.route(user_message, student_id=student_id)
+    combined_context = router_result.context
 
     # --------------------------------------------------
     # 3) Build LLM prompt and generate reply

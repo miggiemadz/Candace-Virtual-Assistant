@@ -1,0 +1,57 @@
+graph TD
+    %% Academic Styling
+    classDef process fill:#fff,stroke:#333,stroke-width:1px;
+    classDef decision fill:#f9f,stroke:#333,stroke-width:1px;
+    classDef storage fill:#eee,stroke:#333,stroke-width:2px,stroke-dasharray: 5 5;
+    classDef user fill:#e1f5fe,stroke:#01579b,stroke-width:2px;
+
+    %% --- User Layer ---
+    subgraph "Client Interface"
+        A([User Input Query]):::user
+        N([Final Response]):::user
+    end
+
+    %% --- Orchestration ---
+    subgraph "Orchestration Layer"
+        B[API Endpoint /chatbot]:::process
+        C{Intent Router}:::decision
+    end
+
+    %% --- Logic/Tools ---
+    subgraph "Retrieval & Logic Layer"
+        direction TB
+        D["SQL Tool (Structured Data)"]:::process
+        E["Vector Tool (Unstructured Data)"]:::process
+        F[Context Assembler]:::process
+    end
+
+    %% --- Data ---
+    subgraph "Data Persistence Layer"
+        G[(MySQL Database)]:::storage
+        I[(Vector Database)]:::storage
+    end
+
+    %% --- Generation ---
+    subgraph "Generation Layer"
+        M[LLM Synthesizer]:::process
+    end
+
+    %% --- Flow Connections ---
+    A --> B
+    B --> C
+    
+    %% Router Logic
+    C -- "Intent: Db Query" --> D
+    C -- "Intent: General Info" --> E
+    
+    %% Data Interaction
+    D <-->|"SQL <-> Result Set"| G
+    E <-->|"Embedding <-> Text Chunks"| I
+    
+    %% Context Assembly
+    D --> F
+    E --> F
+    
+    %% Final Synthesis
+    F -->|"Unified Context"| M
+    M -->|"Natural Language"| N

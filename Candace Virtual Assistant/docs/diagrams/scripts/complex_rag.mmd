@@ -1,0 +1,53 @@
+graph TD
+    %% --- 1. Node Definitions ---
+    subgraph "User Interface"
+        A["User Inputs Question"]
+    end
+
+    subgraph "Web Server (routes.py)"
+        B["1. Endpoint /chatbot"]
+    end
+
+    subgraph "Decision Engine"
+        C{"2. RAG Router"}
+    end
+    
+    subgraph "Data Retrieval Tools"
+        D["3a. CRUD Retriever (crud.py)"]
+        E["3b. RAG Retriever (rag_utils.py)"]
+    end
+
+    subgraph "Databases"
+        F[("SQL Database")]
+        G[("Vector Database")]
+    end
+
+    subgraph "Prompt & Generation Layer"
+        H["4. Prompt Builder (prompt_utils.py)"]
+        %% ERROR CORREGIDO: Se añadieron comillas abajo para soportar paréntesis
+        I["5. LLM Synthesizer (llama_utils.py)"]
+    end
+
+    subgraph "Final Output"
+        J["Final Response"]
+    end
+
+    %% --- 2. Data Flow Connections ---
+    A --> B
+    B --> C
+    
+    C -- "Intent Detected" --> D
+    C -- "No Clear Intent" --> E
+    
+    %% Interacción con Bases de Datos
+    D -- "Executes SQL Query" --> F
+    E -- "Performs Semantic Search" --> G
+    
+    %% Flujo de Contexto
+    D -- "Tool Context" --> H
+    E -- "Document Context" --> H
+    
+    H --> I
+    I --> J
+    
+    J --> A
