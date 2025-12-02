@@ -3,12 +3,14 @@ from .db_utils import query_db, execute_db
 from .services import rag_utils
 from .services.assistant.llama_utils import generate_response as llm_generate
 from .services.assistant.prompt_utils import build_prompt
+from config import Config
 import os
 from werkzeug.security import generate_password_hash
 from .auth_utils import login_user, logout_user, login_required, get_current_user, verify_login_credentials, role_required
 from datetime import datetime
 import re
-from config import Config
+from typing import List
+import time
 
 LLAMA_N_CTX = Config.LLAMA_N_CTX
 LLAMA_MAX_NEW_TOKENS = Config.LLAMA_MAX_NEW_TOKENS
@@ -261,16 +263,12 @@ def ChatbotEndpoint():
     # --------------------------------------------------
     # 1.5) Course-specific assignments and grades
     # --------------------------------------------------
-    assignment_block = ""
-    grade_block = ""
-
     # Detect intent
     assignment_question = bool(
         re.search(r"\bassignments?\b|\bhomework\b|\bessay\b", user_message, re.IGNORECASE)
     )
-    
+
     text = user_message.lower()
-    
     grade_question = any(
         kw in text
         for kw in (
@@ -284,107 +282,75 @@ def ChatbotEndpoint():
         )
     )
 
-    # Try to detect a course code like ENG 101 / ENG-101
-    course_code_hint = detect_course_code(user_message)
+    # Try to detect one or more course codes like ENG 101 / ENG-101
+    course_codes = detect_course_codes(user_message)
 
-    # --- Assignments for a specific course ---
-    if assignment_question and student_id and course_code_hint:
-        like_pattern = f"{course_code_hint}%"
-        assignment_rows = query_db(
-            """
-            SELECT
-                c.course_name,
-                a.assignment_name,
-                a.assignment_type,
-                a.due_at,
-                a.max_points,
-                a.assignment_score_weight,
-                a.description
-            FROM schedule s
-            JOIN classes cl    ON s.class_id = cl.class_id
-            JOIN courses c     ON cl.course_id = c.course_id
-            JOIN assignments a ON a.class_id = cl.class_id
-            WHERE s.student_id = %s
-              AND c.course_name LIKE %s
-            ORDER BY a.due_at, a.assignment_name
-            """,
-            (student_id, like_pattern),
-        )
+    assignment_block = None
+    grade_block = None
 
-        if assignment_rows:
-            lines = []
+    # --- Assignments for one or more specific courses ---
+    if assignment_question and student_id and course_codes:
+        all_lines: list[str] = []
+
+        for course_code_hint in course_codes:
+            like_pattern = f"{course_code_hint}%"  # e.g. "ENG 101%"
+
+            assignment_rows = query_db(
+                """
+                SELECT
+                    c.course_name,
+                    a.assignment_name,
+                    a.assignment_type,
+                    a.due_at,
+                    a.max_points,
+                    a.assignment_score_weight,
+                    a.description
+                FROM schedule s
+                JOIN classes cl    ON s.class_id = cl.class_id
+                JOIN courses c     ON cl.course_id = c.course_id
+                JOIN assignments a ON a.class_id = cl.class_id
+                WHERE s.student_id = %s
+                  AND c.course_name LIKE %s
+                ORDER BY a.due_at, a.assignment_name
+                """,
+                (student_id, like_pattern),
+            )
+
+            if not assignment_rows:
+                # Optional: short message per course if nothing is found
+                all_lines.append(
+                    f"No assignments found in the system for {course_code_hint} "
+                    f"linked to your current enrollment."
+                )
+                all_lines.append("")  # blank line between courses
+                continue
+
             course_label = assignment_rows[0]["course_name"]
-            lines.append(f"Assignments for {course_label}:")
+            all_lines.append(f"Assignments for {course_label}:")
+
             for row in assignment_rows:
                 line = f"- {row['assignment_name']} [{row['assignment_type']}]"
+
                 if row.get("due_at"):
                     line += f" (Due: {row['due_at']})"
+
                 line += f" | Max Points: {row['max_points']}"
+
                 if row.get("assignment_score_weight") is not None:
                     line += f" | Weight: {row['assignment_score_weight']}"
-                lines.append(line)
-            assignment_block = "\n".join(lines)
-        else:
-            return jsonify({
-                "chatbot_response": (
-                    f"I checked the system, but I couldn't find any assignments "
-                    f"for {course_code_hint} in your current enrollment. "
-                    "It might be that assignments haven't been entered yet, or "
-                    "they're only visible directly in Canvas."
-                )
-            }), 200
 
-    # --- Grade summary for a specific course ---
-    if grade_question and student_id and course_code_hint:
-        summary = get_course_grade_summary(student_id, course_code_hint)
-        if summary is None:
-            return jsonify({
-                "chatbot_response": (
-                    f"I checked your record but couldn't find any graded assignments "
-                    f"for {course_code_hint} linked to your enrollment. "
-                    "It might be that grades haven't been entered yet or the course "
-                    "is tracked only in Canvas."
-                )
-            }), 200
+                all_lines.append(line)
 
-        lines = []
-        cname = summary["course_name"]
-        current = summary["current_percent"]
-        covered = summary.get("covered_weight", 0.0) or 0.0
-        remaining = max(0.0, 1.0 - covered)
+            all_lines.append("")  # blank line after each course
 
-        lines.append(f"Grade Summary for {cname}:")
+        if all_lines:
+            assignment_block = "\n".join(all_lines)
 
-        if current is not None and covered > 0:
-            lines.append(
-                f"- Current weighted average: {current:.1f}% "
-                f"(covering {covered * 100:.0f}% of the total grade)."
-            )
-        else:
-            lines.append(
-                "- There are no graded, weighted assignments yet, so a current average "
-                "cannot be calculated."
-            )
+    # --- Grade summary for one or more specific courses ---
+    if grade_question and student_id and course_codes:
+        grade_lines: list[str] = []
 
-        # List assignments and scores
-        if summary["assignments"]:
-            lines.append("Assignments and scores:")
-            for a in summary["assignments"]:
-                line = f"  • {a['name']} [{a['type']}]"
-                if a["due_at"]:
-                    line += f" (Due: {a['due_at']})"
-                line += f" | Max: {a['max_points']}"
-                if a["score"] is not None:
-                    line += f" | Score: {a['score']} (status: {a['status']})"
-                else:
-                    line += f" | Score: — (status: {a['status']})"
-                if a["weight"] is not None:
-                    line += f" | Weight: {a['weight']}"
-                lines.append(line)
-
-        # --------------------------------------------------
-        # Extra: "What do I need on the final?" logic
-        # --------------------------------------------------
+        # Figure out if they asked "what do I need on X%?"
         target_percent = None
 
         # Look for an explicit target like "80%" in the question
@@ -396,28 +362,78 @@ def ChatbotEndpoint():
         elif re.search(r"\bpass\b", user_message, re.IGNORECASE):
             target_percent = 70.0
 
-        if target_percent is not None and current is not None and remaining > 0:
-            # Required average on remaining weighted work:
-            # final = current*covered + needed_avg*remaining
-            needed_avg = (target_percent - current * covered) / remaining
-            # Clamp to 0–100 for sanity
-            needed_avg = max(0.0, min(100.0, needed_avg))
+        for course_code_hint in course_codes:
+            summary = get_course_grade_summary(student_id, course_code_hint)
 
-            lines.append("")
-            lines.append(
-                f"To finish {cname} with at least {target_percent:.1f}%, "
-                f"you would need to average about {needed_avg:.1f}% "
-                f"across the remaining {remaining * 100:.0f}% of the course grade."
-            )
-        elif target_percent is not None and remaining <= 0:
-            lines.append("")
-            lines.append(
-                f"Your course average for {cname} is already based on 100% of the "
-                "graded work, so there are no remaining weighted assignments to "
-                "change your grade."
-            )
+            if summary is None:
+                grade_lines.append(f"Grade Summary for {course_code_hint}:")
+                grade_lines.append(
+                    "- I checked your record but couldn't find any graded "
+                    "assignments linked to your enrollment. It might be that "
+                    "grades haven't been entered yet or the course is tracked "
+                    "only in Canvas."
+                )
+                grade_lines.append("")  # blank line between courses
+                continue
 
-        grade_block = "\n".join(lines)
+            cname = summary["course_name"]
+            current = summary["current_percent"]
+            covered = summary.get("covered_weight", 0.0) or 0.0
+            remaining = max(0.0, 1.0 - covered)
+
+            grade_lines.append(f"Grade Summary for {cname}:")
+
+            if current is not None and covered > 0:
+                grade_lines.append(
+                    f"- Current weighted average: {current:.1f}% "
+                    f"(covering {covered * 100:.0f}% of the total grade)."
+                )
+            else:
+                grade_lines.append(
+                    "- There are no graded, weighted assignments yet, so a "
+                    "current average cannot be calculated."
+                )
+
+            # List assignments and scores
+            if summary["assignments"]:
+                grade_lines.append("Assignments and scores:")
+                for a in summary["assignments"]:
+                    line = f"  • {a['name']} [{a['type']}]"
+                    if a["due_at"]:
+                        line += f" (Due: {a['due_at']})"
+                    line += f" | Max: {a['max_points']}"
+                    if a["score"] is not None:
+                        line += f" | Score: {a['score']} (status: {a['status']})"
+                    else:
+                        line += f" | Score: — (status: {a['status']})"
+                    if a["weight"] is not None:
+                        line += f" | Weight: {a['weight']}"
+                    grade_lines.append(line)
+
+            # "What do I need on the remaining work?" logic
+            if target_percent is not None and current is not None and remaining > 0:
+                needed_avg = (target_percent - current * covered) / remaining
+                needed_avg = max(0.0, min(100.0, needed_avg))  # clamp 0–100
+
+                grade_lines.append("")
+                grade_lines.append(
+                    f"To finish {cname} with at least {target_percent:.1f}%, "
+                    f"you would need to average about {needed_avg:.1f}% "
+                    f"across the remaining {remaining * 100:.0f}% of the "
+                    "course grade."
+                )
+            elif target_percent is not None and remaining <= 0:
+                grade_lines.append("")
+                grade_lines.append(
+                    f"Your course average for {cname} is already based on 100% "
+                    "of the graded work, so there are no remaining weighted "
+                    "assignments to change your grade."
+                )
+
+            grade_lines.append("")  # blank line after each course
+
+        if grade_lines:
+            grade_block = "\n".join(grade_lines)
 
     # Attach blocks to student_context if present
     extra_blocks = []
@@ -436,7 +452,6 @@ def ChatbotEndpoint():
     #    and FILTER it so student-specific docs only
     #    show for the logged-in student.
     # --------------------------------------------------
-    # NOTE: let rag_utils.choose_top_k decide 'k' instead of hard-coding 8
     raw_hits = rag_utils.retrieve(user_message)
 
     def _get_hit_text(hit):
@@ -473,7 +488,6 @@ def ChatbotEndpoint():
     # --------------------------------------------------
     # 2.25) Token-budgeted RAG context using rag_utils.budget_hits
     # --------------------------------------------------
-    # Reserve some tokens for system prompt + instructions
     safety_margin = 512
     max_context_tokens = max(
         1024,
@@ -536,6 +550,7 @@ def ChatbotEndpoint():
         max_turns=3,
     )
 
+    llm_start = time.perf_counter()
     reply = llm_generate(
         prompt=prompt,
         max_new_tokens=LLAMA_MAX_NEW_TOKENS,
@@ -543,6 +558,7 @@ def ChatbotEndpoint():
         top_p=0.9,
         top_k=40,
     )
+    llm_time = time.perf_counter() - llm_start
 
     # --------------------------------------------------
     # 4) Log to ai_chat_log (if we have a student_id)
@@ -550,10 +566,10 @@ def ChatbotEndpoint():
     try:
         execute_db(
             """
-            INSERT INTO ai_chat_log (student_id, user_message, ai_response)
-            VALUES (%s, %s, %s)
+            INSERT INTO ai_chat_log (student_id, user_message, ai_response, llm_response_time)
+            VALUES (%s, %s, %s, %s)
             """,
-            (student_id, user_message, reply),
+            (student_id, user_message, reply, llm_time),
         )
     except Exception as e:
         print(f"[ai_chat_log] insert failed: {e}")
@@ -565,7 +581,15 @@ def get_course_grade_summary(student_id: int, course_code_hint: str):
     Compute a grade summary for one course for a given student.
 
     course_code_hint: something like "ENG 101" or "ENG-101" (we'll use LIKE).
-    Returns dict or None if no matching enrollment/assignments.
+    Returns a dict with:
+        {
+          "course_name": str,
+          "assignments": [...],
+          "current_percent": float | None,
+          "covered_weight": float,
+          "remaining_weight": float,
+        }
+    or None if there are no matching enrollments/assignments.
     """
 
     like_pattern = f"{course_code_hint}%"  # matches "ENG 101 - English Composition I"
@@ -611,7 +635,7 @@ def get_course_grade_summary(student_id: int, course_code_hint: str):
         score = r["score"]
         status = r["status"] or "not_assigned"
 
-        # Build a per-assignment summary line
+        # Build a per-assignment summary dict
         assignments.append({
             "name": r["assignment_name"],
             "type": r["assignment_type"],
@@ -647,15 +671,21 @@ def get_course_grade_summary(student_id: int, course_code_hint: str):
         "remaining_weight": remaining_weight, # e.g. 0.40
     }
 
-def detect_course_code(msg: str) -> str | None:
+def detect_course_codes(msg: str) -> list[str]:
     """
-    Try to detect a course code like ENG 101 or ENG-101 in the message.
-    Returns a normalized 'ENG 101' or None.
+    Return all course codes like ENG 101 / ENG-101 found in the message.
     """
-    m = re.search(r"\b([A-Z]{2,4})[-\s]?(\d{3})\b", msg.upper())
-    if not m:
-        return None
-    return f"{m.group(1)} {m.group(2)}"
+    codes = []
+    for m in re.finditer(r"\b([A-Z]{2,4})[-\s]?(\d{3})\b", msg.upper()):
+        codes.append(f"{m.group(1)} {m.group(2)}")
+    # Deduplicate while preserving order
+    seen = set()
+    unique = []
+    for c in codes:
+        if c not in seen:
+            seen.add(c)
+            unique.append(c)
+    return unique
 
 @bp.post("/rag/ingest")
 @role_required("admin")
@@ -1642,6 +1672,7 @@ def history():
             ORDER BY chat_timestamp DESC
             LIMIT 100
         """, (user["student_id"],))
+
 
     return render_template("student/history.html", logs=logs, user=user)
 
